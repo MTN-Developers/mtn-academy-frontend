@@ -1,0 +1,20 @@
+{
+  "login": {
+    "title": "Login",
+    "email": {
+      "label": "Email",
+      "placeholder": "Enter your email"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "Enter your password"
+    },
+    "button": {
+      "submit": "Login",
+      "loading": "Loading..."
+    },
+    "errors": {
+      "invalidCredentials": "Invalid email or password"
+    }
+  }
+}
