@@ -28,7 +28,9 @@ export default async function LocaleLayout({
 
   return (
     <Providers messages={messages} locale={locale}>
-      <AuthProvider>{children}</AuthProvider>
+      <div className={`${locale === "ar" ? "font-cairo" : "font-poppins"}`}>
+        <AuthProvider>{children}</AuthProvider>
+      </div>
     </Providers>
   );
 }
