@@ -21,5 +21,30 @@
     "errors": {
       "invalidCredentials": "Invalid email or password"
     }
+  },
+  "register": {
+    "Welcome onboard": "Welcome onboard",
+    "Name": "Name",
+    "Enter your name": "Enter your name",
+    "Email": "Email",
+    "Phone number": "Phone number",
+    "Email or phone number": "Email or phone number",
+    "Password": "Password",
+    "Enter password": "Enter password",
+    "By signing up you agree to mtn": "By signing up you agree to mtn",
+    "terms & Conditions": "terms & Conditions",
+    "privacy policy": "privacy policy",
+    "Sign in": "Sign in",
+    "Or sign in with Google": "Or sign in with Google",
+    "Already have an account?": "Already have an account?",
+    "Login now": "Login now",
+    "registration": {
+      "success": "Registration successful!",
+      "error": "Registration failed. Please try again."
+    },
+    "Gender": "Gender",
+    "Male": "Male",
+    "Female": "Female",
+    "Country": "Country"
   }
 }

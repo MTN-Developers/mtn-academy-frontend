@@ -9,6 +9,7 @@ import {
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "../../axios/instance";
 import Cookies from "js-cookie";
+import { endpoints } from "@/app/utils/endpoints";
 
 const initialState: AuthState = {
   user: null,
@@ -20,10 +21,10 @@ const initialState: AuthState = {
 };
 
 export const login = createAsyncThunk<AuthResponse, LoginCredentials>(
-  "auth/login",
+  endpoints.login,
   async (credentials) => {
     const response = await axiosInstance.post<AuthResponse>(
-      "/auth/login",
+      endpoints.login,
       credentials
     );
     return response.data;

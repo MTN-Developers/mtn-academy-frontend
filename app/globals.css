@@ -80,3 +80,28 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Phone Input Custom Styles */
+.phone-input {
+  @apply w-full ;
+}
+
+.phone-input input {
+  @apply !w-full !bg-[#f2f2f2] h-10 px-3 py-2  border border-input rounded-md text-sm;
+}
+
+.phone-input .country-list {
+  @apply bg-white border border-gray-200 rounded-md shadow-lg;
+}
+
+/* [dir="rtl"] .phone-input input {
+  @apply text-right;
+}
+
+[dir="rtl"] .phone-input .selected-flag {
+  @apply right-0 left-auto;
+}
+
+[dir="rtl"] .phone-input input {
+  @apply pl-[6px] pr-[48px];
+} */
