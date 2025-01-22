@@ -7,11 +7,16 @@
     },
     "password": {
       "label": "كلمة المرور",
-      "placeholder": "أدخل كلمة المرور"
+      "placeholder": "أدخل كلمة المرور",
+      "forgotPassword": "نسيت كلمة المرور ؟"
     },
     "button": {
       "submit": "تسجيل الدخول",
-      "loading": "جاري التحميل..."
+      "loading": "جاري التحميل...",
+      "RememberMe": "تذكرني",
+      "signWithGoogle": "تسجيل الدخول باستخدام جوجل",
+      "dontHaveAccount": "ليس لديك حساب",
+      "createAccount": "انشاء حساب جديد"
     },
     "errors": {
       "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"

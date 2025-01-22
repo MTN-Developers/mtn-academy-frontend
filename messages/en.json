@@ -7,11 +7,16 @@
     },
     "password": {
       "label": "Password",
-      "placeholder": "Enter your password"
+      "placeholder": "Enter your password",
+      "forgotPassword": "Forgot password?"
     },
     "button": {
-      "submit": "Login",
-      "loading": "Loading..."
+      "submit": "Sign in",
+      "loading": "Loading...",
+      "RememberMe": "Remember me",
+      "signWithGoogle": "Or sign in with Google",
+      "dontHaveAccount": "Dont have an account?",
+      "createAccount": "Sign up now"
     },
     "errors": {
       "invalidCredentials": "Invalid email or password"
