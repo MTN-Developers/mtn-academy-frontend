@@ -1,42 +1,61 @@
 // src/hooks/useAuth.ts
 import { useSelector, useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
 import { AppDispatch, RootState } from "../lib/redux/store";
-import { LoginCredentials } from "../types/auth";
-import { login, logout } from "../lib/redux/features/authSlice";
+import {
+  login as loginAction,
+  logout as logoutAction,
+} from "../lib/redux/features/authSlice";
+import { toast } from "sonner";
+
+interface LoginCredentials {
+  email: string;
+  password: string;
+  rememberMe?: boolean;
+}
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
   const { user, isAuthenticated, loading } = useSelector(
     (state: RootState) => state.auth
   );
 
-  const handleLogin = async (credentials: LoginCredentials) => {
+  const login = async (credentials: LoginCredentials) => {
     try {
-      await dispatch(login(credentials)).unwrap();
+      const _result = await dispatch(
+        loginAction({
+          email: credentials.email,
+          password: credentials.password,
+        })
+      ).unwrap();
+
+      // Handle remember me
+      if (credentials.rememberMe) {
+        localStorage.setItem("rememberMe", "true");
+        localStorage.setItem("email", credentials.email);
+      } else {
+        localStorage.removeItem("rememberMe");
+        localStorage.removeItem("email");
+      }
+
       return true;
     } catch (error) {
       console.error("Login failed:", error);
+      toast.error(`invalid credintials`);
       return false;
     }
   };
 
-  const handleLogout = () => {
-    dispatch(logout());
-    router.push("/login"); // Redirect to login after logout
-  };
-
-  const hasPermission = (permission: string) => {
-    return user?.permissions.includes(permission) ?? false;
+  const logout = () => {
+    dispatch(logoutAction());
+    localStorage.removeItem("rememberMe");
+    localStorage.removeItem("email");
   };
 
   return {
     user,
     isAuthenticated,
     loading,
-    login: handleLogin,
-    logout: handleLogout,
-    hasPermission,
+    login,
+    logout,
   };
 };

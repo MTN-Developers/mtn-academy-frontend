@@ -7,6 +7,9 @@ import { useAuth } from "@/app/hooks/useAuth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 import bannerMob from "@/public/images/login-banner-mob.svg";
 import bannerWeb from "@/public/images/login-banner-web.svg";
 import mtnLogo from "@/public/images/mtn-logo.svg";
@@ -14,12 +17,30 @@ import googleIcon from "@/public/icons/google-icon.svg";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Eye, EyeOff } from "lucide-react"; // Import icons
+import { Eye, EyeOff } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
+import { toast } from "sonner"; // Add toast notifications
+
+// Form schema
+interface LoginFormData {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+const schema = yup.object({
+  email: yup
+    .string()
+    .email("Invalid email format")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .required("Password is required"),
+  rememberMe: yup.boolean().required().default(false),
+});
 
 export default function LoginPage() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { login, loading } = useAuth();
   const router = useRouter();
@@ -27,33 +48,60 @@ export default function LoginPage() {
   const t = useTranslations("login");
   const params = useParams();
   const locale = params.locale as string;
+  const callbackUrl = searchParams.get("redirect");
 
-  // Change from redirect to callbackUrl to match middleware
-  const callbackUrl = searchParams.get("redirect"); // Changed from "callbackUrl"
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    control, // Add control
+  } = useForm<LoginFormData>({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    },
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const success = await login({ email, password });
-    if (success) {
-      // Use the locale from params, not from searchParams
-      const redirectTo = callbackUrl
-        ? `/${locale}${callbackUrl}`
-        : `/${locale}/dashboard`;
-      router.push(redirectTo);
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      console.log("onSubmit", data);
+
+      const success = await login({
+        email: data.email,
+        password: data.password,
+        rememberMe: data.rememberMe,
+      });
+
+      if (success) {
+        const redirectTo = callbackUrl
+          ? `/${locale}${callbackUrl}`
+          : `/${locale}/dashboard`;
+        router.push(redirectTo);
+        toast.success("login.success");
+      }
+    } catch (error) {
+      toast.error(`${error}`);
     }
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
+  const handleGoogleLogin = async () => {
+    try {
+      // Implement Google login logic here
+      toast.info("Google login not implemented yet");
+    } catch (error) {
+      toast.error(`${error}`);
+    }
   };
 
   return (
     <div
-      dir={locale === "ar" ? "rtl" : "lrt"}
+      dir={locale === "ar" ? "rtl" : "ltr"}
       className="w-full h-full bg-white"
     >
-      <div className=" w-full h-screen flex justify-center items-center  ">
-        {/* bannner web */}
+      <div className="w-full h-screen flex justify-center items-center">
+        {/* Banner web */}
         <div className="w-full h-full hidden lg:block bg-gray-400 overflow-hidden">
           <Image
             src={bannerWeb}
@@ -62,108 +110,143 @@ export default function LoginPage() {
           />
         </div>
         <div>
-          {/* banner mob */}
-        <div className="block overflow-hidden relative lg:hidden w-full  h-[360px]">
-          <Image
-            src={bannerMob}
-            alt="banner-mob"
-            className="object-cover w-full"
-          />
-          <div className={`absolute bottom-4 p-4`}>
-            <Image src={mtnLogo} alt="mtn logo" />
-            <h2 className="font-bold mt-6">{t("Nice to see you again")}</h2>
-          </div>
-        </div>
-        
-        {/* from body */}
-        <div className="lg:w-[456px] w-full p-4 lg:p-[48px]">
-          <div className={`hidden lg:block`}>
-            <Image src={mtnLogo} alt="mtn logo" />
-            <h2 className="font-bold my-6">{t("Nice to see you again")}</h2>
-          </div>
-
-          <div className="grid w-full mb-8 items-center gap-1.5">
-            <Label htmlFor="email">{t("email.label")}</Label>
-            <Input
-              type="email"
-              id="email"
-              placeholder={t("email.label")}
-              className="bg-[#f2f2f2] focus:bg-white transition-colors"
+          {/* Banner mob */}
+          <div className="block overflow-hidden relative lg:hidden w-full h-[360px]">
+            <Image
+              src={bannerMob}
+              alt="banner-mob"
+              className="object-cover w-full"
             />
+            <div className={`absolute bottom-4 p-4`}>
+              <Image src={mtnLogo} alt="mtn logo" />
+              <h2 className="font-bold mt-6">{t("Nice to see you again")}</h2>
+            </div>
           </div>
 
-          <div className="grid w-full mb-8 items-center gap-1.5">
-            <Label htmlFor="password">{t("password.label")}</Label>
-            <div className="relative">
+          {/* Form body */}
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="lg:w-[456px] w-full p-4 lg:p-[48px]"
+          >
+            <div className={`hidden lg:block`}>
+              <Image src={mtnLogo} alt="mtn logo" />
+              <h2 className="font-bold my-6">{t("Nice to see you again")}</h2>
+            </div>
+
+            {/* Email field */}
+            <div className="grid w-full mb-8 items-center gap-1.5">
+              <Label htmlFor="email">{t("email.label")}</Label>
               <Input
-                type={showPassword ? "text" : "password"}
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder={t("password.label")}
-                className="bg-[#f2f2f2] focus:bg-white transition-colors pr-10"
+                {...register("email")}
+                type="email"
+                id="email"
+                placeholder={t("email.label")}
+                className="bg-[#f2f2f2] focus:bg-white transition-colors"
               />
-              <button
-                type="button"
-                onClick={togglePasswordVisibility}
-                className={`absolute ${
-                  locale === "ar" ? "left-3" : "right-3"
-                } top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none`}
-              >
-                {showPassword ? (
-                  <EyeOff className=" h-4 w-4" />
-                ) : (
-                  <Eye className=" h-4 w-4" />
-                )}
-              </button>
+              {errors.email && (
+                <span className="text-red-500 text-sm">
+                  {errors.email.message}
+                </span>
+              )}
             </div>
-          </div>
-          <div className="flex w-full justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="remember-me"
-                className="data-[state=checked]:bg-primary"
-              />
-              <Label htmlFor="remember-me">{t("button.RememberMe")}</Label>
+
+            {/* Password field */}
+            <div className="grid w-full mb-8 items-center gap-1.5">
+              <Label htmlFor="password">{t("password.label")}</Label>
+              <div className="relative">
+                <Input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder={t("password.label")}
+                  className="bg-[#f2f2f2] focus:bg-white transition-colors pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={`absolute ${
+                    locale === "ar" ? "left-3" : "right-3"
+                  } top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none`}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              </div>
+              {errors.password && (
+                <span className="text-red-500 text-sm">
+                  {errors.password.message}
+                </span>
+              )}
             </div>
-            <div>
-              <button className="text-xs text-blue-600 underline ">
-                {t("password.forgotPassword")}
-              </button>
-            </div>
-          </div>
 
-          <div className="grid w-full mb-8 items-center gap-1.5">
-            <Button className="bg-[#007aff] py-2 my-[28px] text-white">
-              {t("button.submit")}
-            </Button>
-
-            <Button className="bg-[#333333] py-2 my-[28px] text-white">
-              <Image src={googleIcon} alt="google icon" />
-              {t("button.signWithGoogle")}
-            </Button>
-
-            <p className="text-center text-sm">
-              {t("button.dontHaveAccount")}{" "}
+            {/* Remember me and Forgot password */}
+            <div className="flex w-full justify-between items-center">
+              <div className="flex items-center space-x-2">
+                <Controller
+                  name="rememberMe"
+                  control={control}
+                  render={({ field: { onChange, value } }) => (
+                    <Switch
+                      id="remember-me"
+                      checked={value}
+                      onCheckedChange={onChange}
+                      className="data-[state=checked]:bg-primary"
+                    />
+                  )}
+                />
+                <Label htmlFor="remember-me">{t("button.RememberMe")}</Label>
+              </div>
               <Link
-                href={"/register"}
-                className="cursor-pointer text-blue-500 underline"
+                href={`/${locale}/forgot-password`}
+                className="text-xs text-blue-600 underline"
               >
-                {t("button.createAccount")}
+                {t("password.forgotPassword")}
               </Link>
-            </p>
-          </div>
+            </div>
 
-          {/* Language switcher */}
-          <div className="mt-4 text-center">
-            <Link
-              href={locale === "en" ? "/ar/login" : "/en/login"}
-              className="text-sm text-primary hover:text-primary/90"
-            >
-              {locale === "en" ? "العربية" : "English"}
-            </Link>
-          </div>
-        </div>
+            {/* Buttons */}
+            <div className="grid w-full mb-8 items-center gap-1.5">
+              <Button
+                type="submit"
+                disabled={loading}
+                className="bg-[#007aff] py-2 my-[28px] text-white"
+              >
+                {loading ? t("button.loading") : t("button.submit")}
+              </Button>
+
+              <Button
+                type="button"
+                onClick={handleGoogleLogin}
+                className="bg-[#333333] py-2 my-[28px] text-white"
+              >
+                <Image src={googleIcon} alt="google icon" className="mr-2" />
+                {t("button.signWithGoogle")}
+              </Button>
+
+              <p className="text-center text-sm">
+                {t("button.dontHaveAccount")}{" "}
+                <Link
+                  href={`/${locale}/register`}
+                  className="cursor-pointer text-blue-500 underline"
+                >
+                  {t("button.createAccount")}
+                </Link>
+              </p>
+            </div>
+
+            {/* Language switcher */}
+            <div className="mt-4 text-center">
+              <Link
+                href={locale === "en" ? "/ar/login" : "/en/login"}
+                className="text-sm text-primary hover:text-primary/90"
+              >
+                {locale === "en" ? "العربية" : "English"}
+              </Link>
+            </div>
+          </form>
         </div>
       </div>
     </div>
