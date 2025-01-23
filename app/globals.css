@@ -83,7 +83,7 @@
 
 /* Phone Input Custom Styles */
 .phone-input {
-  @apply w-full ;
+  @apply w-full;
 }
 
 .phone-input input {
@@ -106,10 +106,7 @@
   @apply pl-[6px] pr-[48px];
 } */
 
-
-
 /* nav bar responsive */
-
 
 /* app/globals.css */
 [dir="rtl"] .sheet-content {
@@ -128,5 +125,20 @@
   @apply text-right;
 }
 
+@layer components {
+  .carousel-dots {
+    @apply flex justify-center gap-2 mt-4;
+  }
 
+  .carousel-dot {
+    @apply w-2 h-2 rounded-full transition-all;
+  }
 
+  .carousel-dot-active {
+    @apply bg-blue-600 w-6;
+  }
+
+  .carousel-dot-inactive {
+    @apply bg-gray-300 hover:bg-gray-400;
+  }
+}

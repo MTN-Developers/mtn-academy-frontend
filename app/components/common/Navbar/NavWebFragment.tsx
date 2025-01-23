@@ -3,7 +3,7 @@
 import Image from "next/image";
 import React from "react";
 import mtnLogo from "@/public/images/mtn-logo.svg";
-import { Bell, ChevronDown, Globe, Search } from "lucide-react";
+import { Bell, ChevronDown, Globe, LogOut, Search } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   Menubar,
@@ -13,6 +13,14 @@ import {
   MenubarRadioItem,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useDispatch } from "react-redux";
+import { logout } from "@/app/lib/redux/features/authSlice";
 const NavWebFragment = ({
   locale,
   t,
@@ -21,6 +29,13 @@ const NavWebFragment = ({
   handleNavigation,
   user,
 }) => {
+  const dispatch = useDispatch();
+
+  // handlers
+  const handleLogout = () => {
+    // logout user
+    dispatch(logout());
+  };
   return (
     <>
       {/* Desktop Layout */}
@@ -95,9 +110,21 @@ const NavWebFragment = ({
             </MenubarMenu>
           </Menubar>
           {/* Avatar */}
-          <Avatar className="h-10">
-            <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
-          </Avatar>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="cursor-pointer">
+              <Avatar className="h-10">
+                <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuLabel
+                onClick={handleLogout}
+                className="flex items-center gap-2 cursor-pointer"
+              >
+                Logout <LogOut size={14} />
+              </DropdownMenuLabel>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </>

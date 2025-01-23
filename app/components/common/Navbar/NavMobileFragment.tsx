@@ -1,11 +1,13 @@
 "use client";
 
 import mtnLogo from "@/public/images/mtn-logo.svg";
-import { Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { useDispatch } from "react-redux";
+import { logout } from "@/app/lib/redux/features/authSlice";
 
 const NavMobileFragment = ({
   isOpen,
@@ -17,6 +19,13 @@ const NavMobileFragment = ({
   handleNavigation,
   user,
 }) => {
+  const dispatch = useDispatch();
+
+  // handlers
+  const handleLogout = () => {
+    // logout user
+    dispatch(logout());
+  };
   return (
     <>
       {/* Mobile Layout */}
@@ -100,6 +109,13 @@ const NavMobileFragment = ({
                   <AvatarFallback>{user?.name?.slice(0, 2)}</AvatarFallback>
                 </Avatar>
                 <span>{user?.name}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                {/* logout button logic */}
+                <Button variant="ghost" onClick={handleLogout}>
+                  logout <LogOut size={14} />
+                </Button>
               </div>
             </div>
           </SheetContent>
