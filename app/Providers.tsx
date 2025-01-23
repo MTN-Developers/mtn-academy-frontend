@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistor, store } from "./lib/redux/store";
 import { NextIntlClientProvider } from "next-intl";
 import type { AbstractIntlMessages } from "use-intl";
+import { Toaster } from "sonner";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,6 +32,7 @@ export function Providers({ children, locale, messages }: ProvidersProps) {
         <QueryClientProvider client={queryClient}>
           <NextIntlClientProvider locale={locale} messages={messages}>
             {children}
+            <Toaster />
           </NextIntlClientProvider>
         </QueryClientProvider>
       </PersistGate>

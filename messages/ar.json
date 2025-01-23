@@ -1,21 +1,50 @@
 {
-    "login": {
-      "title": "تسجيل الدخول",
-      "email": {
-        "label": "البريد الإلكتروني",
-        "placeholder": "أدخل بريدك الإلكتروني"
-      },
-      "password": {
-        "label": "كلمة المرور",
-        "placeholder": "أدخل كلمة المرور"
-      },
-      "button": {
-        "submit": "تسجيل الدخول",
-        "loading": "جاري التحميل..."
-      },
-      "errors": {
-        "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
-      }
+  "login": {
+    "Nice to see you again": "سعداء بعودتك مجدداً",
+    "email": {
+      "label": "البريد الإلكتروني",
+      "placeholder": "أدخل بريدك الإلكتروني"
+    },
+    "password": {
+      "label": "كلمة المرور",
+      "placeholder": "أدخل كلمة المرور",
+      "forgotPassword": "نسيت كلمة المرور ؟"
+    },
+    "button": {
+      "submit": "تسجيل الدخول",
+      "loading": "جاري التحميل...",
+      "RememberMe": "تذكرني",
+      "signWithGoogle": "تسجيل الدخول باستخدام جوجل",
+      "dontHaveAccount": "ليس لديك حساب",
+      "createAccount": "انشاء حساب جديد"
+    },
+    "errors": {
+      "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
     }
+  },
+  "register": {
+    "Welcome onboard": "مرحباً بك",
+    "Name": "الاسم",
+    "Enter your name": "أدخل اسمك",
+    "Email": "البريد الإلكتروني",
+    "Phone number": "رقم الهاتف",
+    "Email or phone number": "البريد الإلكتروني أو رقم الهاتف",
+    "Password": "كلمة المرور",
+    "Enter password": "أدخل كلمة المرور",
+    "By signing up you agree to mtn": "بالتسجيل أنت توافق على",
+    "terms & Conditions": "الشروط والأحكام",
+    "privacy policy": "سياسة الخصوصية",
+    "Sign in": "تسجيل",
+    "Or sign in with Google": "أو سجل باستخدام جوجل",
+    "Already have an account?": "لديك حساب بالفعل؟",
+    "Login now": "سجل دخول الآن",
+    "registration": {
+      "success": "تم التسجيل بنجاح!",
+      "error": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+    },
+    "Gender": "الجنس",
+    "Male": "ذكر",
+    "Female": "أنثى",
+    "Country": "البلد"
   }
-  
+}
