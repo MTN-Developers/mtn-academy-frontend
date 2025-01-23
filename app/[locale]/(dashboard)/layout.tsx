@@ -1,6 +1,6 @@
 // src/app/[locale]/(dashboard)/layout.tsx
 
-import Navbar from "@/app/components/common/Navbar";
+import Navbar from "@/app/components/common/Navbar/Navbar";
 import { ProtectedRoute } from "@/app/components/common/ProtectedRoute";
 
 export default function DashboardLayout({

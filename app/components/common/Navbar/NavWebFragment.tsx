@@ -1,0 +1,1 @@
+NavMobileFragmentProps

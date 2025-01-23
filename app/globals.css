@@ -105,3 +105,28 @@
 [dir="rtl"] .phone-input input {
   @apply pl-[6px] pr-[48px];
 } */
+
+
+
+/* nav bar responsive */
+
+
+/* app/globals.css */
+[dir="rtl"] .sheet-content {
+  @apply right-0 left-auto;
+}
+
+[dir="rtl"] .sheet-content-close {
+  @apply left-4 right-auto;
+}
+
+[dir="rtl"] .sheet-content-header {
+  @apply text-right;
+}
+
+[dir="rtl"] .menubar-content {
+  @apply text-right;
+}
+
+
+
