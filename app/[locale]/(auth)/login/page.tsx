@@ -193,7 +193,7 @@ export default function LoginPage() {
                       id="remember-me"
                       checked={value}
                       onCheckedChange={onChange}
-                      className="data-[state=checked]:bg-primary"
+                      className="data-[state=checked]:bg-primary mx-2"
                     />
                   )}
                 />
