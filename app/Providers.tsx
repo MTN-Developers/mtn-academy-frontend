@@ -17,12 +17,13 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 type Messages = Record<string, AbstractIntlMessages>;
 
 type ProvidersProps = {
   children: React.ReactNode;
   locale: string;
-  messages: Messages; // You can make this more specific based on your messages type
+  messages: Messages;
 };
 
 export function Providers({ children, locale, messages }: ProvidersProps) {
