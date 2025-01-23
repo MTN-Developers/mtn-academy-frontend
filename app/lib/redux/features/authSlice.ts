@@ -8,6 +8,8 @@ import {
 } from "@/app/types/auth";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "../../axios/instance";
+import Cookies from "js-cookie";
+import { endpoints } from "@/app/utils/endpoints";
 
 const initialState: AuthState = {
   user: null,
@@ -19,10 +21,10 @@ const initialState: AuthState = {
 };
 
 export const login = createAsyncThunk<AuthResponse, LoginCredentials>(
-  "auth/login",
+  endpoints.login,
   async (credentials) => {
     const response = await axiosInstance.post<AuthResponse>(
-      "/auth/login",
+      endpoints.login,
       credentials
     );
     return response.data;
@@ -50,8 +52,12 @@ const authSlice = createSlice({
       state.refreshToken = null;
       state.isAuthenticated = false;
       state.permissions = [];
+
+      // Clear both localStorage and cookies
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      Cookies.remove("accessToken");
+      Cookies.remove("refreshToken");
     },
     setCredentials: (state, action: PayloadAction<SetCredentialsPayload>) => {
       state.accessToken = action.payload.accessToken;
@@ -59,6 +65,18 @@ const authSlice = createSlice({
       state.user = action.payload.user;
       state.isAuthenticated = true;
       state.permissions = action.payload.user?.permissions || [];
+
+      // Set both localStorage and cookies
+      localStorage.setItem("accessToken", action.payload.accessToken);
+      localStorage.setItem("refreshToken", action.payload.refreshToken);
+      Cookies.set("accessToken", action.payload.accessToken, {
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("refreshToken", action.payload.refreshToken, {
+        secure: true,
+        sameSite: "strict",
+      });
     },
   },
   extraReducers: (builder) => {
@@ -73,8 +91,18 @@ const authSlice = createSlice({
         state.isAuthenticated = true;
         state.loading = false;
         state.permissions = action.payload.user?.permissions || [];
+
+        // Set both localStorage and cookies
         localStorage.setItem("accessToken", action.payload.accessToken);
         localStorage.setItem("refreshToken", action.payload.refreshToken);
+        Cookies.set("accessToken", action.payload.accessToken, {
+          secure: true,
+          sameSite: "strict",
+        });
+        Cookies.set("refreshToken", action.payload.refreshToken, {
+          secure: true,
+          sameSite: "strict",
+        });
       })
       .addCase(login.rejected, (state) => {
         state.loading = false;
@@ -82,6 +110,10 @@ const authSlice = createSlice({
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.accessToken;
         localStorage.setItem("accessToken", action.payload.accessToken);
+        Cookies.set("accessToken", action.payload.accessToken, {
+          secure: true,
+          sameSite: "strict",
+        });
       });
   },
 });
