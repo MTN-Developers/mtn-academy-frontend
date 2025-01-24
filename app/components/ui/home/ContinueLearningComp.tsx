@@ -31,7 +31,7 @@ export const studies: Study[] = [
     title: "Pre Study",
     mainCourses: [
       {
-        title: "Emotion Literacymfendmdns,mfnkldsjnflkdlfjdkfjlflekfjldkfjlfkjdlkjf",
+        title: "Emotion Literacy",
         image: imagePlaceholder,
         Courses: [
           {
@@ -109,7 +109,7 @@ const ContinueLearningComp = () => {
   });
 
   return (
-    <div className="w-full lg:my-[60px] my-[20px] flex flex-col gap-4">
+    <div className="w-full max-w-[1005px]  lg:my-[60px] my-[20px] flex items-start justify-start   flex-col gap-4">
       <h1 className="text-2xl font-bold text-start">Continue learning</h1>
       {sortedStudies.map((study) => (
         <LearningStudyProgressCard key={study.id} study={study} />

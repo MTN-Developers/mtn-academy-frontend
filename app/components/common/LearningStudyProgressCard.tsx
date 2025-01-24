@@ -20,7 +20,7 @@ const LearningStudyProgressCard = ({ study }: { study: Study }) => {
     }) || study.mainCourses[0];
 
   return (
-    <div className="bg-white w-fit lg:w-[1005px] flex gap-4 items-stretch overflow-hidden shadow-sm rounded-3xl lg:py-[14px] lg:px-[24px]">
+    <div className="bg-white w-fit lg:min-w-[1005px] flex gap-4 items-stretch overflow-hidden shadow-sm rounded-3xl lg:py-[14px] lg:px-[24px]">
       <Image
         src={study.image}
         alt="study image"
@@ -60,7 +60,7 @@ const LearningStudyProgressCard = ({ study }: { study: Study }) => {
           {/* watching place */}
           <div className="  !w-[1px] !h-4 bg-[#303141]"></div>
           <div className="flex items-center justify-center">
-            <p>Video</p>
+          <p>Video</p>
             <Dot width={30} height={30} />
             <p>4 min</p>
           </div>

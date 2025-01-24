@@ -2,7 +2,7 @@
 "use client";
 export const TruncatedText = ({
   text,
-  maxLength = 20,
+  maxLength = 25,
   className,
 }: {
   text: string;

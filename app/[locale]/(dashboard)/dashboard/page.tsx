@@ -4,7 +4,7 @@ import React from "react";
 
 const page = () => {
   return (
-    <div className="w-full bg-[#f2f2f2] p-4 flex flex-col items-center justify-center">
+    <div className="w-full bg-[#f2f2f2] p-4 ">
       <MainCarousel />
       <ContinueLearningComp />
     </div>
