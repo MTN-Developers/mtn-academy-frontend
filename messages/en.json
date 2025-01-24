@@ -46,5 +46,23 @@
     "Male": "Male",
     "Female": "Female",
     "Country": "Country"
+  },
+  "navbar": {
+    "search": {
+      "placeholder": "Search for anything"
+    },
+    "menu": {
+      "home": "Home",
+      "freeStudy": "Free study",
+      "academy": "Academy",
+      "language": "English",
+      "notifications": {
+        "title": "Notifications",
+        "empty": "No notifications",
+        "one": "notification one",
+        "two": "notification two",
+        "three": "notification three"
+      }
+    }
   }
 }

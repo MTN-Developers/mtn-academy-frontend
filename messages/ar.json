@@ -46,5 +46,23 @@
     "Male": "ذكر",
     "Female": "أنثى",
     "Country": "البلد"
+  },
+  "navbar": {
+    "search": {
+      "placeholder": "ابحث عن أي شيء"
+    },
+    "menu": {
+      "home": "الرئيسية",
+      "freeStudy": "دراسة مجانية",
+      "academy": "الأكاديمية",
+      "language": "العربية",
+      "notifications": {
+        "title": "الإشعارات",
+        "empty": "لا توجد إشعارات",
+        "one": "إشعار واحد",
+        "two": "إشعار اثنان",
+        "three": "إشعار ثلاثة"
+      }
+    }
   }
 }
