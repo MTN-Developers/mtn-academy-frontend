@@ -20,7 +20,8 @@
     },
     "errors": {
       "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
-    }
+    },
+    "success": "تم تسجيل الدخول بنجاح"
   },
   "register": {
     "Welcome onboard": "مرحباً بك",
@@ -64,5 +65,8 @@
         "three": "إشعار ثلاثة"
       }
     }
+  },
+  "home": {
+    "Continue learning": "إستمر بالتعلم"
   }
 }
