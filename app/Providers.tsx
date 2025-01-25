@@ -1,41 +1,35 @@
-// src/app/providers.tsx
+// app/Providers.tsx
 "use client";
 
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { persistor, store } from "./lib/redux/store";
-import { NextIntlClientProvider } from "next-intl";
-import type { AbstractIntlMessages } from "use-intl";
+// import { NextIntlClientProvider } from "next-intl";
 import { Toaster } from "sonner";
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 60 * 1000,
-      refetchOnWindowFocus: false,
-    },
-  },
-});
-
-type Messages = Record<string, AbstractIntlMessages>;
+import { Suspense } from "react";
+import LoadingSpinner from "./components/common/LoadingSpinner";
 
 type ProvidersProps = {
   children: React.ReactNode;
   locale: string;
-  messages: Messages;
+  messages?: Record<string, any>;
 };
 
-export function Providers({ children, locale, messages }: ProvidersProps) {
+export function Providers({ children }: ProvidersProps) {
+  // // Provide default values
+  // const safeLocale = locale || "en";
+  // const safeMessages = messages || {};
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <NextIntlClientProvider locale={locale} messages={messages}>
-            {children}
-            <Toaster />
-          </NextIntlClientProvider>
-        </QueryClientProvider>
+        {/* <NextIntlClientProvider locale={safeLocale} messages={safeMessages}> */}
+        <Suspense fallback={<LoadingSpinner />}> 
+          {children}
+        </Suspense>
+
+        <Toaster />
+        {/* </NextIntlClientProvider> */}
       </PersistGate>
     </Provider>
   );

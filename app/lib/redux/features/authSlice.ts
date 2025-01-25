@@ -1,15 +1,14 @@
 // src/lib/redux/features/authSlice.ts
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axiosInstance from "../../axios/instance";
-import { endpoints } from "@/app/utils/endpoints";
-import Cookies from "js-cookie";
+import { createSlice } from "@reduxjs/toolkit";
 import { User } from "@/app/types/auth";
+import { login, refreshAccessToken } from "./authActions";
+import { deleteCookie, setCookie } from "cookies-next";
 
 interface AuthState {
   user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
-  isAuthenticated: boolean;
+  // isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -18,98 +17,57 @@ const initialState: AuthState = {
   user: null,
   accessToken: null,
   refreshToken: null,
-  isAuthenticated: false,
+  // isAuthenticated: false,
   loading: false,
   error: null,
 };
-
-export const login = createAsyncThunk(
-  "auth/login",
-  async (
-    credentials: { email: string; password: string },
-    { rejectWithValue }
-  ) => {
-    try {
-      const response = await axiosInstance.post(endpoints.login, credentials);
-      const { access_token, refresh_token, user } = response.data.data;
-
-      // Store tokens in cookies
-      Cookies.set("accessToken", access_token, {
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("refreshToken", refresh_token, {
-        secure: true,
-        sameSite: "strict",
-      });
-
-      return { user, access_token, refresh_token };
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "An error occurred during login"
-      );
-    }
-  }
-);
-
-export const refreshAccessToken = createAsyncThunk(
-  "auth/refreshToken",
-  async (_, { rejectWithValue }) => {
-    try {
-      const refreshToken = Cookies.get("refreshToken");
-
-      if (!refreshToken) {
-        throw new Error("No refresh token available");
-      }
-
-      const response = await axiosInstance.post(endpoints.refresh, {
-        refresh_token: refreshToken,
-      });
-
-      const { access_token } = response.data.data;
-
-      // Update access token in cookies
-      Cookies.set("accessToken", access_token, {
-        secure: true,
-        sameSite: "strict",
-      });
-
-      return { access_token };
-    } catch (error: any) {
-      // Clear all auth data on refresh failure
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to refresh token"
-      );
-    }
-  }
-);
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     initializeAuthState(state) {
-      const accessToken = Cookies.get("accessToken");
-      const refreshToken = Cookies.get("refreshToken");
+      const accessToken = localStorage.getItem("accessToken");
+      const tokenExpiry = localStorage.getItem("tokenExpiry");
 
-      if (accessToken && refreshToken) {
-        state.accessToken = accessToken;
-        state.refreshToken = refreshToken;
-        state.isAuthenticated = true;
+      if (accessToken && tokenExpiry) {
+        const expiryTime = parseInt(tokenExpiry);
+        if (expiryTime > Date.now()) {
+          state.accessToken = accessToken;
+          // state.isAuthenticated = true;
+        } else {
+          // Token has expired
+          // state.isAuthenticated = false;
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          localStorage.removeItem("tokenExpiry");
+        }
       }
     },
     logout(state) {
       state.user = null;
       state.accessToken = null;
       state.refreshToken = null;
-      state.isAuthenticated = false;
+      // state.isAuthenticated = false;
+      state.loading = false;
       state.error = null;
 
-      // Clear cookies
-      Cookies.remove("accessToken");
-      Cookies.remove("refreshToken");
+      // Clear tokens and expiration
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("tokenExpiry");
+
+      // Delete cookies
+      deleteCookie("accessToken");
+      deleteCookie("refreshToken");
+      deleteCookie("user");
+      console.log("Delete Cookie from authSlice - 2");
+    },
+    setCredentials(state, action) {
+      state.accessToken = action.payload.accessToken;
+      state.refreshToken = action.payload.refreshToken;
+      // state.user = action.payload.user;
+      // state.isAuthenticated = !!action.payload.accessToken;
     },
   },
   extraReducers: (builder) => {
@@ -123,8 +81,22 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.access_token;
         state.refreshToken = action.payload.refresh_token;
-        state.isAuthenticated = true;
+        // state.isAuthenticated = true;
         state.error = null;
+
+        // Store tokens in localStorage
+        localStorage.setItem("accessToken", action.payload.access_token);
+        localStorage.setItem("refreshToken", action.payload.refresh_token);
+
+        // Store tokens in cookies
+        setCookie("accessToken", action.payload.access_token, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7, // 1 week
+        });
+        setCookie("refreshToken", action.payload.refresh_token, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7, // 1 week
+        });
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
@@ -132,13 +104,13 @@ const authSlice = createSlice({
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.access_token;
-        state.isAuthenticated = true;
+        // state.isAuthenticated = true;
       })
       .addCase(refreshAccessToken.rejected, (state) => {
         state.user = null;
         state.accessToken = null;
         state.refreshToken = null;
-        state.isAuthenticated = false;
+        // state.isAuthenticated = false;
       });
   },
 });

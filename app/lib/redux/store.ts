@@ -1,45 +1,18 @@
 // src/lib/redux/store.ts
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./features/authSlice";
-// import courseReducer from "./features/courseSlice";
-// import semesterReducer from "./features/semesterSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import createWebStorage from "redux-persist/lib/storage/createWebStorage";
-import {
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from "redux-persist";
+import coursesReducer from "./features/courseSlice";
+import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-interface StorageAPI {
-  getItem(key: string): Promise<string | null>;
-  setItem(key: string, value: string): Promise<void>;
-  removeItem(key: string): Promise<void>;
-}
+// Combine all reducers
+const rootReducer = combineReducers({
+  auth: authReducer,
+  courses: coursesReducer,
 
-// Create custom storage for SSR
-const createNoopStorage = (): StorageAPI => {
-  return {
-    getItem: () => Promise.resolve(null),
-    setItem: (_key: string, value: string) => {
-      console.log("Persisted state: ", value);
-
-      return Promise.resolve();
-    },
-    removeItem: () => Promise.resolve(),
-  };
-};
-
-// Use proper storage depending on environment
-const storage =
-  typeof window !== "undefined"
-    ? createWebStorage("local")
-    : createNoopStorage();
-
+  // semesters: semesterReducer,
+});
 // Define persist config
 const persistConfig = {
   key: "root",
@@ -47,38 +20,16 @@ const persistConfig = {
   whitelist: ["auth"], // only auth will be persisted
 };
 
-// Combine all reducers
-const rootReducer = combineReducers({
-  auth: authReducer,
-  // courses: courseReducer,
-  // semesters: semesterReducer,
-});
-
-// Create persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Configure store
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [
-          FLUSH,
-          REHYDRATE,
-          PAUSE,
-          PERSIST,
-          PURGE,
-          REGISTER,
-          "persist/PERSIST",
-          "persist/REHYDRATE",
-        ],
-      },
+      serializableCheck: false,
     }),
-  devTools: process.env.NODE_ENV !== "production",
 });
 
-// Create persistor
 export const persistor = persistStore(store);
 
 // Export types

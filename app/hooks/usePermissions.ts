@@ -1,18 +1,18 @@
-// app/hooks/usePermissions.ts
-import { useSelector } from "react-redux";
-import { RootState } from "../lib/redux/store";
+// // app/hooks/usePermissions.ts
+// import { useSelector } from "react-redux";
+// import { RootState } from "../lib/redux/store";
 
-export const usePermissions = () => {
-  const permissions = useSelector(
-    (state: RootState) => state.auth.user?.permissions || []
-  );
+// export const usePermissions = () => {
+//   const permissions = useSelector(
+//     (state: RootState) => state.auth.user?.permissions || []
+//   );
 
-  const hasPermission = (permission: string) => {
-    return permissions.includes(permission);
-  };
+//   const hasPermission = (permission: string) => {
+//     return permissions.includes(permission);
+//   };
 
-  return {
-    permissions,
-    hasPermission,
-  };
-};
+//   return {
+//     permissions,
+//     hasPermission,
+//   };
+// };

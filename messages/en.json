@@ -20,7 +20,8 @@
     },
     "errors": {
       "invalidCredentials": "Invalid email or password"
-    }
+    },
+    "success": "login successful"
   },
   "register": {
     "Welcome onboard": "Welcome onboard",
@@ -64,5 +65,8 @@
         "three": "notification three"
       }
     }
+  },
+  "home": {
+    "Continue learning": "Continue learning"
   }
 }

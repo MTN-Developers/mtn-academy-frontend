@@ -20,6 +20,9 @@ import { Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import axiosInstance from "@/app/lib/axios/instance";
+import { endpoints } from "@/app/utils/endpoints";
+import { AxiosError } from "axios";
 
 // Form schema
 interface RegisterFormData {
@@ -29,7 +32,10 @@ interface RegisterFormData {
   password: string;
   country: string;
   gender: "male" | "female";
-  agreeToTerms: boolean;
+}
+interface ApiErrorResponse {
+  message?: string;
+  errors?: Record<string, string[]>;
 }
 
 const schema = yup.object({
@@ -48,11 +54,6 @@ const schema = yup.object({
     .string()
     .oneOf(["male", "female"], "Please select a gender")
     .required("Gender is required"),
-  agreeToTerms: yup
-    .boolean()
-    .oneOf([true], "You must accept the terms and conditions")
-    .required()
-    .default(true),
 });
 
 export default function RegisterPage() {
@@ -62,11 +63,13 @@ export default function RegisterPage() {
   const t = useTranslations("register");
   const params = useParams();
   const locale = params.locale as string;
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
     formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: yupResolver(schema),
@@ -76,10 +79,23 @@ export default function RegisterPage() {
       phone: "",
       password: "",
       country: "",
-      gender: "female",
-      agreeToTerms: true,
+      gender: "male",
     },
   });
+
+  // Add a function to reset all form states
+  const resetFormStates = () => {
+    reset({
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      country: "",
+      gender: "male",
+    });
+    setPhoneData({ phone: "", country: "" });
+    setShowPassword(false);
+  };
 
   const handlePhoneChange = (value: string, country: any) => {
     setPhoneData({
@@ -91,7 +107,9 @@ export default function RegisterPage() {
   };
 
   const onSubmit = async (data: RegisterFormData) => {
+    setIsLoading(true);
     try {
+      // const {name,country,email,gender,password} = data
       const formattedData = {
         ...data,
         phone: phoneData.phone,
@@ -101,11 +119,74 @@ export default function RegisterPage() {
       console.log("onSubmit", formattedData);
 
       // Implement your registration logic here
-      toast.success(t("registration.success"));
-      router.push(`/${locale}/login`);
+      const response = await axiosInstance.post(
+        endpoints.register,
+        formattedData
+      );
+      if (response.data.message === "Success" || response.data.status === 201) {
+        // Show success message
+        toast.success(t("registration.success"));
+
+        // Optional: Store auth token if provided
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+        }
+
+        resetFormStates();
+
+        // Use window.location for navigation
+        try {
+          // Method 1: Next.js router
+          await router.push(`/${locale}/login`);
+        } catch (routingError) {
+          console.error(
+            "Next.js routing failed, trying alternative:",
+            routingError
+          );
+          // Method 2: Window location
+          window.location.href = `/${locale}/login`;
+        }
+      } else {
+        throw new Error(response.data.message || t("registration.error"));
+      }
     } catch (error) {
+      if (error instanceof AxiosError) {
+        // Handle Axios errors
+        if (error.response) {
+          const errorData = error.response.data as ApiErrorResponse;
+          const errorMessage = errorData.message || t("registration.error");
+
+          switch (error.response.status) {
+            case 422: // Validation error
+              if (errorData.errors) {
+                Object.keys(errorData.errors).forEach((key) => {
+                  const errors = errorData.errors![key];
+                  if (errors && errors.length > 0) {
+                    toast.error(errors[0]);
+                  }
+                });
+              }
+              break;
+            case 409: // Conflict - email/phone already exists
+              toast.error(t("registration.userExists"));
+              break;
+            default:
+              toast.error(errorMessage);
+          }
+        } else if (error.request) {
+          // Network error
+          toast.error(t("errors.network"));
+        }
+      } else if (error instanceof Error) {
+        // Handle standard Error objects
+        toast.error(error.message || t("errors.unknown"));
+      } else {
+        // Handle unknown error types
+        toast.error(t("errors.unknown"));
+      }
       console.error("Registration failed:", error);
-      toast.error(t("registration.error"));
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -224,6 +305,7 @@ export default function RegisterPage() {
                   inputClass="bg-[#f2f2f2] focus:bg-white transition-colors w-full"
                   containerClass="phone-input"
                   buttonClass="bg-[#f2f2f2]"
+                  key={phoneData.phone} // Add this to force re-render
                 />
               </div>
               {errors.phone && (
@@ -286,19 +368,22 @@ export default function RegisterPage() {
                   </Link>
                 </Label>
               </div>
-              {errors.agreeToTerms && (
-                <span className="text-red-500 text-sm">
-                  {errors.agreeToTerms.message}
-                </span>
-              )}
             </div>
 
             {/* Submit button */}
             <Button
               type="submit"
               className="w-full bg-[#007aff] text-white py-2 mb-10"
+              disabled={isLoading}
             >
-              {t("Sign in")}
+              {isLoading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ...
+                </div>
+              ) : (
+                t("Sign in")
+              )}
             </Button>
 
             {/* Google sign in */}

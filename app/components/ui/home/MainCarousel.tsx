@@ -49,6 +49,23 @@ export function MainCarousel() {
     [api]
   );
 
+  const slideInterval = 4000;
+
+  //Auto sliding animation
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      api.scrollNext();
+    }, slideInterval);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [api]);
+
   return (
     <div className="relative w-full">
       <Carousel

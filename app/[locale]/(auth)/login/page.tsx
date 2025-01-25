@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/app/hooks/useAuth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -20,6 +19,9 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner"; // Add toast notifications
+import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 // Form schema
 interface LoginFormData {
@@ -27,6 +29,12 @@ interface LoginFormData {
   password: string;
   rememberMe: boolean;
 }
+
+// interface LoginPageProps {
+//   params: {
+//     locale: string;
+//   };
+// }
 
 const schema = yup.object({
   email: yup
@@ -42,13 +50,15 @@ const schema = yup.object({
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const { login, loading } = useAuth();
+  const { loginFn, loading } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
+  const path = usePathname();
+  const pathArr = path.split("/");
+  const locale = pathArr[1];
+
+  console.log("path is", path);
+  console.log("local is", locale);
   const t = useTranslations("login");
-  const params = useParams();
-  const locale = params.locale as string;
-  const callbackUrl = searchParams.get("redirect");
 
   const {
     register,
@@ -68,17 +78,27 @@ export default function LoginPage() {
     try {
       console.log("onSubmit", data);
 
-      const success = await login({
+      const result = await loginFn({
         email: data.email,
         password: data.password,
         rememberMe: data.rememberMe,
       });
 
-      if (success) {
-        const redirectTo = callbackUrl
-          ? `/${locale}${callbackUrl}`
-          : `/${locale}/dashboard`;
-        router.push(redirectTo);
+      if (result) {
+        console.log("Login successful, redirecting to dashboard...");
+
+        // Set cookies
+        setCookie("accessToken", result.access_token, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7, // 1 week
+        });
+        setCookie("refreshToken", result.refresh_token, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 7, // 1 week
+        });
+
+        // Redirect to dashboard
+        router.push(`/dashboard`);
         toast.success("login.success");
       }
     } catch (error) {
@@ -97,7 +117,7 @@ export default function LoginPage() {
 
   return (
     <div
-      dir={locale === "ar" ? "rtl" : "ltr"}
+      dir={`${locale === "en" ? "ltr" : "rtl"}`}
       className="w-full h-full bg-white"
     >
       <div className="w-full h-screen flex justify-center items-center">
