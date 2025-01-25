@@ -1,22 +1,24 @@
-// src/hooks/useCourses.ts
-import { useQuery, useMutation } from "@tanstack/react-query";
-import axiosInstance from "../lib/axios/instance";
+// src/app/hooks/useCourses.ts
+import { useAppSelector } from "@/app/lib/redux/store";
 
 export const useCourses = () => {
-  const getCourses = useQuery({
-    queryKey: ["courses"],
-    queryFn: async () => {
-      const { data } = await axiosInstance.get("/courses");
-      return data;
-    },
-  });
+  const {
+    items: courses,
+    status,
+    error,
+    metadata,
+  } = useAppSelector((state) => state.courses);
 
-  const createCourse = useMutation({
-    mutationFn: async (courseData) => {
-      const { data } = await axiosInstance.post("/courses", courseData);
-      return data;
-    },
-  });
+  const isLoading = status === "loading";
+  const isError = status === "failed";
+  const isSuccess = status === "succeeded";
 
-  return { getCourses, createCourse };
+  return {
+    courses,
+    isLoading,
+    isError,
+    isSuccess,
+    error,
+    metadata,
+  };
 };

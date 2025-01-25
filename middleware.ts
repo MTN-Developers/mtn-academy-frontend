@@ -1,6 +1,7 @@
 // middleware.ts
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
+import { routing } from "./i18n/routing";
 
 // Localization Middleware
 const intlMiddleware = createMiddleware({
@@ -47,6 +48,9 @@ export function middleware(req: NextRequest) {
     // Clear any existing auth cookies
     response.cookies.delete("accessToken");
     response.cookies.delete("refreshToken");
+    response.cookies.delete("access_token");
+    response.cookies.delete("refresh_token");
+    response.cookies.delete("user");
     return response;
   }
 
@@ -66,11 +70,13 @@ export function middleware(req: NextRequest) {
   return NextResponse.next();
 }
 
+export default createMiddleware(routing);
+
 // Update config to match your routes
 export const config = {
   matcher: [
     "/",
     "/(ar|en)/:path*",
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|_next/static|_next/image|images|favicon.ico|sitemap.xml|robots.txt).*)",
   ],
 };

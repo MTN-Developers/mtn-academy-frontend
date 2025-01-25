@@ -8,6 +8,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useDispatch } from "react-redux";
 import { logout } from "@/app/lib/redux/features/authSlice";
+import { useRouter } from "next/navigation";
 
 const NavMobileFragment = ({
   isOpen,
@@ -20,11 +21,13 @@ const NavMobileFragment = ({
   user,
 }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // handlers
   const handleLogout = () => {
     // logout user
     dispatch(logout());
+    router.push("/login");
   };
   return (
     <>

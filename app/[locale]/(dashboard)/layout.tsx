@@ -1,7 +1,7 @@
 // src/app/[locale]/(dashboard)/layout.tsx
 
 import Navbar from "@/app/components/common/Navbar/Navbar";
-import { ProtectedRoute } from "@/app/components/common/ProtectedRoute";
+// import { ProtectedRoute } from "@/app/components/common/ProtectedRoute";
 
 export default function DashboardLayout({
   children,
@@ -9,9 +9,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ProtectedRoute>
+    <>
+      {/* // <ProtectedRoute> */}
       <Navbar />
       {children}
-    </ProtectedRoute>
+      {/* // </ProtectedRoute> */}
+    </>
   );
 }

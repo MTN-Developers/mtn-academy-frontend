@@ -1,45 +1,58 @@
 import React from "react";
-import { Study } from "../ui/home/ContinueLearningComp";
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
+import imagePlaceholder from "@/public/images/image-placeholder.svg";
+
 import { Dot, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TruncatedText } from "./TruncatedText";
+import { Course } from "@/app/types/course";
+// import { useTranslations } from "next-intl";
+import { useParams } from "next/navigation";
 
-const LearningStudyProgressCard = ({ study }: { study: Study }) => {
+const LearningStudyProgressCard = ({ course }: { course: Course }) => {
+  // const t = useTranslations("home");
+  const params = useParams();
+  const locale = params.locale as string;
   // Get the appropriate course to show
-  const courseToShow =
-    study.mainCourses.find((course) => {
-      if (study.progress === 100) {
-        // For completed studies, show the last course
-        return course.percentage === 100;
-      } else {
-        // For in-progress or not started studies, show the first incomplete course
-        return course.percentage < 100;
-      }
-    }) || study.mainCourses[0];
+  // const courseToShow =
+  //   study.mainCourses.find((course) => {
+  //     if (study.progress === 100) {
+  //       // For completed studies, show the last course
+  //       return course.percentage === 100;
+  //     } else {
+  //       // For in-progress or not started studies, show the first incomplete course
+  //       return course.percentage < 100;
+  //     }
+  //   }) || study.mainCourses[0];
 
   return (
     <div className="bg-white w-full max-w-[1005px] flex flex-col lg:flex-row gap-4 items-stretch overflow-hidden shadow-sm rounded-3xl p-4 lg:py-[14px] lg:px-[24px]">
       <Image
-        src={study.image}
+        src={locale === "en" ? course.banner_en : imagePlaceholder}
         alt="study image"
         width={200}
         height={140}
         className="rounded-2xl shadow-2xl w-full lg:w-[200px] h-[140px] object-cover"
       />
       <div className="lg:w-[420px] flex flex-col justify-end lg:me-[32px]">
-        <p className="text-sm block font-bold">{study.title}</p>
+        <p className="text-sm block font-bold">
+          {locale === "en"
+            ? course.semester.name_en
+            : course.semester.name_ar || "placeholder"}
+        </p>
         <p className="text-[#07519C] lg:text-[32px] font-medium leading-[45px]">
-          <TruncatedText text={courseToShow.title} />
+          <TruncatedText
+            text={
+              locale === "en" ? course.name_en : course.name_ar || "placeholder"
+            }
+          />
         </p>
         <div className="lg:my-4 w-full">
           <Progress
-            value={courseToShow.percentage}
+            value={20}
             className={`w-[100%] bg-gray-200 ${
-              courseToShow.percentage === 100
-                ? "[&>div]:bg-[#2563eb]" // Blue for completed
-                : "[&>div]:bg-[#009b4e]" // Green for in progress
+              "[&>div]:bg-[#009b4e]" // Green for in progress
             }`}
           />
         </div>
@@ -55,7 +68,13 @@ const LearningStudyProgressCard = ({ study }: { study: Study }) => {
         </div>
         <div className="flex items-center justify-start lg:justify-center gap-2    ">
           <p className="line-clamp-2 text-sm font-semibold text-nowrap text-[#303141]">
-            <TruncatedText text={courseToShow.title} />
+            <TruncatedText
+              text={
+                locale === "en"
+                  ? course.semester.name_en
+                  : course.semester.name_ar || "placeholder"
+              }
+            />
           </p>
           {/* watching place */}
           <div className="  !w-[1px] !h-4 bg-[#303141]"></div>

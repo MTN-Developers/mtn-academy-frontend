@@ -1,6 +1,9 @@
 import React from "react";
 import LearningStudyProgressCard from "../../common/LearningStudyProgressCard";
 import imagePlaceholder from "@/public/images/image-placeholder.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "@/app/lib/redux/store";
+import { useTranslations } from "next-intl";
 
 export type Study = {
   id: number;
@@ -92,27 +95,37 @@ export const studies: Study[] = [
 ];
 
 const ContinueLearningComp = () => {
-  // Sort studies: In Progress first, then Not Started, then Completed
-  const sortedStudies = [...studies].sort((a, b) => {
-    // If one is in progress (> 0 and < 100) and the other isn't
-    const aInProgress = a.progress > 0 && a.progress < 100;
-    const bInProgress = b.progress > 0 && b.progress < 100;
+  const t = useTranslations("home");
+  //get all courses
+  const { items: allCourses } = useSelector(
+    (state: RootState) => state.courses
+  );
 
-    if (aInProgress && !bInProgress) return -1;
-    if (!aInProgress && bInProgress) return 1;
+  console.log("All courses is ", allCourses);
 
-    // If neither is in progress, put not started (0%) before completed (100%)
-    if (a.progress === 0 && b.progress === 100) return -1;
-    if (a.progress === 100 && b.progress === 0) return 1;
+  // // Sort studies: In Progress first, then Not Started, then Completed
+  // const sortedStudies = [...studies].sort((a, b) => {
+  //   // If one is in progress (> 0 and < 100) and the other isn't
+  //   const aInProgress = a.progress > 0 && a.progress < 100;
+  //   const bInProgress = b.progress > 0 && b.progress < 100;
 
-    return 0;
-  });
+  //   if (aInProgress && !bInProgress) return -1;
+  //   if (!aInProgress && bInProgress) return 1;
+
+  //   // If neither is in progress, put not started (0%) before completed (100%)
+  //   if (a.progress === 0 && b.progress === 100) return -1;
+  //   if (a.progress === 100 && b.progress === 0) return 1;
+
+  //   return 0;
+  // });
 
   return (
     <div className="w-full max-w-[1005px]  lg:my-[60px] my-[20px] flex items-start justify-start   flex-col gap-4">
-      <h1 className="text-2xl font-bold text-start">Continue learning</h1>
-      {sortedStudies.map((study) => (
-        <LearningStudyProgressCard key={study.id} study={study} />
+      <h1 className="text-2xl font-bold text-start">
+        {t("Continue learning")}
+      </h1>
+      {allCourses.map((course) => (
+        <LearningStudyProgressCard key={course.id} course={course} />
       ))}
     </div>
   );

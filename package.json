@@ -41,6 +41,7 @@
     "react-redux": "^9.2.0",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^3.1.0",
+    "rtl-detect": "^1.1.2",
     "shadcn-ui": "^0.9.4",
     "sonner": "^1.7.2",
     "tailwind-merge": "^2.6.0",

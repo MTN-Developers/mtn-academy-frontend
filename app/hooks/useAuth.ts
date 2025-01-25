@@ -1,11 +1,9 @@
 // src/hooks/useAuth.ts
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch, RootState } from "../lib/redux/store";
-import {
-  login as loginAction,
-  logout as logoutAction,
-} from "../lib/redux/features/authSlice";
+import { logout } from "../lib/redux/features/authSlice";
 import { toast } from "sonner";
+import { login } from "../lib/redux/features/authActions";
 
 interface LoginCredentials {
   email: string;
@@ -15,14 +13,12 @@ interface LoginCredentials {
 
 export const useAuth = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { user, isAuthenticated, loading } = useSelector(
-    (state: RootState) => state.auth
-  );
+  const { user, loading } = useSelector((state: RootState) => state.auth);
 
-  const login = async (credentials: LoginCredentials) => {
+  const loginFn = async (credentials: LoginCredentials) => {
     try {
-      const _result = await dispatch(
-        loginAction({
+      const result = await dispatch(
+        login({
           email: credentials.email,
           password: credentials.password,
         })
@@ -37,7 +33,7 @@ export const useAuth = () => {
         localStorage.removeItem("email");
       }
 
-      return true;
+      return result;
     } catch (error) {
       console.error("Login failed:", error);
       toast.error(`invalid credintials`);
@@ -45,17 +41,16 @@ export const useAuth = () => {
     }
   };
 
-  const logout = () => {
-    dispatch(logoutAction());
+  const logoutFn = () => {
+    dispatch(logout());
     localStorage.removeItem("rememberMe");
     localStorage.removeItem("email");
   };
 
   return {
     user,
-    isAuthenticated,
     loading,
-    login,
-    logout,
+    loginFn,
+    logoutFn,
   };
 };
