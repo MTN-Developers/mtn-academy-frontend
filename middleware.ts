@@ -56,7 +56,7 @@ export function middleware(req: NextRequest) {
 
   // Handle authenticated users trying to access login/register pages
   if (accessToken && isPublicRoute) {
-    const dashboardUrl = new URL(`/${locale}/dashboard`, req.url);
+    const dashboardUrl = new URL(`/${locale}/`, req.url);
     return NextResponse.redirect(dashboardUrl);
   }
 

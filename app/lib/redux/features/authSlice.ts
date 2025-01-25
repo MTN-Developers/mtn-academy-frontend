@@ -58,6 +58,10 @@ const authSlice = createSlice({
       localStorage.removeItem("tokenExpiry");
 
       // Delete cookies
+      deleteCookie("access_token");
+      deleteCookie("refresh_token");
+
+      // Delete cookies
       deleteCookie("accessToken");
       deleteCookie("refreshToken");
       deleteCookie("user");

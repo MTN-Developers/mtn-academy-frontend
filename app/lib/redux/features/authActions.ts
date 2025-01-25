@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axiosInstance from "../../axios/instance";
-import { endpoints } from "@/app/utils/endpoints";
 import { deleteCookie } from "cookies-next";
+import { AxiosError } from "axios";
 
 export const login = createAsyncThunk(
   "auth/login",
@@ -10,7 +10,10 @@ export const login = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await axiosInstance.post(endpoints.login, credentials);
+      const response = await axiosInstance.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/login`,
+        credentials
+      );
       const { access_token, refresh_token, user } = response.data.data;
 
       //   // Store tokens in cookies
@@ -24,10 +27,19 @@ export const login = createAsyncThunk(
       //   });
 
       return { user, access_token, refresh_token };
-    } catch (error: any) {
-      return rejectWithValue(
-        error.response?.data?.message || "An error occurred during login"
-      );
+    } catch (error: unknown) {
+      let errorMessage = "An unknown error occurred";
+
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data?.message || error.message;
+        console.log("error", errorMessage);
+      } else if (error instanceof Error) {
+        console.log("error2 ", error);
+
+        errorMessage = error.message;
+      }
+
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -42,9 +54,12 @@ export const refreshAccessToken = createAsyncThunk(
         throw new Error("No refresh token available");
       }
 
-      const response = await axiosInstance.post(endpoints.refresh, {
-        refresh_token: refreshToken,
-      });
+      const response = await axiosInstance.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/auth/refresh`,
+        {
+          refresh_token: refreshToken,
+        }
+      );
 
       const { access_token } = response.data.data;
 
@@ -63,9 +78,16 @@ export const refreshAccessToken = createAsyncThunk(
       deleteCookie("access_token");
       deleteCookie("refresh_token");
       deleteCookie("user");
-      return rejectWithValue(
-        error.response?.data?.message || "Failed to refresh token"
-      );
+      console.log("Delete Cookie from authSlice");
+      let errorMessage = "An unknown error occurred";
+
+      if (error instanceof AxiosError) {
+        errorMessage = error.response?.data?.message || error.message;
+      } else if (error instanceof Error) {
+        errorMessage = error.message;
+      }
+
+      return rejectWithValue(errorMessage);
     }
   }
 );

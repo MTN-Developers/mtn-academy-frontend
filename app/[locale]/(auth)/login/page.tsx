@@ -2,7 +2,7 @@
 "use client";
 
 import { useState } from "react";
-import { useAuth } from "@/app/hooks/useAuth";
+// import { useAuth } from "@/app/hooks/useAuth";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,8 +20,12 @@ import { Eye, EyeOff } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner"; // Add toast notifications
 import { setCookie } from "cookies-next";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { usePathname } from "next/navigation";
+import { login } from "@/app/lib/redux/features/authActions";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@/app/lib/redux/store";
+// import axiosInstance from "@/app/lib/axios/instance";
 
 // Form schema
 interface LoginFormData {
@@ -50,11 +54,15 @@ const schema = yup.object({
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const { loginFn, loading } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+  // const { loginFn, loading } = useAuth();
   const router = useRouter();
   const path = usePathname();
   const pathArr = path.split("/");
   const locale = pathArr[1];
+  const searchParams = useSearchParams();
+  const redirect = searchParams.get("redirect");
+  const { loading } = useSelector((state: RootState) => state.auth);
 
   console.log("path is", path);
   console.log("local is", locale);
@@ -76,33 +84,45 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      console.log("onSubmit", data);
+      const resultAction = await dispatch(
+        login({ email: data.email, password: data.password })
+      );
+      console.log("resultAction", resultAction);
 
-      const result = await loginFn({
-        email: data.email,
-        password: data.password,
-        rememberMe: data.rememberMe,
-      });
-
-      if (result) {
-        console.log("Login successful, redirecting to dashboard...");
-
-        // Set cookies
-        setCookie("accessToken", result.access_token, {
+      if (login.fulfilled.match(resultAction)) {
+        toast.success("Login successful");
+        // Set cookies with appropriate options
+        setCookie("access_token", resultAction.payload.access_token, {
           path: "/",
-          maxAge: 60 * 60 * 24 * 7, // 1 week
         });
-        setCookie("refreshToken", result.refresh_token, {
+        setCookie("refresh_token", resultAction.payload.refresh_token, {
           path: "/",
-          maxAge: 60 * 60 * 24 * 7, // 1 week
         });
+        setCookie("user", resultAction.payload.user, { path: "/" });
 
-        // Redirect to dashboard
-        router.push(`/dashboard`);
-        toast.success("login.success");
+        // if (package_id) {
+        //   try {
+        //     const { data } = await axiosInstance.post(
+        //       "/user-compensation-request",
+        //       {
+        //         package_id: package_id,
+        //       }
+        //     );
+        //     console.log(data);
+        //   } catch (e) {
+        //     console.log(e);
+        //   }
+        // }
+        // router.push("/"); // Redirect to home page
+        router.replace(`
+          ${redirect ? decodeURIComponent(redirect) : "/"}
+          `);
+      } else {
+        toast.error(resultAction.payload as string);
       }
-    } catch (error) {
-      toast.error(`${error}`);
+    } catch (err) {
+      console.error("Login error:", err);
+      toast.error("An unexpected error occurred");
     }
   };
 
