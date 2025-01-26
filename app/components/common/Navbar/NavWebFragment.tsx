@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useDispatch } from "react-redux";
 import { logout } from "@/app/lib/redux/features/authSlice";
+import { useRouter } from "next/navigation";
 const NavWebFragment = ({
   locale,
   t,
@@ -30,11 +31,14 @@ const NavWebFragment = ({
   user,
 }) => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   // handlers
   const handleLogout = () => {
     // logout user
     dispatch(logout());
+    router.push("/login");
+    router.refresh();
   };
   return (
     <>

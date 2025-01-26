@@ -10,7 +10,7 @@ const intlMiddleware = createMiddleware({
 });
 
 export function middleware(req: NextRequest) {
-  const accessToken = req.cookies.get("accessToken")?.value;
+  const accessToken = req.cookies.get("access_token")?.value;
   const pathname = req.nextUrl.pathname;
 
   // Step 1: Extract Locale from Path
@@ -37,25 +37,28 @@ export function middleware(req: NextRequest) {
 
     // Create redirect URL with callback
     const redirectURL =
-      pathname === `/${locale}`
+      req.nextUrl.pathname == `/${locale}`
         ? `/${locale}/login`
-        : `/${locale}/login?redirect=${encodeURIComponent(
-            pathnameWithoutLocale
-          )}`;
+        : `/login?redirect=${pathnameWithoutLocale}`;
 
     const response = NextResponse.redirect(new URL(redirectURL, req.url));
 
     // Clear any existing auth cookies
     response.cookies.delete("accessToken");
     response.cookies.delete("refreshToken");
+    // Update cookie deletion to match actual cookie names
     response.cookies.delete("access_token");
     response.cookies.delete("refresh_token");
+
     response.cookies.delete("user");
     return response;
   }
 
   // Handle authenticated users trying to access login/register pages
-  if (accessToken && isPublicRoute) {
+  if (
+    accessToken &&
+    (pathname === `/${locale}/login` || pathname === `/${locale}/register`)
+  ) {
     const dashboardUrl = new URL(`/${locale}/`, req.url);
     return NextResponse.redirect(dashboardUrl);
   }

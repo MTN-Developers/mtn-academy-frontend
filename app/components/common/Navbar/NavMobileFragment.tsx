@@ -28,6 +28,7 @@ const NavMobileFragment = ({
     // logout user
     dispatch(logout());
     router.push("/login");
+    router.refresh();
   };
   return (
     <>
