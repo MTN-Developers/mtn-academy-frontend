@@ -1,7 +1,7 @@
 // src/app/[locale]/register/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
@@ -97,14 +97,29 @@ export default function RegisterPage() {
     setShowPassword(false);
   };
 
-  const handlePhoneChange = (value: string, country: any) => {
-    setPhoneData({
-      phone: `+${value}`,
-      country: country.name,
-    });
-    setValue("phone", `+${value}`);
-    setValue("country", country.name);
-  };
+  // const handlePhoneChange = (value: string, country: any) => {
+  //   // Use functional update to batch state changes
+  //   setPhoneData((prev) => ({
+  //     ...prev,
+  //     phone: `+${value}`,
+  //     country: country.name,
+  //   }));
+
+  const handlePhoneChange = useCallback(
+    (value: string, country: any) => {
+      // Use functional update to batch state changes
+      setPhoneData((prev) => ({
+        ...prev,
+        phone: `+${value}`,
+        country: country.name,
+      }));
+
+      // Batch form updates together
+      setValue("phone", `+${value}`, { shouldValidate: true });
+      setValue("country", country.name, { shouldValidate: true });
+    },
+    [setValue]
+  );
 
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
@@ -299,13 +314,18 @@ export default function RegisterPage() {
               <Label htmlFor="phone">{t("Phone number")}</Label>
               <div dir="ltr">
                 <PhoneInput
-                  country={"eg"} // Default country
+                  country={"eg"}
                   value={phoneData.phone}
                   onChange={handlePhoneChange}
                   inputClass="bg-[#f2f2f2] focus:bg-white transition-colors w-full"
                   containerClass="phone-input"
                   buttonClass="bg-[#f2f2f2]"
-                  key={phoneData.phone} // Add this to force re-render
+                  // Remove the key prop here
+                  inputProps={{
+                    id: "phone-input",
+                    required: true,
+                    autoFocus: true, // Add this to maintain focus
+                  }}
                 />
               </div>
               {errors.phone && (
