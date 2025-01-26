@@ -28,7 +28,7 @@ const slides = [
   },
 ];
 
-export function MainCarousel() {
+export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
@@ -72,7 +72,9 @@ export function MainCarousel() {
         opts={{
           align: "start",
           loop: true,
+          direction: direction
         }}
+        
         setApi={setApi}
         className="w-full"
       >

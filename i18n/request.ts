@@ -1,3 +1,5 @@
+//i18n/requests.ts
+
 import { getRequestConfig } from "next-intl/server";
 import { routing } from "./routing";
 
