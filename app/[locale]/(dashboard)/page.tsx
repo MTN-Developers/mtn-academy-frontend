@@ -8,10 +8,20 @@ import { fetchCourses } from "@/app/lib/redux/features/courseSlice";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import ContinueLearningComp from "@/app/components/ui/home/ContinueLearningComp";
 import { MainCarousel } from "@/app/components/ui/home/MainCarousel";
+import FreeStudiesComp from "@/app/components/ui/home/FreeStudiesComp";
+import { usePathname } from "next/navigation";
+import { getLangDir } from "rtl-detect";
+import { DiplomaCarousel } from "@/app/components/ui/home/DiplomaCarousel";
 
 const Page = () => {
   const dispatch = useAppDispatch();
-  const { status, error, items } = useSelector((state: RootState) => state.courses);
+  const { status, error, items } = useSelector(
+    (state: RootState) => state.courses
+  );
+  const path = usePathname();
+  const pathArr = path.split("/");
+  const locale = pathArr[1];
+  const direction = getLangDir(locale);
 
   useEffect(() => {
     dispatch(fetchCourses({ page: 1, limit: 5000 }));
@@ -24,13 +34,14 @@ const Page = () => {
   }
 
   return (
-    <div className="w-full bg-[#f2f2f2] p-4">
+    <div dir={direction} className="w-full bg-[#f2f2f2] p-4">
       <MainCarousel />
-      {status === "loading" ? (
-        <LoadingSpinner />
-      ) : (
-        <ContinueLearningComp />
-      )}
+      {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />}
+      {/* Add free studies component */}
+      <FreeStudiesComp />
+      {/* diploma carousel */}
+      <DiplomaCarousel />
+      
     </div>
   );
 };

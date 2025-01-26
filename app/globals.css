@@ -165,3 +165,14 @@
     transform: rotate(360deg);
   }
 }
+
+/* globals.css */
+/* @layer utilities {
+  .embla__slide {
+    transition: all 0.3s ease;
+  }
+
+  .embla__slide--center {
+    transform: scale(1.05);
+  }
+} */
