@@ -28,13 +28,13 @@ const LearningStudyProgressCard = ({ course }: { course: Course }) => {
 
   return (
     <div className="bg-white w-full max-w-[1005px] flex flex-col lg:flex-row gap-4 items-stretch overflow-hidden shadow-sm rounded-3xl p-4 lg:py-[14px] lg:px-[24px]">
-      {/* <Image
-        src={locale === "en" ? course.banner_en : imagePlaceholder}
+      <Image
+        src={locale === "en" ? imagePlaceholder : imagePlaceholder}
         alt="study image"
         width={200}
         height={140}
         className="rounded-2xl shadow-2xl w-full lg:w-[200px] h-[140px] object-cover"
-      /> */}
+      />
       <div className="lg:w-[420px] flex flex-col justify-end lg:me-[32px]">
         <p className="text-sm block font-bold">
           {locale === "en"
