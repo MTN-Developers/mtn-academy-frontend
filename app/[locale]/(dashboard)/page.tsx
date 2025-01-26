@@ -11,6 +11,7 @@ import { MainCarousel } from "@/app/components/ui/home/MainCarousel";
 import FreeStudiesComp from "@/app/components/ui/home/FreeStudiesComp";
 import { usePathname } from "next/navigation";
 import { getLangDir } from "rtl-detect";
+import { DiplomaCarousel } from "@/app/components/ui/home/DiplomaCarousel";
 
 const Page = () => {
   const dispatch = useAppDispatch();
@@ -38,6 +39,9 @@ const Page = () => {
       {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />}
       {/* Add free studies component */}
       <FreeStudiesComp />
+      {/* diploma carousel */}
+      <DiplomaCarousel />
+      
     </div>
   );
 };

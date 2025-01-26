@@ -103,26 +103,7 @@ export const coursesData: ICourseCard[] = [
     },
     thumbnailUrl: imagePlaceholder,
   },
-  {
-    id: "5",
-    type: "premium",
-    title: "Stress Management",
-    instructor: {
-      name: "David Cooper",
-      avatar: imagePlaceholder,
-    },
-    description:
-      "Learn proven techniques for managing stress and maintaining emotional balance in your daily life",
-    stats: {
-      students: 4567,
-      likes: 1340,
-    },
-    pricing: {
-      originalPrice: 1600,
-      discountPercentage: 30,
-    },
-    thumbnailUrl: imagePlaceholder,
-  },
+ 
 ];
 
 const FreeStudiesComp = () => {
