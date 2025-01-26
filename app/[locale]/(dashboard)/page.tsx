@@ -35,13 +35,12 @@ const Page = () => {
 
   return (
     <div dir={direction} className="w-full bg-[#f2f2f2] p-4">
-      <MainCarousel />
+      <MainCarousel key={locale} direction={direction} />
       {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />}
       {/* Add free studies component */}
       <FreeStudiesComp />
       {/* diploma carousel */}
-      <DiplomaCarousel />
-      
+      <DiplomaCarousel key={locale} direction={direction} />
     </div>
   );
 };

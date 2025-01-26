@@ -16,7 +16,7 @@ import Image from "next/image";
 import { Diploma, diplomasData } from "@/app/types/diploma";
 // import { diplomasData } from "@/data/diplomas";
 
-export function DiplomaCarousel() {
+export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
   return (
     <section className="py-16 px-4 ">
       <div className="container mx-auto">
@@ -30,6 +30,7 @@ export function DiplomaCarousel() {
           opts={{
             align: "start",
             loop: true,
+            direction: direction,
           }}
           className="w-full"
         >
