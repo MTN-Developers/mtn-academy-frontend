@@ -166,7 +166,29 @@
   }
 }
 
+.swiper {
+  padding-bottom: 40px !important;
+}
+.swiper-pagination {
+  bottom: 0 !important;
+}
 
+/* styles/swiper-custom.css */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #2d5482;
+  width: 20px;
+  height: 20px;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 10px;
+}
+
+.swiper-pagination-bullet-active {
+  background: #2d5482;
+}
 
 /* globals.css */
 /* @layer utilities {

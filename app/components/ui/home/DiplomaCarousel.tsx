@@ -2,23 +2,22 @@
 "use client";
 
 import * as React from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
 import Image from "next/image";
 import { Diploma, diplomasData } from "@/app/types/diploma";
-// import { diplomasData } from "@/data/diplomas";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
   return (
-    <section className="py-16 px-4  ">
+    <section className="py-16 ">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <p className="text-[#2d5482] font-bold mb-2">Explore our new</p>
@@ -26,28 +25,32 @@ export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
           <p className="text-gray-600">Take a new step towards your career</p>
         </div>
 
-        <div className="relative">
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-              direction: direction,
+        <div className="relative h-auto w-full">
+          <Swiper
+            modules={[Navigation, Pagination, Autoplay]}
+            spaceBetween={10}
+            slidesPerView={1}
+            // navigation
+            pagination={{ clickable: true }}
+            // autoplay={{ delay: 5000, disableOnInteraction: false }}
+            loop={true}
+            dir={direction}
+            className="pb-12" // Add padding bottom to make room for pagination
+            breakpoints={{
+              640: {
+                slidesPerView: 2,
+              },
+              1024: {
+                slidesPerView: 3,
+              },
             }}
-            className="w-full"
           >
-            <CarouselContent className="-ml-2 md:-ml-4">
-              {diplomasData.map((diploma) => (
-                <CarouselItem
-                  key={diploma.id}
-                  className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
-                >
-                  <DiplomaCard diploma={diploma} />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-            <CarouselPrevious className=" absolute -left-4 top-1/2 transform -translate-y-1/2 h-8 w-8" />
-            <CarouselNext className=" absolute -right-4 top-1/2 transform -translate-y-1/2 h-8 w-8" />
-          </Carousel>
+            {diplomasData.map((diploma) => (
+              <SwiperSlide key={diploma.id}>
+                <DiplomaCard diploma={diploma} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>

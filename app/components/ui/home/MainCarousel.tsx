@@ -1,15 +1,12 @@
-// components/ui/home/MainCarousel.tsx
 "use client";
 
 import * as React from "react";
 import Image from "next/image";
-import { useEffect } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
+import { Swiper as SwiperType } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 import saleImg from "@/public/images/sale-slide.svg";
 import imgPlaceholder from "@/public/images/image-placeholder.svg";
 import { cn } from "@/lib/utils";
@@ -30,72 +27,49 @@ const slides = [
 ];
 
 export function MainCarousel({ direction }: { direction: "ltr" | "rtl" }) {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
+  const [activeIndex, setActiveIndex] = React.useState(0);
+  const swiperRef = React.useRef<SwiperType | null>(null);
 
-  useEffect(() => {
-    if (!api) {
-      return;
+  const handleDotClick = (index: number) => {
+    if (swiperRef.current) {
+      swiperRef.current.slideToLoop(index);
     }
-
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
-
-  const handleDotClick = React.useCallback(
-    (index: number) => {
-      api?.scrollTo(index);
-    },
-    [api]
-  );
-
-  const slideInterval = 4000;
-
-  //Auto sliding animation
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, slideInterval);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [api]);
+  };
 
   return (
     <div className="relative w-full">
-      <Carousel
-        opts={{
-          align: "start",
-          loop: true,
-          direction: direction,
+      <Swiper
+        dir={direction}
+        modules={[Autoplay, Pagination]}
+        spaceBetween={10}
+        slidesPerView={1}
+        loop={true}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
         }}
-        setApi={setApi}
+        onSwiper={(swiper) => {
+          swiperRef.current = swiper;
+        }}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="w-full"
       >
-        <CarouselContent className="-ml-0">
-          {slides.map((slide) => (
-            <CarouselItem key={slide.id} className="pl-0 w-full">
-              <div className="relative w-full h-[200px] rounded-lg overflow-hidden">
-                <Image
-                  src={slide.image}
-                  alt="carousel background"
-                  fill
-                  className="object-cover w-full"
-                  priority
-                />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+        {slides.map((slide) => (
+          <SwiperSlide key={slide.id}>
+            <div className="relative w-full h-[200px] rounded-lg overflow-hidden">
+              <Image
+                src={slide.image}
+                alt="carousel background"
+                fill
+                className="object-cover w-full"
+                priority
+              />
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-      {/* Dots */}
+      {/* Custom Dots */}
       <div className="flex justify-center gap-2 mt-4">
         {slides.map((_, index) => (
           <button
@@ -103,7 +77,7 @@ export function MainCarousel({ direction }: { direction: "ltr" | "rtl" }) {
             onClick={() => handleDotClick(index)}
             className={cn(
               "w-2 h-2 rounded-full transition-all",
-              current === index
+              activeIndex === index
                 ? "bg-blue-600 w-6" // Active dot
                 : "bg-gray-300 hover:bg-gray-400" // Inactive dot
             )}
