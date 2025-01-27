@@ -11,6 +11,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import saleImg from "@/public/images/sale-slide.svg";
+import imgPlaceholder from "@/public/images/image-placeholder.svg";
 import { cn } from "@/lib/utils";
 
 const slides = [
@@ -20,7 +21,7 @@ const slides = [
   },
   {
     id: 2,
-    image: saleImg,
+    image: imgPlaceholder,
   },
   {
     id: 3,
@@ -28,7 +29,7 @@ const slides = [
   },
 ];
 
-export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
+export function MainCarousel({ direction }: { direction: "ltr" | "rtl" }) {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
@@ -72,9 +73,8 @@ export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
         opts={{
           align: "start",
           loop: true,
-          direction: direction
+          direction: direction,
         }}
-        
         setApi={setApi}
         className="w-full"
       >
