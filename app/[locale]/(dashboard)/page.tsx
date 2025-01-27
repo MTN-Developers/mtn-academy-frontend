@@ -29,14 +29,11 @@ const Page = () => {
 
   console.log("Redux State:", { status, error, items }); // Add this for debugging
 
-  if (status === "failed") {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <div dir={direction} className="w-full bg-[#f2f2f2] p-4">
       <MainCarousel key={locale} direction={direction} />
       {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />}
+      {status === "failed" && " error fetching courses"}
       {/* Add free studies component */}
       <FreeStudiesComp />
       {/* diploma carousel */}
