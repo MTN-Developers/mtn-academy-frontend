@@ -18,7 +18,7 @@ import { Diploma, diplomasData } from "@/app/types/diploma";
 
 export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
   return (
-    <section className="py-16 px-4 ">
+    <section className="py-16 px-4  ">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <p className="text-[#2d5482] font-bold mb-2">Explore our new</p>
@@ -26,27 +26,29 @@ export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
           <p className="text-gray-600">Take a new step towards your career</p>
         </div>
 
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-            direction: direction,
-          }}
-          className="w-full"
-        >
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {diplomasData.map((diploma) => (
-              <CarouselItem
-                key={diploma.id}
-                className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
-              >
-                <DiplomaCard diploma={diploma} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <div className="relative">
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+              direction: direction,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-2 md:-ml-4">
+              {diplomasData.map((diploma) => (
+                <CarouselItem
+                  key={diploma.id}
+                  className="pl-2 md:pl-4 md:basis-1/2 lg:basis-1/3"
+                >
+                  <DiplomaCard diploma={diploma} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className=" absolute -left-4 top-1/2 transform -translate-y-1/2 h-8 w-8" />
+            <CarouselNext className=" absolute -right-4 top-1/2 transform -translate-y-1/2 h-8 w-8" />
+          </Carousel>
+        </div>
       </div>
     </section>
   );

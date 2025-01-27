@@ -103,7 +103,6 @@ export const coursesData: ICourseCard[] = [
     },
     thumbnailUrl: imagePlaceholder,
   },
- 
 ];
 
 const FreeStudiesComp = () => {
@@ -112,7 +111,7 @@ const FreeStudiesComp = () => {
       <h2 className="text-[#353535]  lg:text-[40px] font-semibold leading-[45px]">
         Get Started with free study
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
         {coursesData.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}

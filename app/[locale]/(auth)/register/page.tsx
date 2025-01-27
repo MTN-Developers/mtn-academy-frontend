@@ -101,18 +101,24 @@ export default function RegisterPage() {
     setShowPassword(false);
   };
 
-  // Corrected phone change handler
+  // const handlePhoneChange = (value: string, country: any) => {
+  //   // Use functional update to batch state changes
+  //   setPhoneData((prev) => ({
+  //     ...prev,
+  //     phone: `+${value}`,
+  //     country: country.name,
+  //   }));
+
   const handlePhoneChange = useCallback(
     (value: string, country: any) => {
-      // Convert the phone string to a number by using +value
+      // Use functional update to batch state changes
       setPhoneData((prev) => ({
         ...prev,
-        phone: value, // Store the input as a string
+        phone: `+${value}`,
         country: country.name,
       }));
-      
 
-      // Update form values
+      // Batch form updates together
       setValue("phone", `+${value}`, { shouldValidate: true });
       setValue("country", country.name, { shouldValidate: true });
     },
@@ -312,10 +318,11 @@ export default function RegisterPage() {
                   inputClass="bg-[#f2f2f2] focus:bg-white transition-colors w-full"
                   containerClass="phone-input"
                   buttonClass="bg-[#f2f2f2]"
+                  // Remove the key prop here
                   inputProps={{
                     id: "phone-input",
                     required: true,
-                    autoFocus: true,
+                    autoFocus: true, // Add this to maintain focus
                   }}
                 />
               </div>

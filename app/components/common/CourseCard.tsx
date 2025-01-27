@@ -1,6 +1,8 @@
 import Image from "next/image";
 import React from "react";
 import { ICourseCard } from "../ui/home/FreeStudiesComp";
+import { TruncatedText } from "./TruncatedText";
+import { Heart, User } from "lucide-react";
 interface CourseCardProps {
   course: ICourseCard;
 }
@@ -23,43 +25,36 @@ const CourseCard = ({ course }: CourseCardProps) => {
       </div>
 
       <div className="p-6">
-        <span className="inline-block px-3 py-1 text-sm bg-blue-100 text-blue-600 rounded-full">
+        <span className="inline-block px-3 py-1 text-sm bg-[#73b8ff] text-white rounded-full">
           {course.type}
         </span>
 
-        <h2 className="text-2xl font-bold mt-4">{course.title}</h2>
-        <p className="text-gray-600 mt-2">
+        <h2 className="flex  flex-col justify-center text-[#353535]  text-2xl font-medium leading-[54px]">
+          <TruncatedText text={course.title} />
+        </h2>
+        <p className="flex  flex-col justify-center text-[#353535]  text-[13px] font-normal ">
           A course by {course.instructor.name}
         </p>
 
         <p className="mt-4 text-gray-700">{course.description}</p>
 
-        <div className="flex items-center mt-6 space-x-4">
+        <div className="flex  items-center mt-6 space-x-4">
           <div className="flex items-center">
-            <svg
-              className="w-5 h-5 text-gray-500"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              {/* User icon */}
-            </svg>
-            <span className="ml-2">{course.stats.students}</span>
+            <span className=" flex justify-start items-center gap-1">
+              <User />
+              {course.stats.students}
+            </span>
           </div>
 
           <div className="flex items-center">
-            <svg
-              className="w-5 h-5 text-gray-500"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              {/* Heart icon */}
-            </svg>
-            <span className="ml-2">{course.stats.likes}</span>
+            <span className="flex justify-start items-center gap-1">
+              <Heart /> {course.stats.likes}
+            </span>
           </div>
         </div>
 
         <div className="mt-6 flex items-center justify-between">
-          <div className="text-2xl font-bold text-blue-600">
+          <div className="text-[#07519C]  text-[32px] font-medium leading-[29px]">
             ${discountedPrice}
           </div>
           {course.pricing.discountPercentage && (
