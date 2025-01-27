@@ -169,6 +169,15 @@
 .swiper {
   padding-bottom: 40px !important;
 }
+
+.swiper-wrapper {
+  height: auto !important;
+}
+
+.swiper-slide {
+  height: auto !important;
+}
+
 .swiper-pagination {
   bottom: 0 !important;
 }
