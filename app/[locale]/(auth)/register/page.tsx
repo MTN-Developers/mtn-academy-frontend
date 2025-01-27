@@ -58,7 +58,11 @@ const schema = yup.object({
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [phoneData, setPhoneData] = useState({ phone: "", country: "" });
+  const [phoneData, setPhoneData] = useState<{ phone: string; country: string }>({
+    phone: "",
+    country: "",
+  });
+  
   const router = useRouter();
   const t = useTranslations("register");
   const params = useParams();
@@ -109,7 +113,6 @@ export default function RegisterPage() {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     try {
-      // const {name,country,email,gender,password} = data
       const formattedData = {
         ...data,
         phone: phoneData.phone,
@@ -118,7 +121,6 @@ export default function RegisterPage() {
 
       console.log("onSubmit", formattedData);
 
-      // Implement your registration logic here
       const response = await axiosInstance.post(
         endpoints.register,
         formattedData
@@ -134,16 +136,11 @@ export default function RegisterPage() {
 
         resetFormStates();
 
-        // Use window.location for navigation
+        // Use window.location for navigation or Next.js router
         try {
-          // Method 1: Next.js router
           await router.push(`/${locale}/login`);
         } catch (routingError) {
-          console.error(
-            "Next.js routing failed, trying alternative:",
-            routingError
-          );
-          // Method 2: Window location
+          console.error("Next.js routing failed, trying alternative:", routingError);
           window.location.href = `/${locale}/login`;
         }
       } else {
@@ -160,9 +157,9 @@ export default function RegisterPage() {
             case 422: // Validation error
               if (errorData.errors) {
                 Object.keys(errorData.errors).forEach((key) => {
-                  const errors = errorData.errors![key];
-                  if (errors && errors.length > 0) {
-                    toast.error(errors[0]);
+                  const fieldErrors = errorData.errors![key];
+                  if (fieldErrors && fieldErrors.length > 0) {
+                    toast.error(fieldErrors[0]);
                   }
                 });
               }
@@ -204,6 +201,7 @@ export default function RegisterPage() {
             className="w-full h-full object-cover"
           />
         </div>
+
         <div>
           {/* Banner mob */}
           <div className="block overflow-hidden relative lg:hidden w-full h-[360px]">
@@ -212,7 +210,7 @@ export default function RegisterPage() {
               alt="banner-mob"
               className="object-cover w-full"
             />
-            <div className={`absolute bottom-4 p-4`}>
+            <div className="absolute bottom-4 p-4">
               <Image src={mtnLogo} alt="mtn logo" />
               <h2 className="font-bold mt-6">{t("Welcome onboard")}</h2>
             </div>
@@ -223,7 +221,7 @@ export default function RegisterPage() {
             onSubmit={handleSubmit(onSubmit)}
             className="lg:w-[456px] w-full p-4 lg:p-[48px]"
           >
-            <div className={`hidden lg:block`}>
+            <div className="hidden lg:block">
               <Image src={mtnLogo} alt="mtn logo" />
               <h2 className="font-bold my-6">{t("Welcome onboard")}</h2>
             </div>
@@ -347,7 +345,8 @@ export default function RegisterPage() {
 
             {/* Terms and Conditions */}
             <div className="mb-6">
-              <div className="flex items-center  gap-2">
+              <div className="flex items-center gap-2">
+                {/* If you need a real checkbox, uncomment and adjust your schema */}
                 {/* <input
                   type="checkbox"
                   {...register("agreeToTerms")}
