@@ -3,6 +3,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 // type LocaleLayoutProps = {
 //   children: React.ReactNode;
@@ -13,10 +16,7 @@ export async function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export default async function LocaleLayout({
-  children,
-  params,
-}) {
+export default async function LocaleLayout({ children, params }) {
   const { locale } = params;
   // Ensure that the incoming `locale` is valid
   if (!routing.locales.includes(locale)) {
@@ -28,7 +28,7 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <main >
+    <main>
       <NextIntlClientProvider locale={locale} messages={messages}>
         <div className={`${locale === "ar" ? "font-cairo" : "font-poppins"}`}>
           {children}

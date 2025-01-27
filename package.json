@@ -45,6 +45,7 @@
     "rtl-detect": "^1.1.2",
     "shadcn-ui": "^0.9.4",
     "sonner": "^1.7.2",
+    "swiper": "^11.2.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "yup": "^1.6.1",
