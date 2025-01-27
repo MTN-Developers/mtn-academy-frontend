@@ -58,11 +58,14 @@ const schema = yup.object({
 
 export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [phoneData, setPhoneData] = useState<{ phone: string; country: string }>({
+  const [phoneData, setPhoneData] = useState<{
+    phone: string;
+    country: string;
+  }>({
     phone: "",
     country: "",
   });
-  
+
   const router = useRouter();
   const t = useTranslations("register");
   const params = useParams();
@@ -155,7 +158,10 @@ export default function RegisterPage() {
         try {
           await router.push(`/${locale}/login`);
         } catch (routingError) {
-          console.error("Next.js routing failed, trying alternative:", routingError);
+          console.error(
+            "Next.js routing failed, trying alternative:",
+            routingError
+          );
           window.location.href = `/${locale}/login`;
         }
       } else {
@@ -322,7 +328,7 @@ export default function RegisterPage() {
                   inputProps={{
                     id: "phone-input",
                     required: true,
-                    autoFocus: true, // Add this to maintain focus
+                    // autoFocus: true, // Add this to maintain focus
                   }}
                 />
               </div>
