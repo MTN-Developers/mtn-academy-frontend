@@ -37,7 +37,7 @@ const Page = () => {
       {/* Add free studies component */}
       <FreeStudiesComp />
       {/* diploma carousel */}
-      <DiplomaCarousel key={locale} direction={direction} />
+      <DiplomaCarousel key={locale}  direction={direction} />
     </div>
   );
 };

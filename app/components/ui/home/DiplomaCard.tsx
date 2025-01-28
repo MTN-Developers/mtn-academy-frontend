@@ -10,6 +10,7 @@ interface DiplomaCardProps {
     id: string;
     name_ar: string;
     name_en: string;
+    slug: string;
     description_ar: string;
     description_en: string;
     image_url_ar: string;
@@ -75,7 +76,7 @@ export default function DiplomaCard({ path, direction }: DiplomaCardProps) {
         <Button className="w-full bg-blue-600 hover:bg-blue-700">
           {t("card.enrollNow")}
         </Button>
-        <Link href={`/academic-paths/${path.id}`} className="block">
+        <Link href={`/academic-paths/${path.slug}`} className="block">
           <Button
             variant="outline"
             className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
