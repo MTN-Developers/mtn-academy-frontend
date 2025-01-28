@@ -30,7 +30,7 @@ const Page = () => {
   console.log("Redux State:", { status, error, items }); // Add this for debugging
 
   return (
-    <div dir={direction} className="w-full bg-[#f2f2f2] p-4">
+    <div dir={direction} className="w-full bg-[#f2f2f2] lg:px-[130px] p-4">
       <MainCarousel key={locale} direction={direction} />
       {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />}
       {status === "failed" && " error fetching courses"}

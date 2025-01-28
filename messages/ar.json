@@ -68,5 +68,21 @@
   },
   "home": {
     "Continue learning": "إستمر بالتعلم"
+  },
+  "diplomaCarousel": {
+    "error": {
+      "title": "خطأ في تحميل الدورات",
+      "tryAgain": "حاول مرة أخرى"
+    },
+    "header": {
+      "explore": "اكتشف دوراتنا الجديدة",
+      "title": "دبلومات معهد MTN",
+      "subtitle": "خطوة جديدة نحو مستقبلك المهني"
+    },
+    "card": {
+      "enrollNow": "سجل الآن",
+      "showMore": "عرض المزيد",
+      "currency": "د.ك"
+    }
   }
 }
