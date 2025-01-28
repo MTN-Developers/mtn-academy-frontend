@@ -84,5 +84,21 @@
       "showMore": "عرض المزيد",
       "currency": "د.ك"
     }
+  },
+  "course": {
+    "by": "دورة تقدمها",
+    "noVideoAvailable": "لا يوجد فيديو تعريفي",
+    "whoShouldJoin": "من يمكنه الانضمام",
+    "enrollNow": "سجل الآن",
+    "share": "مشاركة",
+    "favorite": "المفضلة",
+    "availableIn": "متوفر باللغات",
+    "discount": "خصم ${discount}% من ${price}"
+  },
+  "tabs": {
+    "information": "المعلومات",
+    "semesters": "الفصول الدراسية",
+    "discussions": "المناقشات",
+    "reviews": "التقييمات"
   }
 }

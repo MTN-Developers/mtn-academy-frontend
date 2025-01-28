@@ -84,6 +84,21 @@
       "showMore": "Show More",
       "currency": "$"
     }
+  },
+  "course": {
+    "by": "A course by",
+    "noVideoAvailable": "No preview video available",
+    "whoShouldJoin": "Who Should Join",
+    "enrollNow": "Enroll Now",
+    "share": "Share",
+    "favorite": "Favorite",
+    "availableIn": "Available in",
+    "discount": "${price} ${discount}% Discount"
+  },
+  "tabs": {
+    "information": "Information",
+    "semesters": "Semesters",
+    "discussions": "Discussions",
+    "reviews": "Reviews"
   }
-  
 }
