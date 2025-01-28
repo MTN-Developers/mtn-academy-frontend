@@ -5,11 +5,13 @@ import { persistStore, persistReducer } from "redux-persist";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import coursesReducer from "./features/courseSlice";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+import academicPathsReducer from "./features/academicPathsSlice";
 
 // Combine all reducers
 const rootReducer = combineReducers({
   auth: authReducer,
   courses: coursesReducer,
+  academicPaths: academicPathsReducer,
 
   // semesters: semesterReducer,
 });

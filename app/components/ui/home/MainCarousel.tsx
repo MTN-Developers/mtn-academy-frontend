@@ -8,7 +8,6 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import saleImg from "@/public/images/sale-slide.svg";
-import imgPlaceholder from "@/public/images/image-placeholder.svg";
 import { cn } from "@/lib/utils";
 
 const slides = [
@@ -18,7 +17,7 @@ const slides = [
   },
   {
     id: 2,
-    image: imgPlaceholder,
+    image: saleImg,
   },
   {
     id: 3,

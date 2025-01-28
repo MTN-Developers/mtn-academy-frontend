@@ -29,7 +29,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
           {course.type}
         </span>
 
-        <h2 className="flex  flex-col justify-center text-[#353535]  text-2xl font-medium leading-[54px]">
+        <h2 className="flex  flex-col justify-center  text-[#353535]  text-xl font-medium my-4">
           <TruncatedText text={course.title} />
         </h2>
         <p className="flex  flex-col justify-center text-[#353535]  text-[13px] font-normal ">

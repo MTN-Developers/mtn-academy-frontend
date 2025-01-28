@@ -30,7 +30,7 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <main>
       <NextIntlClientProvider locale={locale} messages={messages}>
-        <div className={`${locale === "ar" ? "font-cairo" : "font-poppins"}`}>
+        <div className={`${locale === "ar" ? "font-cairo" : "font-poppins"} bg-[#f2f2f2]`}>
           {children}
         </div>
       </NextIntlClientProvider>

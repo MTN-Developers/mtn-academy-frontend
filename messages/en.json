@@ -68,5 +68,22 @@
   },
   "home": {
     "Continue learning": "Continue learning"
+  },
+  "diplomaCarousel": {
+    "error": {
+      "title": "Error Loading Courses",
+      "tryAgain": "Try Again"
+    },
+    "header": {
+      "explore": "Explore our new",
+      "title": "Mtn Institute Diplomas",
+      "subtitle": "Take a new step towards your career"
+    },
+    "card": {
+      "enrollNow": "Enroll Now",
+      "showMore": "Show More",
+      "currency": "$"
+    }
   }
+  
 }

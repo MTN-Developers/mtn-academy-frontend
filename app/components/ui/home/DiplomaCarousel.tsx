@@ -10,26 +10,49 @@ import {
   EffectCoverflow,
   FreeMode,
 } from "swiper/modules";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Check } from "lucide-react";
-import Image from "next/image";
-import { Diploma, diplomasData } from "@/app/types/diploma";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Link from "next/link";
+import { useAcademicPaths } from "@/app/hooks/useAcademicPaths";
+import { DiplomaCardSkeleton } from "./DiplomaCardSkeleton";
+import { useTranslations } from "next-intl";
+import DiplomaCard from "./DiplomaCard";
+import { AlertCircle } from "lucide-react";
 
 export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
+  const { error, isLoading, paths } = useAcademicPaths();
+  const t = useTranslations("diplomaCarousel");
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16">
+        <AlertCircle className="w-12 h-12 text-red-500 mb-4" />
+        <h3 className="text-xl font-bold text-gray-900 mb-2">
+          {t("diplomaCarousel.error.title")}
+        </h3>
+        <p className="text-gray-600 mb-4">{t("error.message")}</p>
+        <Button onClick={() => window.location.reload()}>
+          {t("{diplomaCarousel.error.tryAgain}")}
+        </Button>
+      </div>
+    );
+  }
+
   return (
-    <section className="py-16 ">
-      <div className="container mx-auto">
+    <section className="py-16">
+      <div className="container mx-auto w-full">
         <div className="text-center mb-12">
-          <p className="text-[#2d5482] font-bold mb-2">Explore our new</p>
-          <h2 className="text-3xl font-bold mb-4">Mtn Institute Diplomas</h2>
-          <p className="text-gray-600">Take a new step towards your career</p>
+          <p className="text-[#2d5482] font-bold mb-2">
+            {t("header.explore")}
+          </p>
+          <h2 className="text-3xl font-bold mb-4">
+            {t("header.title")}
+          </h2>
+          <p className="text-gray-600">
+            {t("header.subtitle")}
+          </p>
         </div>
 
         <div className="relative h-auto w-full">
@@ -44,22 +67,18 @@ export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
             spaceBetween={50}
             slidesPerView={1}
             effect="coverflow"
-            // navigation
             pagination={{ clickable: true }}
-            // autoplay={{ delay: 5000, disableOnInteraction: false }}
-            loop={true}
+            loop={!isLoading && paths?.length > 3}
             dir={direction}
-            className="pb-12" // Add padding bottom to make room for pagination
+            className="pb-12"
             breakpoints={{
               350: {
                 slidesPerView: "auto",
               },
-
               640: {
                 slidesPerView: 3,
-                spaceBetween: 10,
+                spaceBetween: 50,
               },
-
               768: {
                 slidesPerView: 3,
                 spaceBetween: 50,
@@ -82,62 +101,22 @@ export function DiplomaCarousel({ direction }: { direction: "ltr" | "rtl" }) {
               scale: 1,
             }}
           >
-            {diplomasData.map((diploma) => (
-              <SwiperSlide key={diploma.id} className="h-auto">
-                <DiplomaCard diploma={diploma} />
-              </SwiperSlide>
-            ))}
+            {isLoading
+              ? Array(3)
+                  .fill(null)
+                  .map((_, index) => (
+                    <SwiperSlide key={`skeleton-${index}`} className="h-auto">
+                      <DiplomaCardSkeleton />
+                    </SwiperSlide>
+                  ))
+              : paths?.map((path) => (
+                  <SwiperSlide key={path.id} className="h-auto">
+                    <DiplomaCard path={path} direction={direction} />
+                  </SwiperSlide>
+                ))}
           </Swiper>
         </div>
       </div>
     </section>
-  );
-}
-
-// DiplomaCard component
-interface DiplomaCardProps {
-  diploma: Diploma;
-}
-
-function DiplomaCard({ diploma }: DiplomaCardProps) {
-  return (
-    <Link href={`/diploma/${diploma.id}`}>
-      <Card className="p-6 h-full flex flex-col">
-        <div className="flex justify-center mb-6 flex-shrink-0">
-          <Image
-            src={diploma.logoUrl}
-            alt={diploma.title}
-            width={120}
-            height={120}
-            className="object-contain"
-          />
-        </div>
-
-        <h3 className="text-xl text-[#10458c] font-bold text-center mb-6 flex-shrink-0">
-          {diploma.title}
-        </h3>
-
-        <div className="space-y-3 flex-grow">
-          {diploma.features.map((feature) => (
-            <div key={feature.id} className="flex items-start gap-2">
-              <Check className="h-4 w-4 text-blue-600 flex-shrink-0 mt-1" />
-              <span className="text-sm text-gray-700">{feature.name}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-6 space-y-3 flex-shrink-0">
-          <Button className="w-full bg-blue-600 hover:bg-blue-700">
-            Enroll Now
-          </Button>
-          <Button
-            variant="outline"
-            className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
-          >
-            Show More
-          </Button>
-        </div>
-      </Card>
-    </Link>
   );
 }
