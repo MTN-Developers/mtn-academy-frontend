@@ -1,7 +1,6 @@
 // middleware.ts
 import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
-import { routing } from "./i18n/routing";
 
 // Localization Middleware
 const intlMiddleware = createMiddleware({
@@ -28,28 +27,44 @@ export function middleware(req: NextRequest) {
 
   // Check if current route is public
   const isPublicRoute = publicRoutes.some((route) =>
-    pathname.startsWith(`/${locale}/${route}`)
+    pathname.includes(`/${route}`)
   );
 
+  // Check if it's the root/landing page
+  const isLandingPage =
+    pathname === "/" ||
+    pathname === "/en" ||
+    pathname === "/ar" ||
+    pathname === `/${locale}`;
+
+  // Always apply localization middleware first for all routes
+  const intlResponse = intlMiddleware(req);
+
+  // Redirect authenticated users from landing page to dashboard
+  if (accessToken && isLandingPage) {
+    const dashboardUrl = new URL(
+      `/${locale || "en"}/dashboard`, // Use "en" as fallback if locale is not available
+      req.url
+    );
+    return NextResponse.redirect(dashboardUrl);
+  }
+
+  // Allow access to public routes and landing page without authentication
+  if (isPublicRoute || isLandingPage) {
+    return intlResponse;
+  }
+
   // Handle unauthenticated users trying to access protected routes
-  if (!accessToken && !isPublicRoute && isLocaleValid) {
+  if (!accessToken && !isPublicRoute && !isLandingPage && isLocaleValid) {
     const pathnameWithoutLocale = pathname.replace(`/${locale}`, "");
-
-    // Create redirect URL with callback
-    const redirectURL =
-      req.nextUrl.pathname == `/${locale}`
-        ? `/${locale}/login`
-        : `/login?redirect=${pathnameWithoutLocale}`;
-
+    const redirectURL = `/${locale}/login?redirect=${pathnameWithoutLocale}`;
     const response = NextResponse.redirect(new URL(redirectURL, req.url));
 
     // Clear any existing auth cookies
     response.cookies.delete("accessToken");
     response.cookies.delete("refreshToken");
-    // Update cookie deletion to match actual cookie names
     response.cookies.delete("access_token");
     response.cookies.delete("refresh_token");
-
     response.cookies.delete("user");
     return response;
   }
@@ -59,23 +74,13 @@ export function middleware(req: NextRequest) {
     accessToken &&
     (pathname === `/${locale}/login` || pathname === `/${locale}/register`)
   ) {
-    const dashboardUrl = new URL(`/${locale}/`, req.url);
+    const dashboardUrl = new URL(`/${locale}/dashboard`, req.url);
     return NextResponse.redirect(dashboardUrl);
   }
 
-  // Step 3: Apply Localization Middleware
-  const intlResponse = intlMiddleware(req);
-  if (intlResponse) {
-    return intlResponse;
-  }
-
-  // Step 4: Proceed to Next Response if no redirects are needed
-  return NextResponse.next();
+  return intlResponse;
 }
 
-export default createMiddleware(routing);
-
-// Update config to match your routes
 export const config = {
   matcher: [
     "/",

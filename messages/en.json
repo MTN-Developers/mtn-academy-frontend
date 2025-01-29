@@ -93,12 +93,26 @@
     "share": "Share",
     "favorite": "Favorite",
     "availableIn": "Available in",
-    "discount": "${price} ${discount}% Discount"
+    "discount": "${price} ${discount}% Discount",
+    "semester": "Semester",
+    "semesterOrder": "Semester {order}",
+    "startLearning": "Start Learning",
+    "noCourses": "No courses available"
   },
   "tabs": {
     "information": "Information",
     "semesters": "Semesters",
     "discussions": "Discussions",
     "reviews": "Reviews"
+  },
+  "error": {
+    "title": "Something went wrong",
+    "generic": "An error occurred while loading the content. Please try again.",
+    "notFound": "The requested resource could not be found.",
+    "network": "Unable to connect to the server. Please check your internet connection.",
+    "timeout": "The request took too long to complete. Please try again.",
+    "tryAgain": "Try Again",
+    "backToHome": "Back to Home",
+    "errorCode": "Error Code"
   }
 }

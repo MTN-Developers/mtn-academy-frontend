@@ -93,12 +93,26 @@
     "share": "مشاركة",
     "favorite": "المفضلة",
     "availableIn": "متوفر باللغات",
-    "discount": "خصم ${discount}% من ${price}"
+    "discount": "خصم ${discount}% من ${price}",
+    "semester": "الفصل",
+    "semesterOrder": "الفصل {order}",
+    "startLearning": "ابدأ التعلم",
+    "noCourses": "لا توجد دورات متاحة"
   },
   "tabs": {
     "information": "المعلومات",
     "semesters": "الفصول الدراسية",
     "discussions": "المناقشات",
     "reviews": "التقييمات"
+  },
+  "error": {
+    "title": "حدث خطأ ما",
+    "generic": "حدث خطأ أثناء تحميل المحتوى. يرجى المحاولة مرة أخرى.",
+    "notFound": "لم يتم العثور على المورد المطلوب.",
+    "network": "تعذر الاتصال بالخادم. يرجى التحقق من اتصال الإنترنت الخاص بك.",
+    "timeout": "استغرق الطلب وقتًا طويلاً للإكمال. حاول مرة اخرى.",
+    "tryAgain": "حاول مرة أخرى",
+    "backToHome": "العودة إلى الرئيسية",
+    "errorCode": "رمز الخطأ"
   }
 }
