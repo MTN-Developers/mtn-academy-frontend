@@ -22,6 +22,7 @@ import { useTranslations } from "next-intl";
 import { getLangDir } from "rtl-detect";
 import { PathDetailsSkeleton } from "@/app/components/ui/home/PathDetailsSkeleton";
 import { NotFoundState } from "@/app/components/common/NotFoundState";
+import { SemestersTab } from "@/app/components/common/SemestersTab";
 
 const AcademicPathPage = () => {
   const { slug } = useParams();
@@ -135,13 +136,10 @@ const AcademicPathPage = () => {
                 </TabsContent>
 
                 <TabsContent value="semesters">
-                  {/* {pathDetails.semesters.map((semester) => (
-                    <SemesterCard
-                      key={semester.id}
-                      semester={semester}
-                      isRTL={isRTL}
-                    />
-                  ))} */}
+                  <SemestersTab
+                    semesters={pathDetails.semesters}
+                    isRTL={isRTL}
+                  />
                 </TabsContent>
               </Tabs>
             </div>
