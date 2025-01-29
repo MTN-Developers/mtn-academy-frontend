@@ -44,7 +44,7 @@ export function MainCarousel() {
 
   return (
     <div className="relative w-full">
-      <div className="relative w-full h-[450px] rounded-lg overflow-hidden">
+      <div className="relative w-full lg:h-[450px] rounded-lg overflow-hidden">
         <Image src={saleImg} alt="background" className="object-cover w-full" />
       </div>
 
