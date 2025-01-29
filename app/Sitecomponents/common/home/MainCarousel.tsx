@@ -2,98 +2,54 @@
 "use client";
 import * as React from "react";
 import Image from "next/image";
-import { useEffect } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  type CarouselApi,
-} from "@/components/ui/carousel";
-import saleImg from "@/public/images/slider.png";
-import { cn } from "@/lib/utils";
 
-const slides = [
-  {
-    id: 1,
-    image: saleImg,
-  },
-  {
-    id: 2,
-    image: saleImg,
-  },
-  {
-    id: 3,
-    image: saleImg,
-  },
-];
+import saleImg from "@/public/images/slider.png";
 
 export function MainCarousel() {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const [current, setCurrent] = React.useState(0);
+  // const [current, setCurrent] = React.useState(0);
 
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!api) {
+  //     return;
+  //   }
 
-    api.on("select", () => {
-      setCurrent(api.selectedScrollSnap());
-    });
-  }, [api]);
+  //   api.on("select", () => {
+  //     setCurrent(api.selectedScrollSnap());
+  //   });
+  // }, [api]);
 
-  const handleDotClick = React.useCallback(
-    (index: number) => {
-      api?.scrollTo(index);
-    },
-    [api]
-  );
+  // const handleDotClick = React.useCallback(
+  //   (index: number) => {
+  //     api?.scrollTo(index);
+  //   },
+  //   [api]
+  // );
 
-  const slideInterval = 4000;
+  // const slideInterval = 4000;
 
   //Auto sliding animation
-  useEffect(() => {
-    if (!api) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (!api) {
+  //     return;
+  //   }
 
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, slideInterval);
+  //   const interval = setInterval(() => {
+  //     api.scrollNext();
+  //   }, slideInterval);
 
-    return () => {
-      clearInterval(interval);
-    };
-  }, [api]);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // }, [api]);
 
   return (
     <div className="relative w-full">
-      <Carousel
-        opts={{
-          align: "start",
-          loop: true,
-        }}
-        setApi={setApi}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-0">
-          {slides.map((slide) => (
-            <CarouselItem key={slide.id} className="pl-0 w-full">
-              <div className="relative w-full h-[450px] rounded-lg overflow-hidden">
-                <Image
-                  src={slide.image}
-                  alt="carousel background"
-                  fill
-                  className="object-cover w-full"
-                  priority
-                />
-              </div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+      <div className="relative w-full h-[450px] rounded-lg overflow-hidden">
+        <Image src={saleImg} alt="background" className="object-cover w-full" />
+      </div>
 
       {/* Dots */}
-      <div className="flex justify-center gap-2 mt-4">
+      {/* <div className="flex justify-center gap-2 mt-4">
         {slides.map((_, index) => (
           <button
             key={index}
@@ -107,7 +63,7 @@ export function MainCarousel() {
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }
