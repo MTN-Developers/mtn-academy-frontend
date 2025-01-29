@@ -73,8 +73,9 @@ jobs:
               -e NEXT_PUBLIC_BASE_URL="$NEXT_PUBLIC_BASE_URL" \
               mazinmtn/mtn_academy_frontend:${VERSION}
 
-            docker image prune -f || true
+            docker image prune -f
           EOF
 
+
           # Clean up the private key
-          rm private_key.pem
+          rm -f ~/.ssh/private_key
