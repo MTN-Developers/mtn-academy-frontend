@@ -19,7 +19,7 @@ export const SemesterCard = ({ semester, isRTL }: SemesterCardProps) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <Link href={`/semester/${semester.slug}`}>
+      <Link href={`/dashboard/semester/${semester.slug}`}>
         <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200">
           {/* Image Section */}
           <div className="relative aspect-[16/9] w-full">

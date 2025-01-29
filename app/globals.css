@@ -209,3 +209,18 @@
     transform: scale(1.05);
   }
 } */
+
+/* Change the active tab background and text color */
+.tabs-trigger[data-state="active"] {
+  @apply !text-blue-500 underline; /* Change to your desired colors */
+}
+
+/* Change hover styles */
+.tabs-trigger:hover {
+  @apply text-blue-500; /* Change to your desired hover color */
+}
+
+/* If you want to keep the hover style different for active tab */
+.tabs-trigger[data-state="active"]:hover {
+  @apply text-blue-500; /* Slightly darker shade for active tab hover */
+}
