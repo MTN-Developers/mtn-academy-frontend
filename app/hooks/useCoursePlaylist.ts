@@ -1,6 +1,6 @@
 // app/hooks/useCoursePlaylist.ts
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axiosInstance from "../lib/axios/instance";
 
 interface Video {
   id: string;
@@ -42,9 +42,11 @@ export const useCoursePlaylist = (slug: string) => {
   return useQuery<PlaylistResponse>({
     queryKey: ["coursePlaylist", slug],
     queryFn: async () => {
-      const { data } = await axios.get(
+      const { data } = await axiosInstance.get(
         `/course-playlist/course/slug/${slug}/videos`
       );
+      console.log("course-playlist ", data);
+
       return data;
     },
   });

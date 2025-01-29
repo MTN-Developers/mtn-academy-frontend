@@ -13,6 +13,7 @@ import { NotFoundState } from "@/app/components/common/NotFoundState";
 import { ErrorState } from "@/app/components/common/ErrorState";
 import { BreadcrumbFragment } from "@/app/components/common/BreadcrumbFragment";
 import { useCourseDetails } from "@/app/hooks/useCourseDetails"; // We'll create this
+import { Playlist } from "@/app/components/ui/course/Playlist";
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -103,6 +104,9 @@ const CoursePage = () => {
                     </p>
                     {/* Add more course details here */}
                   </div>
+                </TabsContent>
+                <TabsContent value="playlist" className="mt-6">
+                  <Playlist />
                 </TabsContent>
               </Tabs>
             </div>
