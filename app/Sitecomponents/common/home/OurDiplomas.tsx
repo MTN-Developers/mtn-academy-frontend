@@ -1,4 +1,4 @@
-import checkIcon from "@/public/icons/check.svg";
+import checkIcon from "@/public/icons/Check.svg";
 import diplomasImg1 from "@/public/diplomas/diplomas1.svg";
 import diplomasImg2 from "@/public/diplomas/diplomas2.svg";
 import diplomasImg3 from "@/public/diplomas/diplomas3.svg";
