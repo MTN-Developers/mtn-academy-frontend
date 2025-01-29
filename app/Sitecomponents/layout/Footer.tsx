@@ -6,49 +6,43 @@ import { AiFillTwitterCircle } from "react-icons/ai";
 import { FaSquareYoutube } from "react-icons/fa6";
 // import { Facebook, Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
 import mtnLogo from "@/public/images/mtn-logo.svg";
-import googlePlay from "@/public/images/google-play-logo.svg";
-import appStore from "@/public/images/app-store-logo.svg";
+// import googlePlay from "@/public/images/google-play-logo.svg";
+// import appStore from "@/public/images/app-store-logo.svg";
 import { FaInstagramSquare } from "react-icons/fa";
 // Define the program categories and their items
 const programCategories = [
   {
-    title: "Learn Key Programmers",
+    title: "Free Studies",
+    items: ["Awaken Fittra", "Emotional Literacy", "Luscher", "FCTRL"],
+  },
+  {
+    title: " ",
     items: [
-      "Masculinity GYM",
-      "Pregnancy",
-      "Estro Gym",
-      "Intimate relationships",
-      "Fitra",
+      " ",
+      // "Artificial Intelligence",
+      // "Cybersecurity",
+      // "Digital Marketing",
+      // "Machine Learning",
+      // "Statistical Analysis",
+      // "Database Management",
+      // "Web Development",
+      // "Financial Modeling",
+      // "Business Analysis",
     ],
   },
   {
-    title: "Essential Skills",
+    title: "BIO",
     items: [
-      "Data Analytics",
-      "Artificial Intelligence",
-      "Cybersecurity",
-      "Digital Marketing",
-      "Machine Learning",
-      "Statistical Analysis",
-      "Database Management",
-      "Web Development",
-      "Financial Modeling",
-      "Business Analysis",
-    ],
-  },
-  {
-    title: "Industry Solutions",
-    items: [
-      "Healthcare Analytics",
-      "Sales",
-      "Digital Transformation",
-      "Supply Chain",
-      "Marketing Analytics",
-      "HR Analytics",
-      "Social Media Marketing",
-      "Risk Management",
-      "Sustainability",
-      "E-commerce",
+      "اختار ما يناسبك من مجموعة شاملة من البرامج المختصة بكل ما يتعلق بتحسين حياتك والارتقاء بمشاعرك، لتنعكس على كل جوانب حياتك بالمزيد من الاتزان والصحة النفسية والجسدية",
+      // "Sales",
+      // "Digital Transformation",
+      // "Supply Chain",
+      // "Marketing Analytics",
+      // "HR Analytics",
+      // "Social Media Marketing",
+      // "Risk Management",
+      // "Sustainability",
+      // "E-commerce",
     ],
   },
 ];
@@ -76,7 +70,7 @@ export function Footer() {
               height={160}
               className="mb-6 lg:mb-20"
             />
-            <div className="space-y-4">
+            {/* <div className="space-y-4">
               <Link href="#" className="block">
                 <Image
                   src={appStore}
@@ -93,7 +87,7 @@ export function Footer() {
                   height={42}
                 />
               </Link>
-            </div>
+            </div> */}
           </div>
           {/* Programs Categories */}
           <div className="md:col-span-9">
