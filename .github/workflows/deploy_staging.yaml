@@ -75,5 +75,6 @@ jobs:
             docker image prune -f
           EOF
 
+
           # Clean up the private key
-          rm private_key.pem
+          rm -f ~/.ssh/private_key
