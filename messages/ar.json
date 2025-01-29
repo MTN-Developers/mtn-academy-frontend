@@ -103,7 +103,9 @@
     "information": "المعلومات",
     "semesters": "الفصول الدراسية",
     "discussions": "المناقشات",
-    "reviews": "التقييمات"
+    "reviews": "التقييمات",
+    "courses": "الكورسات",
+    "playlist": "القوائم"
   },
   "error": {
     "title": "حدث خطأ ما",

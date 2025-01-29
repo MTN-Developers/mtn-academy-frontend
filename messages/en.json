@@ -103,7 +103,9 @@
     "information": "Information",
     "semesters": "Semesters",
     "discussions": "Discussions",
-    "reviews": "Reviews"
+    "reviews": "Reviews",
+    "courses": "courses",
+    "playlist": "playlist"
   },
   "error": {
     "title": "Something went wrong",
