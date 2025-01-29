@@ -29,9 +29,9 @@ export default function HomeContent() {
       {/* Right Section */}
       <div className="py-5 md:px-6 flex flex-col items-start justify-center">
         <p className="text-xl">
-          Here’s our best creations that everyone loves. Lightness and sweetness
-          of the cake make you want more and more. Start from cake, bread, and
-          other creations.
+          اختار ما يناسبك من مجموعة شاملة من البرامج المختصة بكل ما يتعلق بتحسين
+          حياتك والارتقاء بمشاعرك، لتنعكس على كل جوانب حياتك بالمزيد من الاتزان
+          والصحة النفسية والجسدية
         </p>
         <Button className="bg-primary-blue mt-5 border-primary-blue min-w-fit hover:bg-primary-blue">
           {locale === "ar" ? "تسجيل الدخول" : "Join now"}
