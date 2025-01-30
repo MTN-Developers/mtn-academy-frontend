@@ -108,7 +108,7 @@ export const coursesData: ICourseCard[] = [
 const FreeStudiesComp = () => {
   return (
     <div>
-      <h2 className="text-[#353535]  lg:text-[40px] font-semibold leading-[45px]">
+      <h2 className="text-[#353535]  lg:text-[40px] my-4 font-semibold leading-[45px]">
         Get Started with free study
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 ">

@@ -113,7 +113,7 @@ const CoursePage = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 ">
             <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4">
               <div className="text-2xl font-bold mb-2">$1300</div>
               <Button className="w-full bg-blue-600 mb-4">
