@@ -10,7 +10,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="relative">
       {/* // <ProtectedRoute> */}
       <div className="lg:z-50">
         <Navbar />
@@ -19,6 +19,6 @@ export default function DashboardLayout({
       {children}
       <Footer />
       {/* // </ProtectedRoute> */}
-    </>
+    </div>
   );
 }

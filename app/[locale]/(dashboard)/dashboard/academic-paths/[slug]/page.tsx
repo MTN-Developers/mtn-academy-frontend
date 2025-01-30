@@ -43,14 +43,14 @@ const AcademicPathPage = () => {
   }
 
   return (
-    <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
+    <div dir={direction} className=" overflow-x-hidden bg-[#f2f2f2]">
       <BreadcrumbFragment
         pathName={isRTL ? pathDetails.name_ar : pathDetails.name_en}
         pathSlug={pathDetails.slug}
       />
 
       <div className="w-full p-4 px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className=" grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-4 mb-4 flex-wrap">
@@ -144,7 +144,7 @@ const AcademicPathPage = () => {
           </div>
 
           {/* Right Sidebar */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 ">
             <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4">
               <div className="mb-4">
                 <div className="text-2xl text-center md:text-3xl font-bold">
