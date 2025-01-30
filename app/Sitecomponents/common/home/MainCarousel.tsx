@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 
-import saleImg from "@/public/images/slider.png";
+import saleImg from "@/public/images/slider.svg";
 
 export function MainCarousel() {
   // const [current, setCurrent] = React.useState(0);
@@ -44,7 +44,7 @@ export function MainCarousel() {
 
   return (
     <div className="relative w-full">
-      <div className="relative w-full h-[450px] rounded-lg overflow-hidden">
+      <div className="relative w-full lg:h-[450px]  rounded-lg overflow-hidden">
         <Image src={saleImg} alt="background" className="object-cover w-full" />
       </div>
 

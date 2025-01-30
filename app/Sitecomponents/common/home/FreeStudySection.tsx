@@ -3,33 +3,33 @@ import StudyCard from "./StudyCard";
 export default function FreeStudySection() {
   const studiesInfo = [
     {
-      title: "Living Fittra",
+      title: "ايقظ الفطرة",
       image:
         "https://efficaciousleadership.com/awaken-fittra/_next/static/media/Logo%20web.bc396bf5.png",
-      url: "https://efficaciousleadership.com/awaken-fittra/",
+      url: "https://forms.mtninstitute.net/awaken-fittra-dubai",
       description:
         "برنامج أيقظ الفطرة هو برنامج تدريبي، تفاعلي، مُكثف ينقلك من حال المُتفرج إلى حال الفاعلية بأساليب مدروسة ومُتقنة، يُقدمه الأستاذ ويل ستيل تحت إشراف الدكتور/أحمد الدملاوي. برنامج تُفعل فيه الفطرة، لتستلم زمام حياتك من جديد وتكون على الطريق الصحيح، حيث الفرص والإمكانيات اللامحدودة.",
     },
     {
-      title: "Emotional Literacy",
+      title: "محو الامية الشعورية",
       image:
         "https://managethenow.com/emotional-literacy/_next/static/media/logo.f54f6b79.svg",
-      url: "https://managethenow.com/emotional-literacy/",
+      url: "https://forms.mtninstitute.net/ebt",
       description:
         "برنامج محو الأمية الشعورية هو رحلتك لاكتشاف العالم الخفي للمشاعر وتأثيره على حياتك اليومية. دعنا نساعدك على فهم ذاتك، تحقيق التوازن، وإدارة مشاعرك بوعي لتعيش حياة أكثر سعادة وإيجابية.",
     },
     {
-      title: "Luscher",
+      title: "ممارس اختبار لوشر التشخيصي بالالوان",
       image: "https://managethenow.com/luscher/images/logo.png",
-      url: "https://managethenow.com/luscher/",
+      url: "https://forms.mtninstitute.net/luscher",
       description:
         "الطبيب الوحيد في العالم العربي الذي يعتمد في تشخيص وعلاج عملائه على منظور علاجي وتدريبي ينبع من تشخيص النفس بالألوان وتشخيص المرض بالسبب النفسي له. علم الميتاهيلث منذ عام 2012 حتى الآن.",
     },
     {
-      title: "Session CT Scan",
+      title: "منطقية الشعور",
       image:
-        "https://managethenow.com/session-ct-scan//_next/static/media/Brain%20CT%20Scan%20logo.333ba614.svg",
-      url: "https://managethenow.com/session-ct-scan/",
+        "https://s3.amazonaws.com/dynamic.form/uploads/1735733175937-logical-feeling.png",
+      url: "https://forms.mtninstitute.net/logical-feeling",
       description:
         "نحن هنا لنساعدك على كشف أسرار جسدك وعقلك باستخدام أحدث التقنيات. يقدم مركز إدارة اللحظة خدمة التشخيص باستخدام تقنية التصوير المقطعي على المخ (CT Scan)، لتحديد أي ألم جسدي أو سلوك غير مفهوم، مما يتيح لك رؤية أوضح وفهم أعمق لذاتك.",
     },
