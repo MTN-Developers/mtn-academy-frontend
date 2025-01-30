@@ -22,7 +22,7 @@ export default function StudyCard({
   };
 }) {
   return (
-    <Card className="py-3 px-2">
+    <Card className="py-3 px-2 flex flex-col justify-between ">
       <div className="h-[200px] w-[100px] mx-auto overflow-hidden flex justify-center items-center">
         <Image
           alt="cardImage"
@@ -43,7 +43,7 @@ export default function StudyCard({
       <CardContent className="px-3 py-2 text-sm h-36 text-gray-500 text-ellipsis text-center break-words">
         {study.description}
       </CardContent>
-      <CardFooter className="py-0 px-3 pt-6 pb-5 flex flex-col space-y-2 justify-between">
+      <CardFooter className="py-0 px-3 pt-6 pb-5 flex flex-col space-y-2 justify-between w-full">
         {/* <div className="flex items-center justify-start w-full space-x-3">
           <div className="flex items-center">
             <Image alt="peopleIcon" src={personIcon} />
