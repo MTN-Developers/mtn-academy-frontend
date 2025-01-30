@@ -3,7 +3,7 @@
 import * as React from "react";
 import Image from "next/image";
 
-import saleImg from "@/public/images/slider.svg";
+import saleImg from "@/public/images/banner 06.png";
 
 export function MainCarousel() {
   // const [current, setCurrent] = React.useState(0);
