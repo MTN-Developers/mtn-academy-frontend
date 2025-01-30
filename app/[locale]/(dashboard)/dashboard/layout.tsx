@@ -12,7 +12,7 @@ export default function DashboardLayout({
   return (
     <>
       {/* // <ProtectedRoute> */}
-      <div className="lg:z-50">
+      <div className="relative lg:z-50">
         <Navbar />
       </div>
 
