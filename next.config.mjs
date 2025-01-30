@@ -8,7 +8,8 @@ const nextConfig = {
     domains: [
       "d3etitelwwg9fo.cloudfront.net",
       "efficaciousleadership.com",
-      "managethenow.com", // Added this domain
+      "managethenow.com",
+      "s3.amazonaws.com", // Added S3 domain
     ],
     remotePatterns: [
       {
@@ -27,7 +28,13 @@ const nextConfig = {
         protocol: "https",
         hostname: "managethenow.com",
         port: "",
-        pathname: "/**", // This will allow all paths under managethenow.com
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "s3.amazonaws.com",
+        port: "",
+        pathname: "/**", // This will allow all paths under s3.amazonaws.com
       },
     ],
   },
