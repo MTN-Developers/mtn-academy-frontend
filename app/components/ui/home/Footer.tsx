@@ -77,7 +77,7 @@ export function Footer() {
               alt="MTN Institute"
               width={180}
               height={160}
-              className="mb-6 lg:mb-20"
+              className="mb-6 lg:w-[180px] w-[120px] lg:mb-20"
             />
             <div className="space-y-4">
               <Link href="#" className="block">
