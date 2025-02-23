@@ -231,7 +231,7 @@ export default function RegisterPage() {
           {/* Form body */}
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="lg:w-[456px] w-full p-4 lg:p-[48px]"
+            className="lg:w-[456px]  max-h-screen overflow-y-scroll scrollbar-none  w-full p-4  lg:px-[48px]"
           >
             <div className="hidden lg:block">
               <Image src={mtnLogo} alt="mtn logo" />
