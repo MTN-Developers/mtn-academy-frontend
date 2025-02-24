@@ -1,4 +1,4 @@
-import createNextIntlPlugin from "next-intl/plugin";
+import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
@@ -6,35 +6,36 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   images: {
     domains: [
-      "d3etitelwwg9fo.cloudfront.net",
-      "efficaciousleadership.com",
-      "managethenow.com",
-      "s3.amazonaws.com", // Added S3 domain
+      'd3etitelwwg9fo.cloudfront.net',
+      'efficaciousleadership.com',
+      'managethenow.com',
+      's3.amazonaws.com', // Added S3 domain
+      'res.cloudinary.com',
     ],
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "d3etitelwwg9fo.cloudfront.net",
-        port: "",
-        pathname: "/uploads/**",
+        protocol: 'https',
+        hostname: 'd3etitelwwg9fo.cloudfront.net',
+        port: '',
+        pathname: '/uploads/**',
       },
       {
-        protocol: "https",
-        hostname: "efficaciousleadership.com",
-        port: "",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'efficaciousleadership.com',
+        port: '',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "managethenow.com",
-        port: "",
-        pathname: "/**",
+        protocol: 'https',
+        hostname: 'managethenow.com',
+        port: '',
+        pathname: '/**',
       },
       {
-        protocol: "https",
-        hostname: "s3.amazonaws.com",
-        port: "",
-        pathname: "/**", // This will allow all paths under s3.amazonaws.com
+        protocol: 'https',
+        hostname: 's3.amazonaws.com',
+        port: '',
+        pathname: '/**', // This will allow all paths under s3.amazonaws.com
       },
     ],
   },
