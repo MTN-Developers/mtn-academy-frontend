@@ -224,3 +224,13 @@
 .tabs-trigger[data-state="active"]:hover {
   @apply text-blue-500; /* Slightly darker shade for active tab hover */
 }
+
+@layer components {
+  .video-player-controls {
+    @apply opacity-0 transition-opacity duration-300;
+  }
+
+  .video-player-container:hover .video-player-controls {
+    @apply opacity-100;
+  }
+}
