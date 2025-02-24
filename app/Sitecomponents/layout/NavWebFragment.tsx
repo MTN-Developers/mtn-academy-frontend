@@ -13,7 +13,8 @@ import {
   MenubarRadioItem,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { Button } from "../ui/button";
+// import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface NavbarProps {
   locale: string;
@@ -103,12 +104,18 @@ const NavWebFragment = ({
               </MenubarContent>
             </MenubarMenu> */}
             <div className="flex items-center space-x-3">
-              <Button className=" bg-white border text-primary-blue  mx-2 border-primary-blue hover:bg-primary-blue hover:text-white">
+              <Link
+                href={"/register"}
+                className=" bg-white border text-primary-blue px-4 py-1    rounded-sm  mx-2 border-primary-blue hover:bg-primary-blue hover:text-white"
+              >
                 {locale === "ar" ? "اشتراك" : "Signup"}
-              </Button>
-              <Button className="bg-primary-blue border-primary-blue min-w-fit  hover:bg-primary-blue">
+              </Link>
+              <Link
+                href={"/login"}
+                className="bg-primary-blue px-4 py-1 text-white rounded-sm border-primary-blue min-w-fit  hover:bg-primary-blue"
+              >
                 {locale === "ar" ? "تسجيل الدخول" : "Login"}
-              </Button>
+              </Link>
             </div>
           </Menubar>
           {/* Avatar */}

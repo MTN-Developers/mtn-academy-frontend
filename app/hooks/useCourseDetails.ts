@@ -1,8 +1,21 @@
 // app/hooks/useCourseDetails.ts
-import { useQuery } from "@tanstack/react-query";
-import axiosInstance from "../lib/axios/instance";
+import { useQuery } from '@tanstack/react-query';
+import axiosInstance from '../lib/axios/instance';
 
-interface CourseDetails {
+export interface Chapter {
+  id: string;
+  title_ar: string;
+  title_en: string;
+  price: null;
+  type: string;
+  index: number;
+  updated_at: string;
+  created_at: string;
+  deleted_at: null;
+  is_locked: boolean;
+}
+
+export interface CourseDetails {
   data: {
     id: string;
     name_ar: string;
@@ -10,6 +23,7 @@ interface CourseDetails {
     slug: string;
     description_ar: string;
     description_en: string;
+    chapters: Chapter[];
     about_ar: string | null;
     about_en: string | null;
     benefits_ar: string | null;
@@ -29,7 +43,7 @@ interface CourseDetails {
 
 export const useCourseDetails = (slug: string) => {
   return useQuery<CourseDetails>({
-    queryKey: ["courseDetails", slug],
+    queryKey: ['courseDetails', slug],
     queryFn: async () => {
       const { data } = await axiosInstance.get(`/course/slug/${slug}`);
       return data;
