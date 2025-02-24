@@ -97,7 +97,8 @@
     "semester": "الفصل",
     "semesterOrder": "الفصل {order}",
     "startLearning": "ابدأ التعلم",
-    "noCourses": "لا توجد دورات متاحة"
+    "noCourses": "لا توجد دورات متاحة",
+    "enjoyTheCourse": "استمتع بالدورة"
   },
   "tabs": {
     "information": "المعلومات",

@@ -97,7 +97,8 @@
     "semester": "Semester",
     "semesterOrder": "Semester {order}",
     "startLearning": "Start Learning",
-    "noCourses": "No courses available"
+    "noCourses": "No courses available",
+    "enjoyTheCourse": "Enjoy the course"
   },
   "tabs": {
     "information": "Information",
