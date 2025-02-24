@@ -113,91 +113,91 @@ export default function RegisterPage() {
     setValue("country", country.name);
   };
 
-  // const onSubmit = async (data: RegisterFormData) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const formattedData = {
-  //       ...data,
-  //       phone: phoneData.phone,
-  //       country: phoneData.country,
-  //     };
+  const onSubmit = async (data: RegisterFormData) => {
+    setIsLoading(true);
+    try {
+      const formattedData = {
+        ...data,
+        phone: phoneData.phone,
+        country: phoneData.country,
+      };
 
-  //     console.log("onSubmit", formattedData);
+      console.log("onSubmit", formattedData);
 
-  //     const response = await axiosInstance.post(
-  //       endpoints.register,
-  //       formattedData
-  //     );
-  //     if (response.data.message === "Success" || response.data.status === 201) {
-  //       // Show success message
-  //       toast.success(t("registration.success"));
+      const response = await axiosInstance.post(
+        endpoints.register,
+        formattedData
+      );
+      if (response.data.message === "Success" || response.data.status === 201) {
+        // Show success message
+        toast.success(t("registration.success"));
 
-  //       // Optional: Store auth token if provided
-  //       if (response.data.token) {
-  //         localStorage.setItem("token", response.data.token);
-  //       }
+        // Optional: Store auth token if provided
+        if (response.data.token) {
+          localStorage.setItem("token", response.data.token);
+        }
 
-  //       resetFormStates();
+        resetFormStates();
 
-  //       // Use window.location for navigation or Next.js router
-  //       try {
-  //         await router.push(`/${locale}/login`);
-  //       } catch (routingError) {
-  //         console.error(
-  //           "Next.js routing failed, trying alternative:",
-  //           routingError
-  //         );
-  //         window.location.href = `/${locale}/login`;
-  //       }
-  //     } else {
-  //       throw new Error(response.data.message || t("registration.error"));
-  //     }
-  //   } catch (error) {
-  //     if (error instanceof AxiosError) {
-  //       // Handle Axios errors
-  //       if (error.response) {
-  //         const errorData = error.response.data as ApiErrorResponse;
-  //         const errorMessage = errorData.message || t("registration.error");
+        // Use window.location for navigation or Next.js router
+        try {
+          await router.push(`/${locale}/login`);
+        } catch (routingError) {
+          console.error(
+            "Next.js routing failed, trying alternative:",
+            routingError
+          );
+          window.location.href = `/${locale}/login`;
+        }
+      } else {
+        throw new Error(response.data.message || t("registration.error"));
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        // Handle Axios errors
+        if (error.response) {
+          const errorData = error.response.data as ApiErrorResponse;
+          const errorMessage = errorData.message || t("registration.error");
 
-  //         switch (error.response.status) {
-  //           case 422: // Validation error
-  //             if (errorData.errors) {
-  //               Object.keys(errorData.errors).forEach((key) => {
-  //                 const fieldErrors = errorData.errors![key];
-  //                 if (fieldErrors && fieldErrors.length > 0) {
-  //                   toast.error(fieldErrors[0]);
-  //                 }
-  //               });
-  //             }
-  //             break;
-  //           case 409: // Conflict - email/phone already exists
-  //             toast.error(t("registration.userExists"));
-  //             break;
-  //           default:
-  //             toast.error(errorMessage);
-  //         }
-  //       } else if (error.request) {
-  //         // Network error
-  //         toast.error(t("errors.network"));
-  //       }
-  //     } else if (error instanceof Error) {
-  //       // Handle standard Error objects
-  //       toast.error(error.message || t("errors.unknown"));
-  //     } else {
-  //       // Handle unknown error types
-  //       toast.error(t("errors.unknown"));
-  //     }
-  //     console.error("Registration failed:", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  const onSubmit = () => {
-    // Simulate form submission
-    console.log("onSubmit");
-    toast.error("system under construction");
+          switch (error.response.status) {
+            case 422: // Validation error
+              if (errorData.errors) {
+                Object.keys(errorData.errors).forEach((key) => {
+                  const fieldErrors = errorData.errors![key];
+                  if (fieldErrors && fieldErrors.length > 0) {
+                    toast.error(fieldErrors[0]);
+                  }
+                });
+              }
+              break;
+            case 409: // Conflict - email/phone already exists
+              toast.error(t("registration.userExists"));
+              break;
+            default:
+              toast.error(errorMessage);
+          }
+        } else if (error.request) {
+          // Network error
+          toast.error(t("errors.network"));
+        }
+      } else if (error instanceof Error) {
+        // Handle standard Error objects
+        toast.error(error.message || t("errors.unknown"));
+      } else {
+        // Handle unknown error types
+        toast.error(t("errors.unknown"));
+      }
+      console.error("Registration failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
+
+  // const onSubmit = () => {
+  //   // Simulate form submission
+  //   console.log("onSubmit");
+  //   toast.error("system under construction");
+  // };
 
   return (
     <div
