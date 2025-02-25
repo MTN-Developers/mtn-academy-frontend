@@ -13,13 +13,13 @@ import { NotFoundState } from '@/app/components/common/NotFoundState';
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
-import { Chapters } from '@/app/components/ui/course/Playlist';
+import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 
 const CoursePage = () => {
   const { slug } = useParams();
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
-  console.log('courseDetails', courseDetails);
+  console.log('courseDetails is ', courseDetails);
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
   const path = usePathname();
@@ -104,7 +104,7 @@ const CoursePage = () => {
                   </div>
                 </TabsContent>
                 <TabsContent value="playlist" className="mt-6">
-                  <Chapters data={courseDetails.chapters} />
+                  <ChaptersAccordion courseDetails={courseDetails} innerBackground="bg-[#F7F7F7CF]" />
                 </TabsContent>
               </Tabs>
             </div>

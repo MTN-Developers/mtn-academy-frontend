@@ -1,32 +1,33 @@
 // src/lib/redux/store.ts
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import authReducer from "./features/authSlice";
-import { persistStore, persistReducer } from "redux-persist";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import coursesReducer from "./features/courseSlice";
-import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
-import academicPathsReducer from "./features/academicPathsSlice";
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import authReducer from './features/authSlice';
+import { persistStore, persistReducer } from 'redux-persist';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import coursesReducer from './features/courseSlice';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+import academicPathsReducer from './features/academicPathsSlice';
+import courseBySlugReducer from './features/courseBySlugSlice';
 
 // Combine all reducers
 const rootReducer = combineReducers({
   auth: authReducer,
   courses: coursesReducer,
   academicPaths: academicPathsReducer,
-
+  courseBySlug: courseBySlugReducer,
   // semesters: semesterReducer,
 });
 // Define persist config
 const persistConfig = {
-  key: "root",
+  key: 'root',
   storage,
-  whitelist: ["auth"], // only auth will be persisted
+  whitelist: ['auth'], // only auth will be persisted
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: false,
     }),
