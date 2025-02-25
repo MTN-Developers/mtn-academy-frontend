@@ -157,10 +157,6 @@ export default function WatchPage() {
 
             <p className="text-sm md:text-base text-[#161616] mb-4">
               {isRTL ? currentVideo?.description_ar : currentVideo?.description_en}
-              For many people, images are the most effective way to communicate information. Whether it be a social
-              issue, a personal story, or something you find joy in, any subject can inspire a visualization. Data
-              illustrator Sonja Kuijpers specializes in turning numbers and information into accessible works of art.
-              She has worked with clients including Philips, the Dutch government, and Frankfurter Allgemeine Zeitung
             </p>
             <></>
           </TabsContent>
