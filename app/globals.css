@@ -10,7 +10,7 @@
 }
 
 /* Add RTL support */
-[dir="rtl"] {
+[dir='rtl'] {
   .rtl-switch {
     @apply rotate-180;
   }
@@ -109,19 +109,19 @@
 /* nav bar responsive */
 
 /* app/globals.css */
-[dir="rtl"] .sheet-content {
+[dir='rtl'] .sheet-content {
   @apply right-0 left-auto;
 }
 
-[dir="rtl"] .sheet-content-close {
+[dir='rtl'] .sheet-content-close {
   @apply left-4 right-auto;
 }
 
-[dir="rtl"] .sheet-content-header {
+[dir='rtl'] .sheet-content-header {
   @apply text-right;
 }
 
-[dir="rtl"] .menubar-content {
+[dir='rtl'] .menubar-content {
   @apply text-right;
 }
 
@@ -211,7 +211,7 @@
 } */
 
 /* Change the active tab background and text color */
-.tabs-trigger[data-state="active"] {
+.tabs-trigger[data-state='active'] {
   @apply !text-blue-500 underline; /* Change to your desired colors */
 }
 
@@ -221,7 +221,7 @@
 }
 
 /* If you want to keep the hover style different for active tab */
-.tabs-trigger[data-state="active"]:hover {
+.tabs-trigger[data-state='active']:hover {
   @apply text-blue-500; /* Slightly darker shade for active tab hover */
 }
 
@@ -234,3 +234,7 @@
     @apply opacity-100;
   }
 }
+/* 
+.carousel-slide {
+  transition: transform 0.3s ease-in-out;
+} */

@@ -1,10 +1,11 @@
-import React from "react";
-import imagePlaceholder from "@/public/images/image-placeholder.svg";
-import CourseCard from "../../common/CourseCard";
+import React from 'react';
+import imagePlaceholder from '@/public/images/image-placeholder.svg';
+import CourseCard from '../../common/CourseCard';
+import { Course } from '@/app/types/course';
 
 export interface ICourseCard {
   id: string;
-  type: "free" | "premium";
+  type: 'free' | 'premium';
   title: string;
   instructor: {
     name: string;
@@ -24,15 +25,15 @@ export interface ICourseCard {
 
 export const coursesData: ICourseCard[] = [
   {
-    id: "1",
-    type: "free",
-    title: "Emotional literacy",
+    id: '1',
+    type: 'free',
+    title: 'Emotional literacy',
     instructor: {
-      name: "Ahmed eldmlawy",
+      name: 'Ahmed eldmlawy',
       avatar: imagePlaceholder,
     },
     description:
-      "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its",
+      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its',
     stats: {
       students: 5617,
       likes: 1650,
@@ -44,15 +45,14 @@ export const coursesData: ICourseCard[] = [
     thumbnailUrl: imagePlaceholder,
   },
   {
-    id: "2",
-    type: "free",
-    title: "Personal Development",
+    id: '2',
+    type: 'free',
+    title: 'Personal Development',
     instructor: {
-      name: "Sarah Johnson",
+      name: 'Sarah Johnson',
       avatar: imagePlaceholder,
     },
-    description:
-      "Learn essential skills for personal growth and emotional intelligence in this comprehensive course",
+    description: 'Learn essential skills for personal growth and emotional intelligence in this comprehensive course',
     stats: {
       students: 4328,
       likes: 1280,
@@ -64,15 +64,14 @@ export const coursesData: ICourseCard[] = [
     thumbnailUrl: imagePlaceholder,
   },
   {
-    id: "3",
-    type: "premium",
-    title: "Leadership Skills",
+    id: '3',
+    type: 'premium',
+    title: 'Leadership Skills',
     instructor: {
-      name: "Michael Chen",
+      name: 'Michael Chen',
       avatar: imagePlaceholder,
     },
-    description:
-      "Master the art of leadership and team management with practical exercises and real-world examples",
+    description: 'Master the art of leadership and team management with practical exercises and real-world examples',
     stats: {
       students: 3892,
       likes: 945,
@@ -84,15 +83,14 @@ export const coursesData: ICourseCard[] = [
     thumbnailUrl: imagePlaceholder,
   },
   {
-    id: "4",
-    type: "free",
-    title: "Communication Mastery",
+    id: '4',
+    type: 'free',
+    title: 'Communication Mastery',
     instructor: {
-      name: "Emma Williams",
+      name: 'Emma Williams',
       avatar: imagePlaceholder,
     },
-    description:
-      "Enhance your communication skills and learn to connect effectively with others in any situation",
+    description: 'Enhance your communication skills and learn to connect effectively with others in any situation',
     stats: {
       students: 6234,
       likes: 1820,
@@ -105,16 +103,18 @@ export const coursesData: ICourseCard[] = [
   },
 ];
 
-const FreeStudiesComp = () => {
+interface IProps {
+  courses: Course[];
+  direction: string;
+}
+
+const FreeStudiesComp = ({ courses, direction }: IProps) => {
   return (
     <div>
-      <h2 className="text-[#353535]  lg:text-[40px] my-4 font-semibold leading-[45px]">
-        Get Started with free study
-      </h2>
+      <h2 className="text-[#353535]  lg:text-[40px] my-4 font-semibold leading-[45px]">Get Started with free study</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
-        {coursesData.map((course) => (
-          <CourseCard key={course.id} course={course} />
-        ))}
+        {courses.length > 0 &&
+          courses.map(course => <CourseCard key={course.id} course={course} direction={direction} />)}
       </div>
     </div>
   );

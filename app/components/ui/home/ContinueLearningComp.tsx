@@ -1,9 +1,9 @@
-import React from "react";
-import LearningStudyProgressCard from "../../common/LearningStudyProgressCard";
-import imagePlaceholder from "@/public/images/image-placeholder.svg";
-import { useSelector } from "react-redux";
-import { RootState } from "@/app/lib/redux/store";
-import { useTranslations } from "next-intl";
+import React from 'react';
+import LearningStudyProgressCard from '../../common/LearningStudyProgressCard';
+import imagePlaceholder from '@/public/images/image-placeholder.svg';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/lib/redux/store';
+import { useTranslations } from 'next-intl';
 
 export type Study = {
   id: number;
@@ -31,14 +31,14 @@ export type Course = {
 export const studies: Study[] = [
   {
     id: 1,
-    title: "Pre Study",
+    title: 'Pre Study',
     mainCourses: [
       {
-        title: "Emotion Literacy",
+        title: 'Emotion Literacy',
         image: imagePlaceholder,
         Courses: [
           {
-            title: "Fittra Therapy Gym",
+            title: 'Fittra Therapy Gym',
             percentage: 80,
             image: imagePlaceholder,
           },
@@ -46,62 +46,60 @@ export const studies: Study[] = [
         percentage: 70, // In progress
       },
       {
-        title: "Rational Feelings",
+        title: 'Rational Feelings',
         image: imagePlaceholder,
         Courses: [],
         percentage: 0, // Not started
       },
     ],
     progress: 35, // In progress
-    stage: "In Progress",
+    stage: 'In Progress',
     image: imagePlaceholder,
   },
   {
     id: 2,
-    title: "Technical Study",
+    title: 'Technical Study',
     mainCourses: [
       {
-        title: "Emotional Balance 1",
+        title: 'Emotional Balance 1',
         image: imagePlaceholder,
         Courses: [],
         percentage: 100, // Completed
       },
       {
-        title: "Lucsher Practitioner",
+        title: 'Lucsher Practitioner',
         image: imagePlaceholder,
         Courses: [],
         percentage: 100, // Completed
       },
     ],
     progress: 100, // Completed
-    stage: "Completed",
+    stage: 'Completed',
     image: imagePlaceholder,
   },
   {
     id: 3,
-    title: "Specialties",
+    title: 'Specialties',
     mainCourses: [
       {
-        title: "Feeling Tamahy",
+        title: 'Feeling Tamahy',
         image: imagePlaceholder,
         Courses: [],
         percentage: 0, // Not started
       },
     ],
     progress: 0, // Not started
-    stage: "Not Started",
+    stage: 'Not Started',
     image: imagePlaceholder,
   },
 ];
 
 const ContinueLearningComp = () => {
-  const t = useTranslations("home");
+  const t = useTranslations('home');
   //get all courses
-  const { items: allCourses } = useSelector(
-    (state: RootState) => state.courses
-  );
+  const { items: allCourses } = useSelector((state: RootState) => state.courses);
 
-  console.log("All courses is ", allCourses);
+  // console.log("All courses is ", allCourses);
 
   // // Sort studies: In Progress first, then Not Started, then Completed
   // const sortedStudies = [...studies].sort((a, b) => {
@@ -121,10 +119,8 @@ const ContinueLearningComp = () => {
 
   return (
     <div className="w-full max-w-[1005px]  lg:my-[60px] my-[20px] flex items-start justify-start   flex-col gap-4">
-      <h1 className="text-2xl font-bold text-start">
-        {t("Continue learning")}
-      </h1>
-      {allCourses.map((course) => (
+      <h1 className="text-2xl font-bold text-start">{t('Continue learning')}</h1>
+      {allCourses.map(course => (
         <LearningStudyProgressCard key={course.id} course={course} />
       ))}
     </div>

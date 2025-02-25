@@ -11,6 +11,7 @@ const nextConfig = {
       'managethenow.com',
       's3.amazonaws.com', // Added S3 domain
       'res.cloudinary.com',
+      'via.placeholder.com', // Added placeholder domain
     ],
     remotePatterns: [
       {
