@@ -5,6 +5,7 @@ import { TruncatedText } from './TruncatedText';
 // import { Heart, User } from 'lucide-react';
 // import { Course } from '@/app/types/course';
 import { SemesterDetails } from '@/app/types/semester';
+import Link from 'next/link';
 interface SemesterCardProps {
   semester: SemesterDetails;
   direction: string;
@@ -17,7 +18,10 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
   //   : course.pricing.originalPrice;
 
   return (
-    <div className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white">
+    <Link
+      href={`dashboard/semester/${semester.id}`}
+      className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
+    >
       <div className="relative h-48">
         <Image
           src={direction === 'ltr' ? semester.image_url_en : semester.image_url_ar}
@@ -61,7 +65,7 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
           )}
         </div> */}
       </div>
-    </div>
+    </Link>
   );
 };
 

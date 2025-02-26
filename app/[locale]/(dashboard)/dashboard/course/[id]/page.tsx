@@ -1,4 +1,4 @@
-// app/semester/[slug]/page.tsx
+// app/[locale]/course/[slug]/page.tsx
 'use client';
 
 import Image from 'next/image';
@@ -10,18 +10,24 @@ import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
 import { PathDetailsSkeleton } from '@/app/components/ui/home/PathDetailsSkeleton';
 // import { NotFoundState } from '@/app/components/common/NotFoundState';
-import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
-import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
-import { CoursesGrid } from '@/app/components/common/CoursesGrid';
 import { ErrorState } from '@/app/components/common/ErrorState';
+import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
+import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
+import { Chapters } from '@/app/components/ui/course/Playlist';
+import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 
-const SemesterPage = () => {
-  const { slug } = useParams();
-  const { data, isLoading, error } = useSemesterDetails(slug as string);
-  const semesterDetails = data;
+const CoursePage = () => {
+  const { id } = useParams();
+  const { data: courseData, isLoading: courseLoading, error: courseError } = useCourseDetails(id as string);
+  const courseDetails = courseData?.data;
 
-  // console.log('sesmter ails ', semesterDetails);
+  const {
+    data: semesterData,
+    isLoading: semesterLoading,
+    error: semesterError,
+  } = useSemesterDetails(courseDetails?.semester_id || '');
 
+  console.log('courseDetails', courseDetails);
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
   const path = usePathname();
@@ -30,25 +36,29 @@ const SemesterPage = () => {
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
 
-  if (isLoading) {
+  if (courseLoading || semesterLoading) {
     return <PathDetailsSkeleton />;
   }
 
-  if (error) {
-    return <ErrorState error={error} />;
+  if (courseError) {
+    return <ErrorState error={courseError} />;
   }
 
-  // if (!semesterDetails) {
-  //   return <NotFoundState />;
-  // }
+  if (semesterError) {
+    return <ErrorState error={semesterError} />;
+  }
+
+  if (semesterError) {
+    return <ErrorState error={semesterError} />;
+  }
 
   return (
     <>
-      {semesterDetails && (
+      {semesterData && courseDetails && (
         <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
           <BreadcrumbFragment
-            pathName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
-            pathSlug={semesterDetails.slug}
+            pathName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
+            pathSlug={courseDetails.slug}
           />
 
           <div className="w-full p-4 px-4 max-w-7xl mx-auto">
@@ -57,54 +67,31 @@ const SemesterPage = () => {
               <div className="md:col-span-2">
                 <div className="flex items-center gap-4 mb-4 flex-wrap">
                   <Image
-                    src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
-                    alt={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                    src={isRTL ? courseDetails.logo_ar : courseDetails.logo_en}
+                    alt={isRTL ? courseDetails.name_ar : courseDetails.name_en}
                     width={64}
                     height={64}
                     className="rounded-lg"
                   />
                   <div>
-                    <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
-                      {isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                    <h1 className="text-xl md:text-2xl font-normal text-[#10458c] break-words">
+                      {isRTL ? courseDetails.name_ar : courseDetails.name_en}
                     </h1>
-                    <p className="text-gray-600 text-sm">
-                      {tCourse('by')} <span className="font-semibold">{'By Ahmed Eldmallawy'}</span>
-                    </p>
-                  </div>
-                  {/* Video Preview */}
-                  {semesterDetails.promotion_video_url ? (
-                    <div className="relative aspect-video  rounded-lg mb-8 w-full">
-                      {/* Add your video player component here */}
-                      <iframe
-                        style={{
-                          borderRadius: '20px',
-                        }}
-                        allowFullScreen
-                        allow="autoplay; fullscreen; picture-in-picture pip"
-                        key={semesterDetails.id}
-                        className="w-full h-full"
-                        src={semesterDetails.promotion_video_url}
-                        // src={`https://therapy-gym-intimate-relationships.pages.dev/?stream#${src}`}
-                        // src={`https://video-player-cxd.pages.dev/?stream#${src}`}
-                        // src={`https://stream.mtninstitute.net/streaming/index.html?stream#${src}`}
-                      />
-                    </div>
-                  ) : (
-                    <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
-                      <div className="absolute inset-0 flex items-center justify-center text-white">
-                        {tCourse('noVideoAvailable')}
-                      </div>
-                    </div>
-                  )}
-                  <div>
-                    <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
-                      {isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
-                    </h1>
-                    <p className="text-gray-600 text-sm">
-                      {tCourse('semester')} {semesterDetails.order}
-                    </p>
                   </div>
                 </div>
+
+                {/* Video Preview */}
+                {courseDetails.promotion_video_url ? (
+                  <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
+                    {/* Add your video player component here */}
+                  </div>
+                ) : (
+                  <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
+                    <div className="absolute inset-0 flex items-center justify-center text-white">
+                      {tCourse('noVideoAvailable')}
+                    </div>
+                  </div>
+                )}
 
                 {/* Tabs */}
                 <div className="w-full overflow-x-auto">
@@ -113,8 +100,8 @@ const SemesterPage = () => {
                       <TabsTrigger value="information" className="tabs-trigger">
                         {tTabs('information')}
                       </TabsTrigger>
-                      <TabsTrigger value="courses" className="tabs-trigger">
-                        {tTabs('courses')}
+                      <TabsTrigger value="playlist" className="tabs-trigger">
+                        {tTabs('playlist')}
                       </TabsTrigger>
                       <TabsTrigger value="discussions" disabled>
                         <LockKeyhole size={15} />
@@ -125,27 +112,27 @@ const SemesterPage = () => {
                     <TabsContent value="information" className="mt-6">
                       <div className="prose max-w-none">
                         <p className="text-gray-700">
-                          {isRTL ? semesterDetails.description_ar : semesterDetails.description_en}
+                          {isRTL ? courseDetails.description_ar : courseDetails.description_en}
                         </p>
+                        {/* Add more course details here */}
                       </div>
                     </TabsContent>
-
-                    <TabsContent value="courses">
-                      <CoursesGrid courses={semesterDetails.courses} isRTL={isRTL} />
+                    <TabsContent value="playlist" className="mt-6">
+                      <Chapters data={courseDetails.chapters} />
                     </TabsContent>
                   </Tabs>
                 </div>
               </div>
 
-              {/* Right Sidebar */}
+              {/* Right Section */}
               <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
                 <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
                   <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
-                  <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
+                  <div className="text-[64px] font-bold mb-2">${semesterData?.price_after_discount}</div>
                   <p className="text-center text-sm font-normal  text-red-400 ">
-                    <span className="line-through">${semesterDetails.price}</span>
+                    <span className="line-through">${semesterData?.price}</span>
                     <span className="text-red-400 inline mx-2 text-lg">
-                      %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+                      %{((semesterData?.price - semesterData?.price_after_discount) / 100).toFixed(0)} Discount
                     </span>
                   </p>
                   <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
@@ -171,4 +158,4 @@ const SemesterPage = () => {
   );
 };
 
-export default SemesterPage;
+export default CoursePage;

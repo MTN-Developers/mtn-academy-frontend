@@ -1,11 +1,11 @@
 // app/[locale]/not-found.tsx
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { Home } from "lucide-react"; // Assuming you're using lucide-react for icons
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Home } from 'lucide-react'; // Assuming you're using lucide-react for icons
 
 export default function NotFound() {
-  const t = useTranslations("404");
+  const t = useTranslations('404');
 
   return (
     <div className="h-screen w-full flex flex-col items-center justify-center bg-background">
@@ -19,18 +19,14 @@ export default function NotFound() {
         </div>
 
         {/* Error Message */}
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-gray-900 mb-2">
-          {t("title")}
-        </h1>
-        <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400 mb-8">
-          {t("description")}
-        </p>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tighter text-gray-900 mb-2">{t('title')}</h1>
+        <p className="max-w-[600px] text-gray-500 md:text-xl dark:text-gray-400 mb-8">{t('description')}</p>
 
         {/* Home Button */}
         <Link href="/" className="inline-block">
           <Button className="inline-flex items-center justify-center rounded-md bg-primary text-white px-8 py-3 text-sm font-medium transition-colors hover:bg-primary/90">
             <Home className="mr-2 h-4 w-4" />
-            {t("backHome")}
+            {t('backHome')}
           </Button>
         </Link>
       </div>

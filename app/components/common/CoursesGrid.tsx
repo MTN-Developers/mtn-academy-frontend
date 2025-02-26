@@ -1,8 +1,8 @@
 // components/common/CoursesGrid.tsx
-import { Course } from "@/app/types/semester";
-import { Card } from "@/components/ui/card";
-import Image from "next/image";
-import Link from "next/link";
+import { Course } from '@/app/types/semester';
+import { Card } from '@/components/ui/card';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface CoursesGridProps {
   courses: Course[];
@@ -13,17 +13,15 @@ export const CoursesGrid = ({ courses, isRTL }: CoursesGridProps) => {
   if (!courses?.length) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500">
-          {isRTL ? "لا توجد دورات متاحة" : "No courses available"}
-        </p>
+        <p className="text-gray-500">{isRTL ? 'لا توجد دورات متاحة' : 'No courses available'}</p>
       </div>
     );
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {courses.map((course) => (
-        <Link key={course.id} href={`/dashboard/course/${course.slug}`}>
+      {courses.map(course => (
+        <Link key={course.id} href={`/dashboard/course/${course.id}`}>
           <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200">
             <div className="relative aspect-video">
               <Image
@@ -34,9 +32,10 @@ export const CoursesGrid = ({ courses, isRTL }: CoursesGridProps) => {
               />
             </div>
             <div className="p-4">
-              <h3 className="font-semibold mb-2">
-                {isRTL ? course.name_ar : course.name_en}
-              </h3>
+              <div className="w-fit px-4 py-1 text-center rounded-3xl bg-[#73b8ff] text-[11px] mb-3 text-white">
+                Free study
+              </div>
+              <h3 className="font-semibold mb-2">{isRTL ? course.name_ar : course.name_en}</h3>
               <p className="text-sm text-gray-600 line-clamp-2">
                 {isRTL ? course.description_ar : course.description_en}
               </p>

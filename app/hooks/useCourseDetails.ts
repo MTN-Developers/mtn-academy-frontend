@@ -34,18 +34,19 @@ export interface CourseDetails {
     banner_ar: string | null;
     banner_en: string | null;
     type: string;
+    semester_id: string;
     promotion_video_url: string | null;
-    sub_courses: any[];
+    // sub_courses: any[];
   };
   status: number;
   message: string;
 }
 
-export const useCourseDetails = (slug: string) => {
+export const useCourseDetails = (id: string) => {
   return useQuery<CourseDetails>({
-    queryKey: ['courseDetails', slug],
+    queryKey: ['courseDetails', id],
     queryFn: async () => {
-      const { data } = await axiosInstance.get(`/course/slug/${slug}`);
+      const { data } = await axiosInstance.get(`/course/${id}`);
       return data;
     },
   });

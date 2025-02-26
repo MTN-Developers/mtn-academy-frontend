@@ -23,6 +23,8 @@ export interface Course {
   updated_at: string;
   created_at: string;
   deleted_at: string | null;
+  is_completed: true;
+  is_unlocked: true;
 }
 
 export interface SemesterDetails {
@@ -40,6 +42,8 @@ export interface SemesterDetails {
   created_at?: string;
   deleted_at?: string | null;
   courses: Course[] | [];
+  price: number;
+  price_after_discount: number;
   promotion_video_url?: string | null;
 }
 
