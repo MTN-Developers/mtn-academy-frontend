@@ -32,15 +32,15 @@ export interface SemesterDetails {
   slug: string;
   description_ar: string;
   description_en: string;
-  order: number;
+  order?: number;
   image_url_ar: string;
   image_url_en: string;
-  academic_study_path_id: string;
-  updated_at: string;
-  created_at: string;
-  deleted_at: string | null;
-  courses: Course[];
-  promotion_video_url: string | null;
+  academic_study_path_id?: string;
+  updated_at?: string;
+  created_at?: string;
+  deleted_at?: string | null;
+  courses: Course[] | [];
+  promotion_video_url?: string | null;
 }
 
 export interface ApiSemesterResponse {

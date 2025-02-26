@@ -3,24 +3,25 @@ import React from 'react';
 // import { ICourseCard } from "../ui/home/FreeStudiesComp";
 import { TruncatedText } from './TruncatedText';
 // import { Heart, User } from 'lucide-react';
-import { Course } from '@/app/types/course';
-interface CourseCardProps {
-  course: Course;
+// import { Course } from '@/app/types/course';
+import { SemesterDetails } from '@/app/types/semester';
+interface SemesterCardProps {
+  semester: SemesterDetails;
   direction: string;
 }
 
-const CourseCard = ({ course, direction }: CourseCardProps) => {
+const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
   // const discountedPrice = course.pricing.discountPercentage
   //   ? course.pricing.originalPrice *
   //     (1 - course.pricing.discountPercentage / 100)
   //   : course.pricing.originalPrice;
 
   return (
-    <div className="rounded-lg my-1  overflow-hidden shadow-lg bg-white">
+    <div className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white">
       <div className="relative h-48">
         <Image
-          src={direction === 'ltr' ? course.logo_en : course.logo_ar}
-          alt={course.name_en}
+          src={direction === 'ltr' ? semester.image_url_en : semester.image_url_ar}
+          alt={semester.name_en}
           layout="fill"
           objectFit="cover"
         />
@@ -30,13 +31,13 @@ const CourseCard = ({ course, direction }: CourseCardProps) => {
         {/* <span className="inline-block px-3 py-1 text-sm bg-[#73b8ff] text-white rounded-full">{course.type}</span> */}
 
         <h2 className="flex  flex-col justify-center  text-[#353535]  text-xl font-medium my-4">
-          <TruncatedText text={direction === 'ltr' ? course.name_en : course.name_ar} />
+          <TruncatedText text={direction === 'ltr' ? semester.name_en : semester.name_ar} />
         </h2>
         {/* <p className="flex  flex-col justify-center text-[#353535]  text-[13px] font-normal ">
           A course by {course.instructor.name}
         </p> */}
 
-        <p className="mt-4 text-gray-700">{direction === 'ltr' ? course.description_en : course.description_ar}</p>
+        <p className="mt-4 text-gray-700">{direction === 'ltr' ? semester.description_en : semester.description_ar}</p>
 
         {/* <div className="flex  items-center mt-6 space-x-4">
           <div className="flex items-center">
@@ -64,4 +65,4 @@ const CourseCard = ({ course, direction }: CourseCardProps) => {
   );
 };
 
-export default CourseCard;
+export default SemesterCard;

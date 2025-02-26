@@ -2,8 +2,8 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '@/app/lib/redux/store';
+// import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@/app/lib/redux/store';
 import { fetchCourses } from '@/app/lib/redux/features/courseSlice';
 // import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 // import ContinueLearningComp from "@/app/components/ui/home/ContinueLearningComp";
@@ -11,11 +11,16 @@ import { MainCarousel } from '@/app/components/ui/home/MainCarousel';
 import FreeStudiesComp from '@/app/components/ui/home/FreeStudiesComp';
 import { usePathname } from 'next/navigation';
 import { getLangDir } from 'rtl-detect';
+import useGetAllSemesters from '@/app/hooks/useGetAllSemesters';
+import { DiplomaCardSkeleton } from '@/app/components/ui/home/DiplomaCardSkeleton';
 // import { DiplomaCarousel } from '@/app/components/ui/home/DiplomaCarousel';
 
 const Page = () => {
   const dispatch = useAppDispatch();
-  const { status, error, items } = useSelector((state: RootState) => state.courses);
+  // const { status, error, items } = useSelector((state: RootState) => state.courses);
+  const { data: semesters, error, isLoading } = useGetAllSemesters();
+  console.log('semester', semesters);
+
   const path = usePathname();
   const pathArr = path.split('/');
   const locale = pathArr[1];
@@ -28,6 +33,10 @@ const Page = () => {
     dispatch(fetchCourses({ page: 1, limit: 5000 }));
   }, [dispatch]);
 
+  if (isLoading) {
+    return <DiplomaCardSkeleton />;
+  }
+
   // console.log('Redux State:', { status, error, items }); // Add this for debugging
 
   return (
@@ -36,7 +45,7 @@ const Page = () => {
       {/* {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />} */}
       {status === 'failed' && ' error fetching courses'}
       {/* Add free studies component */}
-      {items.length > 0 && <FreeStudiesComp courses={items} direction={direction} />}
+      {semesters && <FreeStudiesComp semesters={semesters} direction={direction} />}
       {/* diploma carousel */}
       {/* <DiplomaCarousel key={locale} direction={direction} /> */}
     </div>
