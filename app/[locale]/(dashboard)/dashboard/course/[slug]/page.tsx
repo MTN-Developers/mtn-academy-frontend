@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LockKeyhole } from 'lucide-react';
+import { Globe, LockKeyhole } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
@@ -148,17 +148,20 @@ const CoursePage = () => {
               <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
               <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
               <div className="space-y-4 text-sm">
-                {/* <div className="flex items-center gap-2">
-                      <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
-                      <span className="break-words">
-                        {semesterDetails.
-                          ? `${courseDetails.course_duration} ${tCourse('hours')}`
-                          : tCourse('durationNotSpecified')}
-                      </span>
-                    </div> */}
-                {/* Add more course metadata here */}
+                <div className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
+                  <span className="break-words">
+                    {courseDetails.course_duration
+                      ? `${courseDetails.course_duration} ${tCourse('hours')}`
+                      : tCourse('durationNotSpecified')}
+                  </span>
+                </div>
               </div>
             </div>
+            <ul className='className="flex flex-col gap-3 mt-6"'>
+              <li>{courseDetails.resources_count}</li>
+              <li>sadsa</li>
+            </ul>
           </div>
         </div>
       </div>

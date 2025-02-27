@@ -50,4 +50,7 @@ export interface Course {
   semester_id: string;
   is_completed: boolean;
   is_locked: boolean;
+  enrolled_count: number;
+  videos_count: number;
+  resources_count: number;
 }

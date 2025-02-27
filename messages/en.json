@@ -35,13 +35,14 @@
     "By signing up you agree to mtn": "By signing up you agree to mtn",
     "terms & Conditions": "terms & Conditions",
     "privacy policy": "privacy policy",
-    "Sign in": "Sign in",
+    "Sign in": "Sign Up",
     "Or sign in with Google": "Or sign in with Google",
     "Already have an account?": "Already have an account?",
     "Login now": "Login now",
     "registration": {
       "success": "Registration successful!",
-      "error": "Registration failed. Please try again."
+      "error": "Registration failed. Please try again.",
+      "userExists": "Email or phone number already exists"
     },
     "Gender": "Gender",
     "Male": "Male",
