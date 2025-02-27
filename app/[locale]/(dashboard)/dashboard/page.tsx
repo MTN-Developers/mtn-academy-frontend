@@ -19,7 +19,7 @@ const Page = () => {
   const dispatch = useAppDispatch();
   // const { status, error, items } = useSelector((state: RootState) => state.courses);
   const { data: semesters, error, isLoading } = useGetAllSemesters();
-  console.log('semester', semesters);
+  // console.log('semester', semesters);
 
   const path = usePathname();
   const pathArr = path.split('/');
