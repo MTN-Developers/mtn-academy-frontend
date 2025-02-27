@@ -33,6 +33,8 @@ export const ChaptersAccordion = ({
   const [openChapter, setOpenChapter] = useState<string | undefined>(undefined);
   const router = useRouter();
 
+  // console.log('courseDetails', courseDetails?.is_unlocked);
+
   // Fixed handleRouting function
   const handleRouting = (video: Video, chapter: Chapter) => {
     if (courseDetails?.is_unlocked === true) {
