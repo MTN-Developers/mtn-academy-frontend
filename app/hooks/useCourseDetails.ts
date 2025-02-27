@@ -17,6 +17,7 @@ export const useCourseDetails = (slug: string, options?: { enabled?: boolean }) 
     queryKey: ['courseDetails', slug],
     queryFn: async () => {
       const { data } = await axiosInstance.get(`/course/slug/${slug}`);
+      dispatch(setCourse(data.data));
       return data;
     },
     enabled: options?.enabled !== false, // Enable by default unless explicitly disabled
