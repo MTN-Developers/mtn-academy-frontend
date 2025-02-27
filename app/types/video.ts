@@ -47,4 +47,5 @@ export interface Course {
   banner_en: string | null;
   type: string;
   promotion_video_url: string | null;
+  semester_id: string;
 }
