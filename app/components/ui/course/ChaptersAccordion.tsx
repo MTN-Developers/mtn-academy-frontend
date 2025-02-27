@@ -37,7 +37,7 @@ export const ChaptersAccordion = ({
 
   // Fixed handleRouting function
   const handleRouting = (video: Video, chapter: Chapter) => {
-    if (courseDetails?.is_unlocked === true) {
+    if (courseDetails?.is_locked === true) {
       // If course is unlocked, allow navigation to watch page
       if (onVideoSelect) {
         onVideoSelect(video, chapter);
