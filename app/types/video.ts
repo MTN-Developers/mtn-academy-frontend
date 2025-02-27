@@ -49,5 +49,5 @@ export interface Course {
   promotion_video_url: string | null;
   semester_id: string;
   is_completed: boolean;
-  is_unlocked: boolean;
+  is_locked: boolean;
 }
