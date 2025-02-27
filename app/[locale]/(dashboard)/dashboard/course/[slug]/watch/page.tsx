@@ -62,6 +62,11 @@ export default function WatchPage() {
       router.push(`/dashboard/course/${courseData.slug}`);
     }
 
+    if (courseData.is_locked === true) {
+      // alert('This course is locked. Please contact support for assistance.');
+      router.push(`/dashboard/course/${courseData.slug}`);
+    }
+
     // Try to get video from URL parameter
     if (videoId) {
       const found = findVideoInChapters(courseData.chapters, videoId);
@@ -131,6 +136,8 @@ export default function WatchPage() {
   if (error) {
     return <ErrorState error={error} />;
   }
+
+  console.log('curent video is ', currentVideo);
 
   // Define content elements to be ordered based on direction
   const VideoSection = (
