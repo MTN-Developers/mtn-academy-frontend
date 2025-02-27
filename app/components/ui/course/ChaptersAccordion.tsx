@@ -35,7 +35,7 @@ export const ChaptersAccordion = ({
 
   // console.log('courseDetails', courseDetails);
 
-  // console.log('courseDetails', courseDetails?.is_unlocked);
+
 
   // Fixed handleRouting function
   const handleRouting = (video: Video, chapter: Chapter) => {

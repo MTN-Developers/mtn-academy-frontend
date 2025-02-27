@@ -50,4 +50,5 @@ export interface Course {
   semester_id: string;
   is_locked: boolean;
   is_completed: boolean;
+
 }
