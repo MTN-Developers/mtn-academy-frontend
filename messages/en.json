@@ -99,7 +99,16 @@
     "semesterOrder": "Semester {order}",
     "startLearning": "Start Learning",
     "noCourses": "No courses available",
-    "enjoyTheCourse": "Enjoy the course"
+    "enjoyTheCourse": "Enjoy the course",
+    "additionalResources": "additional resources",
+    "students": "students",
+    "lessons": "lessons",
+    "positiveReviews": "Positive Reviews",
+    "online": "Online and at your own pace",
+    "audio": "Audio",
+    "english": "English",
+    "arabic": "Arabic",
+    "unlimitedAccess": "Unlimited access forever"
   },
   "tabs": {
     "information": "Information",

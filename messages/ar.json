@@ -99,7 +99,16 @@
     "semesterOrder": "الفصل {order}",
     "startLearning": "ابدأ التعلم",
     "noCourses": "لا توجد دورات متاحة",
-    "enjoyTheCourse": "استمتع بالدورة"
+    "enjoyTheCourse": "استمتع بالدورة",
+    "additionalResources": "موارد إضافية",
+    "students": "طالب",
+    "lessons": "محاضرة",
+    "positiveReviews": "تقييمات إيجابية",
+    "online": "عبر الإنترنت وبوتيرتك الخاصة",
+    "audio": "صوت",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "unlimitedAccess": "وصول غير محدود"
   },
   "tabs": {
     "information": "المعلومات",
