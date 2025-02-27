@@ -19,7 +19,7 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
 
   return (
     <Link
-      href={`dashboard/semester/${semester.id}`}
+      href={`dashboard/semester/${semester.slug}`}
       className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
     >
       <div className="relative h-48">

@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Globe, LockKeyhole } from 'lucide-react';
+import { LockKeyhole } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
@@ -14,7 +14,13 @@ import { ErrorState } from '@/app/components/common/ErrorState';
 import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
-import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
+import { useSemesterDetailsById } from '@/app/hooks/useSemesterDetails';
+import fileIcon from '@/public/icons/file.svg';
+import personIcon from '@/public/icons/person-1.svg';
+import clipIcon from '@/public/icons/clip.svg';
+import smileIcon from '@/public/icons/smile.svg';
+import infiniteIcon from '@/public/icons/infinite.svg';
+import volumeIcon from '@/public/icons/volume.svg';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -25,7 +31,7 @@ const CoursePage = () => {
     data: semesterDetails,
     isLoading: loadingSemester,
     error: errorSemester,
-  } = useSemesterDetails(courseDetails?.semester_id || '');
+  } = useSemesterDetailsById(courseDetails?.semester_id || '');
   console.log('courseDetails is ', courseDetails);
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
@@ -34,7 +40,7 @@ const CoursePage = () => {
   const locale = pathArr[1];
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
-
+  console.log(semesterDetails);
   if (isLoading || loadingSemester) {
     return <PathDetailsSkeleton />;
   }
@@ -135,32 +141,54 @@ const CoursePage = () => {
           </div>
 
           {/* Right Sectio */}
-          <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
-            <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
+          <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 ">
+            <div className="bg-white p-4 md:p-6 rounded-[14px] my-4 md:sticky md:top-4 flex flex-col gap-3 justify-start items-center shadow-[0px_4px_16px_0px_rgba(0,0,0,0.12)]">
               <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
-              <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
-              <p className="text-center text-sm font-normal  text-red-400 ">
-                <span className="line-through">${semesterDetails.price}</span>
-                <span className="text-red-400 inline mx-2 text-lg">
-                  %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
-                </span>
-              </p>
+              <div className="text-[64px] font-bold">${semesterDetails.price_after_discount}</div>
+              {semesterDetails.price_after_discount < semesterDetails.price && (
+                <p className="text-center text-sm font-normal text-red-400 mt-2">
+                  <span className="line-through">${semesterDetails.price}</span>
+                  <span className="text-red-400 inline mx-2 text-lg">
+                    %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+                  </span>
+                </p>
+              )}
               <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
               <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
-              <div className="space-y-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
-                  <span className="break-words">
-                    {courseDetails.course_duration
-                      ? `${courseDetails.course_duration} ${tCourse('hours')}`
-                      : tCourse('durationNotSpecified')}
-                  </span>
-                </div>
-              </div>
             </div>
-            <ul className='className="flex flex-col gap-3 mt-6"'>
-              <li>{courseDetails.resources_count}</li>
-              <li>sadsa</li>
+            <ul className="flex flex-col gap-y-3 mt-6">
+              <li className="flex items-center gap-2">
+                <Image width={13} height={13} src={personIcon} alt="person-icon" />
+                <span className="text-sm text-[#161616]">
+                  {courseDetails.enrolled_count} {tCourse('students')}
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Image width={13} height={13} src={clipIcon} alt="clip-icon" />
+                <span className="text-sm text-[#161616]">
+                  {courseDetails.videos_count} {tCourse('lessons')}
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Image width={13} height={13} src={fileIcon} alt="file-icon" />
+                <span className="text-sm text-[#161616]">
+                  {courseDetails.resources_count} {tCourse('additionalResources')}
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Image width={13} height={13} src={smileIcon} alt="smile-icon" />
+                <span className="text-sm text-[#161616]">{tCourse('online')}</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Image width={13} height={13} src={volumeIcon} alt="volume-icon" />
+                <span className="text-sm text-[#161616]">
+                  {tCourse('audio')}: {tCourse('arabic')}
+                </span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Image width={13} height={13} src={infiniteIcon} alt="infinite-icon" />
+                <span className="text-sm text-[#161616]">{tCourse('unlimitedAccess')}</span>
+              </li>
             </ul>
           </div>
         </div>
