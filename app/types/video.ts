@@ -25,7 +25,7 @@ export interface Chapter {
   created_at: string;
   deleted_at: null;
   is_locked: boolean;
-  videos: Video[];
+  videos: Video[] | null;
 }
 
 export interface Course {

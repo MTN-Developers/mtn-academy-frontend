@@ -15,11 +15,13 @@ export const ChaptersAccordion = ({
   courseDetails,
   onVideoSelect,
   currentVideoId,
+  currentChapterId,
   noBackground = false,
   innerBackground,
 }: {
   courseDetails?: CourseDetailsResponse['data'];
   onVideoSelect?: (video: Video, chapter: Chapter) => void;
+  currentChapterId?: string;
   currentVideoId?: string;
   noBackground?: boolean;
   innerBackground: 'bg-[#E7E7E7]' | 'bg-[#F7F7F7CF]';
@@ -33,7 +35,7 @@ export const ChaptersAccordion = ({
   useEffect(() => {
     if (currentVideoId && courseDetails) {
       const chapterWithCurrentVideo = courseDetails.chapters.find(chapter =>
-        chapter.videos.some(video => video.id === currentVideoId),
+        chapter.videos?.some(video => video.id === currentVideoId),
       );
 
       if (chapterWithCurrentVideo) {
@@ -53,7 +55,9 @@ export const ChaptersAccordion = ({
   }
 
   return (
-    <div className={`w-ful rounded-lg p-4 ${noBackground ? 'bg-transparent' : 'bg-white p-4 rounded-lg'}`}>
+    <div
+      className={`w-full rounded-lg p-4 ${noBackground ? 'bg-transparent' : 'bg-white p-4 rounded-lg'} !shadow-none`}
+    >
       <div className="flex items-center gap-4">
         <img
           src={isRTL ? courseDetails.logo_ar : courseDetails.logo_en}
@@ -63,21 +67,40 @@ export const ChaptersAccordion = ({
         <h3 className="text-2xl font-normal">{isRTL ? courseDetails.name_ar : courseDetails.name_en}</h3>
       </div>
       {courseDetails.chapters.map(chapter => (
-        <div key={chapter.id} className={`space-y-4 ${innerBackground} p-1 pr-4 rounded-[14px] my-4`}>
-          <Accordion type="single" collapsible className="w-full" value={openChapter} onValueChange={setOpenChapter}>
+        <div
+          key={chapter.id}
+          className={`space-y-4 ${
+            !currentChapterId ? innerBackground : currentChapterId === chapter.id ? innerBackground : 'bg-transparent'
+          } p-1 pr-4 rounded-[14px] my-4 shadow-none`}
+        >
+          <Accordion
+            type="single"
+            collapsible
+            className="w-full shadow-none"
+            value={openChapter}
+            onValueChange={setOpenChapter}
+          >
             {
               <AccordionItem key={chapter.id} value={chapter.id} className="ml-6">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-4">
                     <Image src={videoLibrary} alt="video library icon" width={24} height={24} />
-                    <h3 className="font-medium text-xl text-[#07519C]">
+                    <h3
+                      className={`font-medium text-xl ${
+                        !currentChapterId
+                          ? 'text-[#07519C]'
+                          : currentChapterId === chapter.id
+                          ? 'text-[#07519C]'
+                          : 'text-[#545353]'
+                      }`}
+                    >
                       {isRTL ? chapter.title_ar : chapter.title_en}
                     </h3>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="py-4">
                   <div className="space-y-2">
-                    {chapter.videos.map(video => (
+                    {chapter.videos?.map(video => (
                       <div
                         key={video.id}
                         className={`flex items-center justify-between text-gray-700 hover:text-[#07519C] rounded-lg cursor-pointer py-2`}

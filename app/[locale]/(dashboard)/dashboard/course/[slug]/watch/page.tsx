@@ -18,7 +18,7 @@ import { getLangDir } from 'rtl-detect';
 
 const findVideoInChapters = (chapters: Chapter[], videoId: string): { video: Video; chapter: Chapter } | null => {
   for (const chapter of chapters) {
-    const video = chapter.videos.find(v => v.id === videoId);
+    const video = chapter.videos?.find(v => v.id === videoId);
     if (video) {
       return { video, chapter };
     }
@@ -33,7 +33,7 @@ export default function WatchPage() {
   const videoId = searchParams.get('videoId');
   const { item: reduxData } = useSelector((state: RootState) => state.courseBySlug);
   const [currentVideo, setCurrentVideo] = useState<Video | null>(null);
-  const [_currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
+  const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const isRTL = getLangDir(locale as string) === 'rtl';
   const tTabs = useTranslations('tabs');
 
@@ -91,7 +91,7 @@ export default function WatchPage() {
 
     // Fallback to first video
     const firstChapter = courseData.chapters[0];
-    const firstVideo = firstChapter?.videos[0];
+    const firstVideo = firstChapter?.videos?.[0];
     if (firstChapter && firstVideo) {
       setCurrentVideo(firstVideo);
       setCurrentChapter(firstChapter);
@@ -171,10 +171,11 @@ export default function WatchPage() {
 
   const ChaptersSection = (
     <div className="lg:col-span-1">
-      <div className="rounded-lg shadow-sm">
+      <div className="rounded-lg">
         <ChaptersAccordion
           courseDetails={courseData}
           currentVideoId={currentVideo?.id}
+          currentChapterId={currentChapter?.id}
           onVideoSelect={handleVideoSelect}
           noBackground={true}
           innerBackground="bg-[#E7E7E7]"
