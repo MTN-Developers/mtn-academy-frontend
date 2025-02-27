@@ -1,174 +1,51 @@
-// app/components/course/VideoPlayer.tsx
-"use client";
+'use client';
 
-import { useState, useRef, useEffect } from "react";
-import ReactPlayer from "react-player";
-import { Button } from "@/components/ui/button";
-import { Play, Pause, Volume2, VolumeX, Maximize } from "lucide-react";
-import { Slider } from "@/components/ui/slider";
-import { useVideoProgress } from "@/app/hooks/useVideoProgress";
+import React, { useEffect, useState } from 'react';
 
-interface VideoPlayerProps {
-  url: string;
-  courseId: string;
-  videoId: string;
-}
+export const VideoPlayer = ({ url }: { url?: string }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [videoKey, setVideoKey] = useState(Date.now());
 
-export function VideoPlayer({ url, courseId, videoId }: VideoPlayerProps) {
-  const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.7);
-  const [muted, setMuted] = useState(false);
-  const [played, setPlayed] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const [seeking, setSeeking] = useState(false);
-  const playerRef = useRef<ReactPlayer>(null);
-  const playerContainerRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef(played);
-  const { loadProgress, saveProgress } = useVideoProgress(courseId, videoId);
-
-  // Load saved progress on mount
+  // Show loading indicator when URL changes
   useEffect(() => {
-    const savedProgress = loadProgress();
-    setPlayed(savedProgress);
-    progressRef.current = savedProgress;
-  }, []);
+    if (url) {
+      setIsLoading(true);
+      const timer = setTimeout(() => {
+        setIsLoading(false);
+        setVideoKey(Date.now()); // Force iframe re-render with a new key
+      }, 200);
 
-  // Save progress periodically
-  useEffect(() => {
-    const saveInterval = setInterval(() => {
-      if (!seeking && progressRef.current !== played) {
-        saveProgress(played);
-        progressRef.current = played;
-      }
-    }, 5000);
-
-    return () => {
-      clearInterval(saveInterval);
-      saveProgress(played);
-    };
-  }, [played, seeking, saveProgress]);
-
-  const handleProgress = ({ played: currentPlayed }: { played: number }) => {
-    if (!seeking) {
-      setPlayed(currentPlayed);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [url]);
 
-  const handleDuration = (duration: number) => {
-    setDuration(duration);
-  };
-
-  const handleSeekChange = (value: number[]) => {
-    const newValue = value[0];
-    setPlayed(newValue);
-    if (playerRef.current) {
-      playerRef.current.seekTo(newValue);
-    }
-  };
-
-  const formatTime = (seconds: number) => {
-    const date = new Date(seconds * 1000);
-    const hh = date.getUTCHours();
-    const mm = date.getUTCMinutes();
-    const ss = date.getUTCSeconds().toString().padStart(2, "0");
-    if (hh) {
-      return `${hh}:${mm.toString().padStart(2, "0")}:${ss}`;
-    }
-    return `${mm}:${ss}`;
-  };
-
-  const toggleFullScreen = () => {
-    if (playerContainerRef.current) {
-      if (document.fullscreenElement) {
-        document.exitFullscreen();
-      } else {
-        playerContainerRef.current.requestFullscreen();
-      }
-    }
-  };
+  if (!url) {
+    return (
+      <div className="w-full aspect-video bg-gray-200 flex items-center justify-center rounded-lg">
+        <p className="text-gray-600">Video URL is missing</p>
+      </div>
+    );
+  }
 
   return (
-    <div
-      ref={playerContainerRef}
-      className="relative aspect-video bg-black rounded-lg overflow-hidden"
-    >
-      <ReactPlayer
-        ref={playerRef}
-        url={url}
-        width="100%"
-        height="100%"
-        playing={playing}
-        volume={volume}
-        muted={muted}
-        onProgress={handleProgress}
-        onDuration={handleDuration}
-        progressInterval={1000}
-        className="absolute top-0 left-0"
-      />
-
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
-        <div className="space-y-2">
-          <Slider
-            value={[played]}
-            max={1}
-            step={0.001}
-            onValueChange={handleSeekChange}
-            className="w-full"
-          />
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setPlaying(!playing)}
-                className="text-white hover:bg-white/20"
-              >
-                {playing ? (
-                  <Pause className="h-5 w-5" />
-                ) : (
-                  <Play className="h-5 w-5" />
-                )}
-              </Button>
-
-              <div className="flex items-center gap-2">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setMuted(!muted)}
-                  className="text-white hover:bg-white/20"
-                >
-                  {muted ? (
-                    <VolumeX className="h-5 w-5" />
-                  ) : (
-                    <Volume2 className="h-5 w-5" />
-                  )}
-                </Button>
-                <Slider
-                  value={[muted ? 0 : volume]}
-                  max={1}
-                  step={0.1}
-                  onValueChange={(value) => setVolume(value[0])}
-                  className="w-20"
-                />
-              </div>
-
-              <span className="text-white text-sm">
-                {formatTime(played * duration)} / {formatTime(duration)}
-              </span>
-            </div>
-
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleFullScreen}
-              className="text-white hover:bg-white/20"
-            >
-              <Maximize className="h-5 w-5" />
-            </Button>
+    <div className="w-full aspect-video relative rounded-lg overflow-hidden">
+      {isLoading ? (
+        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-2">
+            <div className="h-8 w-8 rounded-full border-4 border-gray-300 border-t-primary animate-spin"></div>
+            <p className="text-gray-600">Loading video...</p>
           </div>
         </div>
-      </div>
+      ) : (
+        <iframe
+          key={videoKey} // Key forces re-render when changed
+          src={url}
+          allowFullScreen
+          allow="autoplay; fullscreen; picture-in-picture pip"
+          className="absolute top-0 left-0 w-full h-full border-0 rounded-3xl"
+          title="Video player"
+        />
+      )}
     </div>
   );
-}
+};

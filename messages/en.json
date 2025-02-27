@@ -105,8 +105,10 @@
     "semesters": "Semesters",
     "discussions": "Discussions",
     "reviews": "Reviews",
-    "courses": "courses",
-    "playlist": "playlist"
+    "courses": "Courses",
+    "playlist": "Playlist",
+    "session": "Session",
+    "comments": "Comments"
   },
   "error": {
     "title": "Something went wrong",

@@ -106,7 +106,9 @@
     "discussions": "المناقشات",
     "reviews": "التقييمات",
     "courses": "الكورسات",
-    "playlist": "القوائم"
+    "playlist": "القوائم",
+    "session": "الجلسة",
+    "comments": "التعليقات"
   },
   "error": {
     "title": "حدث خطأ ما",
