@@ -96,9 +96,6 @@ const CoursePage = () => {
                   key={courseDetails.id}
                   className="w-full h-full"
                   src={courseDetails.promotion_video_url}
-                  // src={`https://therapy-gym-intimate-relationships.pages.dev/?stream#${src}`}
-                  // src={`https://video-player-cxd.pages.dev/?stream#${src}`}
-                  // src={`https://stream.mtninstitute.net/streaming/index.html?stream#${src}`}
                 />
               </div>
             ) : (
