@@ -1,24 +1,17 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 // import personIcon from "@/public/icons/person.svg";
 // import loveIcon from "@/public/icons/love.svg";
-import Image from "next/image";
+import Image from 'next/image';
 // import { Badge } from "@/components/ui/badge";
-import Link from "next/link";
+import Link from 'next/link';
 
 export default function StudyCard({
-  study,
+  semester,
 }: {
-  study: {
-    title: string;
-    description: string;
-    image: string;
-    url: string;
+  semester: {
+    name_ar: string;
+    description_ar: string;
+    image_url_ar?: string;
   };
 }) {
   return (
@@ -26,7 +19,7 @@ export default function StudyCard({
       <div className="h-[200px] w-[100px] mx-auto overflow-hidden flex justify-center items-center">
         <Image
           alt="cardImage"
-          src={study.image}
+          src={semester.image_url_ar || ''}
           className="w-full h-full object-contain"
           width={500}
           height={160}
@@ -38,10 +31,10 @@ export default function StudyCard({
         {/* <Badge className="w-fit bg-[#73B8FF] text-sm font-normal rounded-2xl">
           Free study
         </Badge> */}
-        <CardTitle className="text-xl text-center">{study.title}</CardTitle>
+        <CardTitle className="text-xl text-center">{semester.name_ar}</CardTitle>
       </CardHeader>
       <CardContent className="px-3 py-2 text-sm h-36 text-gray-500 text-ellipsis text-center break-words">
-        {study.description}
+        {semester.description_ar}
       </CardContent>
       <CardFooter className="py-0 px-3 pt-6 pb-5 flex flex-col space-y-2 justify-between w-full">
         {/* <div className="flex items-center justify-start w-full space-x-3">
@@ -56,7 +49,7 @@ export default function StudyCard({
         </div> */}
         <div className="w-full flex items-end justify-start">
           <Link
-            href={study.url}
+            href={'https://mtninstitute.net/en/login'}
             className="text-white bg-[#017AFD] py-3 rounded-lg  w-full text-center text-base font-semibold"
           >
             سجل الان
