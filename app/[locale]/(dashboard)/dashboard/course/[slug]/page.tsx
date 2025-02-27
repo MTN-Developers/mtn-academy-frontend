@@ -4,7 +4,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Globe, LockKeyhole } from 'lucide-react';
+import { LockKeyhole } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
@@ -14,11 +14,18 @@ import { ErrorState } from '@/app/components/common/ErrorState';
 import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
+import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 
 const CoursePage = () => {
   const { slug } = useParams();
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
+
+  const {
+    data: semesterDetails,
+    isLoading: loadingSemester,
+    error: errorSemester,
+  } = useSemesterDetails(courseDetails?.semester_id || '');
   console.log('courseDetails is ', courseDetails);
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
@@ -28,15 +35,19 @@ const CoursePage = () => {
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
 
-  if (isLoading) {
+  if (isLoading || loadingSemester) {
     return <PathDetailsSkeleton />;
+  }
+
+  if (errorSemester) {
+    return <ErrorState error={errorSemester} />;
   }
 
   if (error) {
     return <ErrorState error={error} />;
   }
 
-  if (!courseDetails) {
+  if (!courseDetails || !semesterDetails) {
     return <NotFoundState />;
   }
 
@@ -67,9 +78,22 @@ const CoursePage = () => {
             </div>
 
             {/* Video Preview */}
-            {courseDetails.promotion_video_url ? (
+            {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
               <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
                 {/* Add your video player component here */}
+                <iframe
+                  style={{
+                    borderRadius: '20px',
+                  }}
+                  allowFullScreen
+                  allow="autoplay; fullscreen; picture-in-picture pip"
+                  key={courseDetails.id}
+                  className="w-full h-full"
+                  src={courseDetails.promotion_video_url}
+                  // src={`https://therapy-gym-intimate-relationships.pages.dev/?stream#${src}`}
+                  // src={`https://video-player-cxd.pages.dev/?stream#${src}`}
+                  // src={`https://stream.mtninstitute.net/streaming/index.html?stream#${src}`}
+                />
               </div>
             ) : (
               <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
@@ -114,21 +138,26 @@ const CoursePage = () => {
           <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
             <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
               <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
-              <div className="text-[64px] font-bold mb-2">$1300</div>
+              <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
+              <p className="text-center text-sm font-normal  text-red-400 ">
+                <span className="line-through">${semesterDetails.price}</span>
+                <span className="text-red-400 inline mx-2 text-lg">
+                  %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+                </span>
+              </p>
               <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
               <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
               <div className="space-y-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
-                  <span className="break-words">
-                    {courseDetails.course_duration
-                      ? `${courseDetails.course_duration} ${tCourse('hours')}`
-                      : tCourse('durationNotSpecified')}
-                  </span>
-                </div>
+                {/* <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
+                      <span className="break-words">
+                        {semesterDetails.
+                          ? `${courseDetails.course_duration} ${tCourse('hours')}`
+                          : tCourse('durationNotSpecified')}
+                      </span>
+                    </div> */}
                 {/* Add more course metadata here */}
               </div>
-              ``
             </div>
           </div>
         </div>
