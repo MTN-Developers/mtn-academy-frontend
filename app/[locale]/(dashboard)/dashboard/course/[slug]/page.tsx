@@ -65,7 +65,7 @@ const CoursePage = () => {
       />
 
       <div className="w-full p-4 px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {/* Left Content */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-4 mb-4 flex-wrap">
@@ -85,7 +85,7 @@ const CoursePage = () => {
 
             {/* Video Preview */}
             {courseDetails.promotion_video_url ? (
-              <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
+              <div className="relative aspect-video bg-gray-900 rounded-lg mb-6 w-full">
                 {/* Add your video player component here */}
                 <iframe
                   style={{
