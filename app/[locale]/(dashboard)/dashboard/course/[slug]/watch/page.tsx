@@ -57,7 +57,7 @@ export default function WatchPage() {
   }, [currentVideo, router, searchParams, videoId]);
   useEffect(() => {
     if (!courseData) return;
-    if (courseData.is_locked === false) {
+    if (courseData.is_locked === true) {
       // alert('This course is locked. Please contact support for assistance.');
       router.push(`/dashboard/course/${courseData.slug}`);
     }
