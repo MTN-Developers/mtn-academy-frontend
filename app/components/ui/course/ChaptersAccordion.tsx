@@ -1,6 +1,6 @@
 // app/components/course/Playlist.tsx
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { getLangDir } from 'rtl-detect';
 import { PlaylistSkeleton } from '../../common/PlaylistSkeleton';
 import { CourseDetailsResponse } from '@/app/hooks/useCourseDetails';
@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import DisplayIcon from '@/components/icons/DisplayIcon';
 import { Chapter, Video } from '@/app/types/video';
+// import Link from 'next/link';
 
 export const ChaptersAccordion = ({
   courseDetails,
@@ -30,6 +31,22 @@ export const ChaptersAccordion = ({
   const direction = getLangDir(locale as string);
   const isRTL = direction === 'rtl';
   const [openChapter, setOpenChapter] = useState<string | undefined>(undefined);
+  const router = useRouter();
+
+  // Fixed handleRouting function
+  const handleRouting = (video: Video, chapter: Chapter) => {
+    if (courseDetails?.is_unlocked === true) {
+      // If course is unlocked, allow navigation to watch page
+      if (onVideoSelect) {
+        onVideoSelect(video, chapter);
+      }
+      router.push(`/dashboard/course/${courseDetails.slug}/watch`);
+    } else {
+      // If course is locked, show alert
+      alert('This course is locked. Please contact support for assistance.');
+      // You could also use a more sophisticated alert/modal component here
+    }
+  };
 
   // Find and auto-open the chapter containing the current video
   useEffect(() => {
@@ -104,7 +121,7 @@ export const ChaptersAccordion = ({
                       <div
                         key={video.id}
                         className={`flex items-center justify-between text-gray-700 hover:text-[#07519C] rounded-lg cursor-pointer py-2`}
-                        onClick={() => onVideoSelect?.(video, chapter)}
+                        onClick={() => handleRouting(video, chapter)} // Fixed: Now properly calls the function with parameters
                       >
                         <div className="flex items-center gap-4">
                           {/* <Image src={displayIcon} alt="video library icon" width={24} height={24} /> */}
