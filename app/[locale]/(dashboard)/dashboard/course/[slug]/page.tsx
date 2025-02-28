@@ -84,8 +84,8 @@ const CoursePage = () => {
             </div>
 
             {/* Video Preview */}
-            {courseDetails.promotion_video_url ? (
-              <div className="relative aspect-video bg-gray-900 rounded-lg mb-6 w-full">
+            {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
+              <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
                 {/* Add your video player component here */}
                 <iframe
                   style={{

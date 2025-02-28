@@ -48,9 +48,6 @@ export interface Course {
   type: string;
   promotion_video_url: string | null;
   semester_id: string;
-  is_completed: boolean;
   is_locked: boolean;
-  enrolled_count: number;
-  videos_count: number;
-  resources_count: number;
+  is_completed: boolean;
 }
