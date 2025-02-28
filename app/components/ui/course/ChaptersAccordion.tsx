@@ -35,8 +35,6 @@ export const ChaptersAccordion = ({
 
   // console.log('courseDetails', courseDetails);
 
-
-
   // Fixed handleRouting function
   const handleRouting = (video: Video, chapter: Chapter) => {
     if (courseDetails?.is_locked === false) {
@@ -75,6 +73,10 @@ export const ChaptersAccordion = ({
     return <PlaylistSkeleton />;
   }
 
+  // console.log('courseDetails', courseDetails?.chapters  );
+  // Sort chapters by their index property in ascending order
+  const sortedChapters = [...courseDetails.chapters].sort((a, b) => a.index - b.index);
+
   return (
     <div
       className={`w-full rounded-lg p-4 ${noBackground ? 'bg-transparent' : 'bg-white p-4 rounded-lg'} !shadow-none`}
@@ -87,7 +89,7 @@ export const ChaptersAccordion = ({
         />
         <h3 className="text-2xl font-normal">{isRTL ? courseDetails.name_ar : courseDetails.name_en}</h3>
       </div>
-      {courseDetails?.chapters?.map(chapter => (
+      {sortedChapters?.map(chapter => (
         <div
           key={chapter.id}
           className={`space-y-4 ${
