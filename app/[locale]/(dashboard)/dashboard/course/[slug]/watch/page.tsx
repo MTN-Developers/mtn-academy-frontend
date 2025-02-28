@@ -137,7 +137,7 @@ export default function WatchPage() {
     return <ErrorState error={error} />;
   }
 
-  console.log('curent video is ', currentVideo);
+  // console.log('curent video is ', currentVideo);
 
   // Define content elements to be ordered based on direction
   const VideoSection = (
