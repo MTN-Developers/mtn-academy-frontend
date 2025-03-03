@@ -115,6 +115,8 @@ export default function WatchPage() {
     }
   }, [courseData, videoId, slug]);
 
+  console.log('watch is ', courseData);
+
   // Handle video selection from chapters list
   const handleVideoSelect = (video: Video, chapter: Chapter) => {
     setCurrentVideo(video);
@@ -169,7 +171,6 @@ export default function WatchPage() {
             <p className="text-sm md:text-base text-[#161616] mb-4">
               {isRTL ? currentVideo?.description_ar : currentVideo?.description_en}
             </p>
-            <></>
           </TabsContent>
 
           <TabsContent value="comments">
@@ -206,8 +207,8 @@ export default function WatchPage() {
           </>
         ) : (
           <>
-            {ChaptersSection}
             {VideoSection}
+            {ChaptersSection}
           </>
         )}
       </div>
