@@ -33,7 +33,7 @@ export const ChaptersAccordion = ({
   const [openChapter, setOpenChapter] = useState<string | undefined>(undefined);
   const router = useRouter();
 
-  // console.log('courseDetails', courseDetails);
+  console.log('courseDetailsssss', courseDetails);
 
   // Fixed handleRouting function
   const handleRouting = (video: Video, chapter: Chapter) => {
