@@ -135,7 +135,7 @@ const CoursePage = () => {
           </div>
 
           {/* Right Sectio */}
-          <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
+          <div className="md:col-span-1 hidden lg:block lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
             <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
               <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
               <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
@@ -158,6 +158,22 @@ const CoursePage = () => {
                     </div> */}
                 {/* Add more course metadata here */}
               </div>
+            </div>
+          </div>
+
+          {/* Right Sidebar on mobile */}
+          <div className="md:col-span-1 p-4 rounded-lg bg-white block lg:hidden lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
+            <p className="text-center flex items-center text-sm font-normal  text-red-400 ">
+              <span className="line-through">${semesterDetails.price}</span>
+              <span className="text-red-400 text-nowrap inline mx-2 text-sm">
+                %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+              </span>
+            </p>
+            <div className="   my-4 shadow-sm md:sticky md:top-4 flex  gap-3 justify-start items-center">
+              <div>
+                <div className="text-[30px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
+              </div>
+              <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
             </div>
           </div>
         </div>
