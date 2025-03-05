@@ -15,6 +15,7 @@ import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
+import Link from 'next/link';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -146,7 +147,9 @@ const CoursePage = () => {
                 </span>
               </p>
               <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
-              <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
+              <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
+                <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
+              </Link>
               <div className="space-y-4 text-sm">
                 {/* <div className="flex items-center gap-2">
                       <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
@@ -173,7 +176,9 @@ const CoursePage = () => {
               <div>
                 <div className="text-[30px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
               </div>
-              <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
+              <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
+                <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
+              </Link>
             </div>
           </div>
         </div>
