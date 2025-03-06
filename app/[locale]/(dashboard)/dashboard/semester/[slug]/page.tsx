@@ -14,6 +14,7 @@ import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { CoursesGrid } from '@/app/components/common/CoursesGrid';
 import { ErrorState } from '@/app/components/common/ErrorState';
+import Link from 'next/link';
 
 const SemesterPage = () => {
   const { slug } = useParams();
@@ -29,6 +30,13 @@ const SemesterPage = () => {
   const locale = pathArr[1];
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
+  // const router = useRouter();
+
+  // const handleEnrollNow = () => {
+  //   if (semesterDetails) {
+  //     router.push(`/payment`);
+  //   }
+  // };
 
   if (isLoading) {
     return <PathDetailsSkeleton />;
@@ -149,7 +157,10 @@ const SemesterPage = () => {
                     </span>
                   </p>
                   <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
-                  <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
+                  <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
+                    <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
+                  </Link>
+
                   <div className="space-y-4 text-sm">
                     {/* <div className="flex items-center gap-2">
                       <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
@@ -176,7 +187,9 @@ const SemesterPage = () => {
                   <div>
                     <div className="text-[30px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
                   </div>
-                  <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
+                  <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
+                    <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
+                  </Link>
                 </div>
               </div>
             </div>
