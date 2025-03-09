@@ -36,7 +36,7 @@ export const ChaptersAccordion = ({
   onVideoSelect?: (video: Video, chapter: Chapter) => void;
   currentChapterId?: string;
   currentVideoId?: string;
-  semester: SemesterDetails;
+  semester?: SemesterDetails;
   noBackground?: boolean;
   showDialog: boolean;
   innerBackground: 'bg-[#E7E7E7]' | 'bg-[#F7F7F7CF]';
@@ -55,7 +55,7 @@ export const ChaptersAccordion = ({
     if (showDialog) {
       // If course is locked, show dialog instead of alert
       setDialogOpen(true);
-    } else if (semester.is_purchased === false) {
+    } else if (semester?.is_purchased === false) {
       router.push(`/dashboard/semester/${semester?.id}/payment`);
     } else {
       // If course is unlocked, allow navigation to watch page
