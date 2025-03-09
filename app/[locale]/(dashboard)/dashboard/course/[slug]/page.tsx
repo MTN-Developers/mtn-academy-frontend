@@ -16,9 +16,12 @@ import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 const CoursePage = () => {
   const { slug } = useParams();
+  const [showDialog, setShowDialog] = useState(false);
+  const [goToPayment, setGoToPayment] = useState(false);
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
 
@@ -27,7 +30,12 @@ const CoursePage = () => {
     isLoading: loadingSemester,
     error: errorSemester,
   } = useSemesterDetails(courseDetails?.semester_id || '');
-  console.log('courseDetails is ', courseDetails);
+
+  console.log('data course', courseDetails);
+
+  console.log('semester course', semesterDetails);
+
+  // console.log('courseDetails is ', courseDetails);
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
   const path = usePathname();
@@ -35,6 +43,19 @@ const CoursePage = () => {
   const locale = pathArr[1];
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
+
+  // Move the dialog logic to useEffect so it only runs when dependencies change
+  useEffect(() => {
+    if (semesterDetails?.is_purchased === true && courseDetails?.is_locked === true) {
+      setShowDialog(true);
+    } else if (semesterDetails?.is_purchased === false) {
+      setGoToPayment(true);
+      setShowDialog(false);
+      console.log('gotopayment', goToPayment);
+    } else {
+      setShowDialog(false);
+    }
+  }, [semesterDetails?.is_purchased, courseDetails?.is_locked]);
 
   if (isLoading || loadingSemester) {
     return <PathDetailsSkeleton />;
@@ -129,7 +150,12 @@ const CoursePage = () => {
                   </div>
                 </TabsContent>
                 <TabsContent value="playlist" className="mt-6">
-                  <ChaptersAccordion courseDetails={courseDetails} innerBackground="bg-[#F7F7F7CF]" />
+                  <ChaptersAccordion
+                    semester={semesterDetails}
+                    showDialog={showDialog}
+                    courseDetails={courseDetails}
+                    innerBackground="bg-[#F7F7F7CF]"
+                  />
                 </TabsContent>
               </Tabs>
             </div>

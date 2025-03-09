@@ -10,21 +10,35 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import DisplayIcon from '@/components/icons/DisplayIcon';
 import { Chapter, Video } from '@/app/types/video';
-// import Link from 'next/link';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { SemesterDetails } from '@/app/types/semester';
 
 export const ChaptersAccordion = ({
   courseDetails,
+  semester,
   onVideoSelect,
   currentVideoId,
   currentChapterId,
   noBackground = false,
   innerBackground,
+  showDialog,
 }: {
   courseDetails?: CourseDetailsResponse['data'];
   onVideoSelect?: (video: Video, chapter: Chapter) => void;
   currentChapterId?: string;
   currentVideoId?: string;
+  semester?: SemesterDetails;
   noBackground?: boolean;
+  showDialog: boolean;
   innerBackground: 'bg-[#E7E7E7]' | 'bg-[#F7F7F7CF]';
 }) => {
   const { locale } = useParams();
@@ -33,20 +47,22 @@ export const ChaptersAccordion = ({
   const [openChapter, setOpenChapter] = useState<string | undefined>(undefined);
   const router = useRouter();
 
-  console.log('courseDetailsssss', courseDetails);
+  // Add state for dialog
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   // Fixed handleRouting function
   const handleRouting = (video: Video, chapter: Chapter) => {
-    if (courseDetails?.is_locked === false) {
+    if (showDialog) {
+      // If course is locked, show dialog instead of alert
+      setDialogOpen(true);
+    } else if (semester?.is_purchased === false) {
+      router.push(`/dashboard/semester/${semester?.id}/payment`);
+    } else {
       // If course is unlocked, allow navigation to watch page
       if (onVideoSelect) {
         onVideoSelect(video, chapter);
       }
-      router.push(`/dashboard/course/${courseDetails.slug}/watch`);
-    } else {
-      // If course is locked, show alert
-      alert('This course is locked. Please contact support for assistance.');
-      // You could also use a more sophisticated alert/modal component here
+      router.push(`/dashboard/course/${courseDetails?.slug}/watch`);
     }
   };
 
@@ -73,7 +89,6 @@ export const ChaptersAccordion = ({
     return <PlaylistSkeleton />;
   }
 
-  // console.log('courseDetails', courseDetails?.chapters  );
   // Sort chapters by their index property in ascending order
   const sortedChapters = [...courseDetails.chapters].sort((a, b) => a.index - b.index);
 
@@ -81,6 +96,33 @@ export const ChaptersAccordion = ({
     <div
       className={`w-full rounded-lg p-4 ${noBackground ? 'bg-transparent' : 'bg-white p-4 rounded-lg'} !shadow-none`}
     >
+      {/* Dialog component */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Course Locked</DialogTitle>
+            <DialogDescription>This course is locked. Please contact support for assistance.</DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start">
+            <DialogClose asChild>
+              <Button type="button" variant="secondary">
+                Close
+              </Button>
+            </DialogClose>
+            <Button
+              type="button"
+              className="bg-[#07519C]"
+              onClick={() => {
+                setDialogOpen(false);
+                // You can add navigation to support page or other actions here
+              }}
+            >
+              Contact Support
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <div className="flex items-center gap-4">
         <img
           src={isRTL ? courseDetails.logo_ar : courseDetails.logo_en}
@@ -127,10 +169,9 @@ export const ChaptersAccordion = ({
                       <div
                         key={video.id}
                         className={`flex items-center justify-between text-gray-700 hover:text-[#07519C] rounded-lg cursor-pointer py-2`}
-                        onClick={() => handleRouting(video, chapter)} // Fixed: Now properly calls the function with parameters
+                        onClick={() => handleRouting(video, chapter)}
                       >
                         <div className="flex items-center gap-4">
-                          {/* <Image src={displayIcon} alt="video library icon" width={24} height={24} /> */}
                           <DisplayIcon color={video.id === currentVideoId ? '#07519C' : '#6B7280'} />
                           <span
                             className={`text-sm ${video.id === currentVideoId ? 'text-[#07519C] font-medium' : ''}`}
@@ -154,9 +195,6 @@ export const ChaptersAccordion = ({
                           )}
                         </span>
                       </div>
-                      /* Add task icon here if needed */
-                      /* {video.has_task && (
-                    )} */
                     ))}
                   </div>
                 </AccordionContent>
