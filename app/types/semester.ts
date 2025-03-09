@@ -45,6 +45,7 @@ export interface SemesterDetails {
   price: number;
   price_after_discount: number;
   promotion_video_url?: string | null;
+  is_purchased: boolean;
 }
 
 export interface ApiSemesterResponse {
