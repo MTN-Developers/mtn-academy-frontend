@@ -55,6 +55,7 @@
     "rtl-detect": "^1.1.2",
     "shadcn": "^2.4.0-canary.12",
     "shadcn-ui": "^0.9.4",
+    "sharp": "^0.33.5",
     "sonner": "^1.7.2",
     "swiper": "^11.2.1",
     "tailwind-merge": "^2.6.0",
