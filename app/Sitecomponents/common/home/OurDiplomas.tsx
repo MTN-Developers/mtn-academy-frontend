@@ -75,7 +75,7 @@ export default function OurDiplomas() {
                   return (
                     <div key={index} className="flex items-center">
                       <Image alt="check" src={checkIcon} className="mr-2" />
-                      <p>{item}</p>
+                      <p>{item}.</p>
                     </div>
                   );
                 })}
