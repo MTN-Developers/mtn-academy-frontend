@@ -9,7 +9,7 @@ import { useCourseDetails } from '@/app/hooks/useCourseDetails';
 import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import { RootState } from '@/app/lib/redux/store';
 import { Chapter, Video } from '@/app/types/video';
-import { Comments } from '@/components/ui/Comments';
+import { Comments } from '@/app/components/ui/comments/Comments';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
