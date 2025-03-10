@@ -155,7 +155,7 @@ export default function WatchPage() {
   // Define content elements to be ordered based on direction
   const VideoSection = (
     <div className="lg:col-span-2">
-      <VideoPlayer video={currentVideo} url={currentVideo?.video_url} />
+      <VideoPlayer chapterVideoId={currentChapter?.id} video={currentVideo} url={currentVideo?.video_url} />
       {/* Tabs */}
       <div className="w-full overflow-x-auto mt-5">
         <Tabs defaultValue="session" className="mb-8 shadow-none rounded-none">
