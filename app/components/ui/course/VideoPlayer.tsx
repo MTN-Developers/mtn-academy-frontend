@@ -67,7 +67,7 @@ export const VideoPlayer = ({
     try {
       console.log('Marking video as completed:', chapterVideoId);
       await axiosInstance.post('/completed-video', {
-        chapter_video_id: chapterVideoId,
+        video_id: chapterVideoId,
       });
 
       console.log('Video marked as completed successfully');
