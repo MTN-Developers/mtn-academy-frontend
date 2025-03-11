@@ -331,7 +331,7 @@ export default function RegisterPage() {
                   ...
                 </div>
               ) : (
-                t('Sign in')
+                t('Sign up')
               )}
             </Button>
 
