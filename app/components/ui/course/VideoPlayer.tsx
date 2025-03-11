@@ -18,7 +18,7 @@ export const VideoPlayer = ({
   const completionTimerRef = useRef<NodeJS.Timeout | null>(null);
   const [hasMarkedAsCompleted, setHasMarkedAsCompleted] = useState(false);
 
-  console.log('video id is ', video?.id);
+  // console.log('video id is ', video?.id);
 
   // Show loading indicator when URL changes
   useEffect(() => {
@@ -67,7 +67,7 @@ export const VideoPlayer = ({
     try {
       console.log('Marking video as completed:', chapterVideoId);
       await axiosInstance.post('/completed-video', {
-        video_id: chapterVideoId,
+        video_id: video?.id,
       });
 
       console.log('Video marked as completed successfully');
