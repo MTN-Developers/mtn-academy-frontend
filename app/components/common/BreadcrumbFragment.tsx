@@ -5,9 +5,15 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
+} from '@/components/ui/breadcrumb';
 
-export const BreadcrumbFragment = ({ pathName, pathSlug }) => {
+interface IProps {
+  semesterId: string;
+  semesterName: string;
+  courseName?: string;
+}
+
+export const BreadcrumbFragment = ({ semesterId, semesterName, courseName }: IProps) => {
   return (
     <div className="text-blue-600 p-4 lg:px-[130px] bg-[#f2f2f2] w-full shadow-lg">
       <Breadcrumb>
@@ -18,12 +24,14 @@ export const BreadcrumbFragment = ({ pathName, pathSlug }) => {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             {/* <BreadcrumbLink href={`/academic-paths/${diploma.id}`}>Components</BreadcrumbLink> */}
-            <BreadcrumbLink>{pathName}</BreadcrumbLink>
+            <BreadcrumbLink href={`/dashboard/semester/${semesterId}`}>{semesterName}</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>{pathSlug}</BreadcrumbPage>
-          </BreadcrumbItem>
+          {courseName && (
+            <BreadcrumbItem>
+              <BreadcrumbPage>{semesterName}</BreadcrumbPage>
+            </BreadcrumbItem>
+          )}
         </BreadcrumbList>
       </Breadcrumb>
     </div>
