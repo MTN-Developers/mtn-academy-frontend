@@ -29,7 +29,7 @@ export const BreadcrumbFragment = ({ semesterId, semesterName, courseName }: IPr
           <BreadcrumbSeparator />
           {courseName && (
             <BreadcrumbItem>
-              <BreadcrumbPage>{semesterName}</BreadcrumbPage>
+              <BreadcrumbPage>{courseName}</BreadcrumbPage>
             </BreadcrumbItem>
           )}
         </BreadcrumbList>
