@@ -12,7 +12,7 @@ import FreeStudiesComp from '@/app/components/ui/home/FreeStudiesComp';
 import { usePathname } from 'next/navigation';
 import { getLangDir } from 'rtl-detect';
 import useGetAllSemesters from '@/app/hooks/useGetAllSemesters';
-import { DiplomaCardSkeleton } from '@/app/components/ui/home/DiplomaCardSkeleton';
+import HomeSkeleton from '@/app/components/common/HomeSkeleton';
 // import { DiplomaCarousel } from '@/app/components/ui/home/DiplomaCarousel';
 
 const Page = () => {
@@ -34,7 +34,7 @@ const Page = () => {
   }, [dispatch]);
 
   if (isLoading) {
-    return <DiplomaCardSkeleton />;
+    return <HomeSkeleton />;
   }
 
   // console.log('Redux State:', { status, error, items }); // Add this for debugging

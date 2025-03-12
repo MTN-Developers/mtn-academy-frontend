@@ -23,8 +23,8 @@ import { setCookie } from 'cookies-next';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { login } from '@/app/lib/redux/features/authActions';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/app/lib/redux/store';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/lib/redux/store';
 // import axiosInstance from "@/app/lib/axios/instance";
 
 // Form schema
@@ -56,7 +56,10 @@ export default function LoginPage() {
   const locale = pathArr[1];
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect');
-  const { loading } = useSelector((state: RootState) => state.auth);
+  const [loading, setLoading] = useState(false);
+  // const { loading } = useSelector((state: RootState) => state.auth);
+  // Add this at the top of your component
+  const [pageLoadTime] = useState(Date.now());
 
   console.log('path is', path);
   console.log('local is', locale);
@@ -77,7 +80,13 @@ export default function LoginPage() {
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    // Check if this is an auto-filled submission (happens too quickly after page load)
+    const isAutoFilled = document.activeElement === null;
+    if (isAutoFilled && Date.now() - pageLoadTime < 1000) {
+      return; // Prevent submission if it's likely an auto-fill
+    }
     try {
+      setLoading(true);
       const resultAction = await dispatch(login({ email: data.email, password: data.password }));
       console.log('resultAction', resultAction);
 
@@ -112,7 +121,10 @@ export default function LoginPage() {
       } else {
         toast.error(resultAction.payload as string);
       }
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
+
       console.error('Login error:', err);
       toast.error('An unexpected error occurred');
     }
@@ -145,7 +157,7 @@ export default function LoginPage() {
           </div>
 
           {/* Form body */}
-          <form onSubmit={handleSubmit(onSubmit)} className="lg:w-[456px] w-full p-4 lg:p-[48px]">
+          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="lg:w-[456px] w-full p-4 lg:p-[48px]">
             <div className={`hidden lg:block`}>
               <Image src={mtnLogo} alt="mtn logo" />
               <h2 className="font-bold my-6">{t('Nice to see you again')}</h2>
@@ -158,6 +170,7 @@ export default function LoginPage() {
                 {...register('email')}
                 type="email"
                 id="email"
+                autoComplete="new-email" // Use a non-standard value
                 placeholder={t('email.label')}
                 className="bg-[#f2f2f2] focus:bg-white transition-colors"
               />
@@ -172,6 +185,7 @@ export default function LoginPage() {
                   {...register('password')}
                   type={showPassword ? 'text' : 'password'}
                   id="password"
+                  autoComplete="new-password" // Use a non-standard value
                   placeholder={t('password.label')}
                   className="bg-[#f2f2f2] focus:bg-white transition-colors pr-10"
                 />

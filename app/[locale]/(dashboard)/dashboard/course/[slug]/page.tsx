@@ -17,6 +17,7 @@ import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion'
 import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { ShareButton } from '@/app/components/common/ShareButton';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -84,19 +85,30 @@ const CoursePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-4 mb-4 flex-wrap">
-              <Image
-                src={isRTL ? courseDetails.logo_ar : courseDetails.logo_en}
-                alt={isRTL ? courseDetails.name_ar : courseDetails.name_en}
-                width={64}
-                height={64}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-xl md:text-2xl font-normal text-[#10458c] break-words">
-                  {isRTL ? courseDetails.name_ar : courseDetails.name_en}
-                </h1>
+            <div className="flex items-center w-full justify-between">
+              <div className="flex items-center gap-4">
+                <Image
+                  src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
+                  alt={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                  width={64}
+                  height={64}
+                  className="rounded-lg"
+                />
+                <div>
+                  <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
+                    {isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                  </h1>
+                  <p className="text-gray-600 text-sm">
+                    {tCourse('by')} <span className="font-semibold">{'By Ahmed Eldmallawy'}</span>
+                  </p>
+                </div>
               </div>
+              <ShareButton
+                title="Share this semester"
+                customShareText={`Hi, I am taking this amazing semester: ${
+                  isRTL ? courseDetails.name_ar : courseDetails.name_en
+                }`}
+              />
             </div>
 
             {/* Video Preview */}
