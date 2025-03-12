@@ -77,15 +77,16 @@ const CoursePage = () => {
   return (
     <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
       <BreadcrumbFragment
-        pathName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
-        pathSlug={courseDetails.slug}
+        semesterName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+        semesterId={semesterDetails.id}
+        courseName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
       />
 
       <div className="w-full p-4 px-4 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="md:col-span-2">
-            <div className="flex items-center w-full justify-between">
+            <div className="flex my-4 items-center w-full justify-between">
               <div className="flex items-center gap-4">
                 <Image
                   src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}

@@ -41,8 +41,8 @@ const SemesterPage = () => {
       {semesterDetails && (
         <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
           <BreadcrumbFragment
-            pathName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
-            pathSlug={semesterDetails.slug}
+            semesterName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+            semesterId={semesterDetails.id}
           />
 
           <div className="w-full p-4 px-4 max-w-7xl mx-auto">
