@@ -18,8 +18,8 @@ import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ShareButton } from '@/app/components/common/ShareButton';
-import basicAr from '@/public/images/Basic-study-ar.png';
-import basicEn from '@/public/images/Basic-study-en.png';
+import basicAr from '@/public/images/basicAr.png';
+import basicEn from '@/public/images/basicEn.png';
 
 const CoursePage = () => {
   const { slug } = useParams();
