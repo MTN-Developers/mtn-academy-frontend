@@ -14,6 +14,9 @@ export function middleware(req: NextRequest) {
 
   // Step 1: Extract Locale from Path
   const locale = pathname.split('/')[1];
+
+  console.log('locales from mw', locale);
+
   const supportedLocales = ['en', 'ar'];
   const isLocaleValid = supportedLocales.includes(locale);
 

@@ -118,7 +118,7 @@ export default function LoginPage() {
         // }
         // router.push("/"); // Redirect to home page
         router.replace(`
-          ${redirect ? decodeURIComponent(redirect) : '/'}
+          ${redirect ? decodeURIComponent(redirect) : `/${locale}/dashboard`}
           `);
       } else {
         toast.error(resultAction.payload as string);
