@@ -15,6 +15,8 @@ import { ErrorState } from '@/app/components/common/ErrorState';
 import Link from 'next/link';
 import { ShareButton } from '@/app/components/common/ShareButton';
 // import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
+import basicAr from '@/public/images/Basic study ar.png';
+import basicEn from '@/public/images/Basic study en.png';
 
 const SemesterPage = () => {
   const { slug } = useParams();
@@ -81,7 +83,14 @@ const SemesterPage = () => {
                   </div>
 
                   {/* Video Preview */}
-                  {semesterDetails.promotion_video_url ? (
+                  <div className="relative aspect-video overflow-hidden bg-gray-900 rounded-lg mb-8 w-full">
+                    <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
+                      {/* {tCourse('noVideoAvailable')}
+                       */}
+                      <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+                    </div>
+                  </div>
+                  {/* {semesterDetails.promotion_video_url ? (
                     <div className="relative aspect-video rounded-lg w-full">
                       <iframe
                         style={{
@@ -100,7 +109,7 @@ const SemesterPage = () => {
                         {tCourse('noVideoAvailable')}
                       </div>
                     </div>
-                  )}
+                  )} */}
 
                   {/* <div>
                     <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
