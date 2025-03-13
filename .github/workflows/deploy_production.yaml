@@ -44,6 +44,7 @@ jobs:
           VM_IP: ${{ secrets.VM_IP }}
           PORT: ${{ secrets.PRODUCTION_PORT }}
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_STRIPE_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}
           VERSION: ${{ env.VERSION }}
         run: |
           # Store private key securely
@@ -71,6 +72,7 @@ jobs:
             docker run -d --restart unless-stopped -p "$PORT:$PORT" --name mtn_academy_frontend \
               -e PORT="$PORT" \
               -e NEXT_PUBLIC_BASE_URL="$NEXT_PUBLIC_BASE_URL" \
+              -e NEXT_PUBLIC_STRIPE_PUBLIC_KEY="$NEXT_PUBLIC_STRIPE_PUBLIC_KEY" \
               mazinmtn/mtn_academy_frontend:${VERSION}
 
             docker image prune -f
