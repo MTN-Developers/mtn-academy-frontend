@@ -15,7 +15,7 @@ interface IProps {
 
 export const BreadcrumbFragment = ({ semesterId, semesterName, courseName }: IProps) => {
   return (
-    <div className="text-blue-600 p-4 lg:px-[130px] bg-[#f2f2f2] w-full shadow-lg">
+    <div className="text-blue-600 p-2 lg:px-[130px] bg-[#f2f2f2] w-full shadow-lg">
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>

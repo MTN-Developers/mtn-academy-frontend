@@ -19,7 +19,7 @@ export const CoursesGrid = ({ courses, isRTL }: CoursesGridProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 my-4 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map(course => (
         <Link key={course.id} href={`/dashboard/course/${course.slug}`}>
           <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200">
