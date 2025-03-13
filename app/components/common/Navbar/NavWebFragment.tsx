@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 import mtnLogo from '@/public/images/mtn-logo.svg';
-import { ChevronDown, Globe, LogOut, Search } from 'lucide-react';
+import { ChevronDown, Globe, LogOut } from 'lucide-react';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
   Menubar,
@@ -49,7 +49,7 @@ const NavWebFragment = ({ locale, t, menuItems, handleLanguageChange, handleNavi
             </div>
 
             {/* Search Bar */}
-            <div className="flex-1 max-w-[690px]">
+            {/* <div className="flex-1 max-w-[690px]">
               <div className="relative">
                 <input
                   type="search"
@@ -64,7 +64,7 @@ const NavWebFragment = ({ locale, t, menuItems, handleLanguageChange, handleNavi
                   } top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400`}
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* Navigation and User Controls */}
             <div className="flex items-center gap-4">
