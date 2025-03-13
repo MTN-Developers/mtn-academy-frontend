@@ -1,5 +1,6 @@
 'use client';
 
+import { Footer } from '../components/ui/home/Footer';
 //the land page which is in
 // app/[locale]/page.tsx
 
@@ -9,7 +10,6 @@ import FreeStudySection from '../Sitecomponents/common/home/FreeStudySection';
 import HomeContent from '../Sitecomponents/common/home/HomeContent';
 import { MainCarousel } from '../Sitecomponents/common/home/MainCarousel';
 import OurDiplomas from '../Sitecomponents/common/home/OurDiplomas';
-import { Footer } from '../Sitecomponents/layout/Footer';
 import Navbar from '../Sitecomponents/layout/Navbar';
 
 export default function Page() {

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LockKeyhole } from 'lucide-react';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
 import { PathDetailsSkeleton } from '@/app/components/ui/home/PathDetailsSkeleton';
@@ -23,9 +23,11 @@ const SemesterPage = () => {
 
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
-  const path = usePathname();
-  const pathArr = path.split('/');
-  const locale = pathArr[1];
+  const params = useParams();
+  // const path = usePathname();
+  // const pathArr = path.split('/');
+  // const locale = pathArr[1];
+  const locale = params.locale as string;
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
 
@@ -36,6 +38,7 @@ const SemesterPage = () => {
   if (error) {
     return <ErrorState error={error} />;
   }
+  const discount = semesterDetails && ((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0);
 
   return (
     <>
@@ -111,7 +114,7 @@ const SemesterPage = () => {
 
                 {/* Tabs */}
                 <div className="w-full overflow-x-auto">
-                  <Tabs defaultValue="information" className="mb-10">
+                  <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-10">
                     <TabsList className="w-full flex-nowrap bg-white">
                       <TabsTrigger value="information" className="tabs-trigger">
                         {tTabs('information')}
@@ -145,12 +148,12 @@ const SemesterPage = () => {
                 <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
                   <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
                   <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
-                  <p className="text-center text-sm font-normal  text-red-400 ">
-                    <span className="line-through">${semesterDetails.price}</span>
-                    <span className="text-red-400 inline mx-2 text-lg">
-                      %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
-                    </span>
-                  </p>
+                  {Number(discount) > 0 && (
+                    <p className="text-center text-sm font-normal  text-red-400 ">
+                      <span className="line-through">${semesterDetails.price}</span>
+                      <span className="text-red-400 inline mx-2 text-lg">%{discount} Discount</span>
+                    </p>
+                  )}
                   <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
                   <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
                     <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
@@ -162,12 +165,17 @@ const SemesterPage = () => {
 
               {/* Right Sidebar on mobile */}
               <div className="md:col-span-1 p-4 rounded-lg bg-white block lg:hidden lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
-                <p className="text-center flex items-center text-sm font-normal  text-red-400 ">
-                  <span className="line-through">${semesterDetails.price}</span>
-                  <span className="text-red-400 text-nowrap inline mx-2 text-sm">
-                    %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
-                  </span>
-                </p>
+                {Number(discount) > 0 && (
+                  <>
+                    <p className="text-center flex items-center text-sm font-normal  text-red-400 ">
+                      <span className="line-through">${semesterDetails.price}</span>
+                      <span className="text-red-400 text-nowrap inline mx-2 text-sm">
+                        %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+                      </span>
+                    </p>
+                  </>
+                )}
+
                 <div className="my-4 shadow-sm md:sticky md:top-4 flex gap-3 justify-start items-center">
                   <div>
                     <div className="text-[30px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
