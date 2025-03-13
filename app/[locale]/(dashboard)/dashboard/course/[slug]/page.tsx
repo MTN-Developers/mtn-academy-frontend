@@ -18,6 +18,8 @@ import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ShareButton } from '@/app/components/common/ShareButton';
+import basicAr from '@/public/images/Basic study ar.png';
+import basicEn from '@/public/images/Basic study en.png';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -115,9 +117,15 @@ const CoursePage = () => {
             </div>
 
             {/* Video Preview */}
-            {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
+            <div className="relative aspect-video overflow-hidden bg-gray-900 rounded-lg mb-8 w-full">
+              <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
+                {/* {tCourse('noVideoAvailable')}
+                 */}
+                <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+              </div>
+            </div>
+            {/* {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
               <div className="relative aspect-video bg-gray-900 rounded-lg mb-3 w-full">
-                {/* Add your video player component here */}
                 <iframe
                   style={{
                     borderRadius: '20px',
@@ -127,9 +135,6 @@ const CoursePage = () => {
                   key={courseDetails.id}
                   className="w-full h-full"
                   src={courseDetails.promotion_video_url}
-                  // src={`https://therapy-gym-intimate-relationships.pages.dev/?stream#${src}`}
-                  // src={`https://video-player-cxd.pages.dev/?stream#${src}`}
-                  // src={`https://stream.mtninstitute.net/streaming/index.html?stream#${src}`}
                 />
               </div>
             ) : (
@@ -138,7 +143,7 @@ const CoursePage = () => {
                   {tCourse('noVideoAvailable')}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Tabs */}
             <div className="w-full overflow-x-auto">
