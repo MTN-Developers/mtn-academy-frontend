@@ -3,6 +3,7 @@ import { Course } from '@/app/types/semester';
 import { Card } from '@/components/ui/card';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 interface CoursesGridProps {
   courses: Course[];
@@ -10,6 +11,9 @@ interface CoursesGridProps {
 }
 
 export const CoursesGrid = ({ courses, isRTL }: CoursesGridProps) => {
+  const params = useParams();
+  const locale = params.locale as string;
+
   if (!courses?.length) {
     return (
       <div className="text-center py-12">
@@ -19,9 +23,9 @@ export const CoursesGrid = ({ courses, isRTL }: CoursesGridProps) => {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 my-4 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {courses.map(course => (
-        <Link key={course.id} href={`/dashboard/course/${course.slug}`}>
+        <Link key={course.id} href={`/${locale}/dashboard/course/${course.slug}`}>
           <Card className="overflow-hidden hover:shadow-md transition-shadow duration-200">
             <div className="relative aspect-video">
               <Image
@@ -33,7 +37,7 @@ export const CoursesGrid = ({ courses, isRTL }: CoursesGridProps) => {
             </div>
             <div className="p-4">
               <div className="w-fit px-4 py-1 text-center rounded-3xl bg-[#73b8ff] text-[11px] mb-3 text-white">
-                Free study
+                MTN study
               </div>
               <h3 className="font-semibold mb-2">{isRTL ? course.name_ar : course.name_en}</h3>
               <p className="text-sm text-gray-600 line-clamp-2">

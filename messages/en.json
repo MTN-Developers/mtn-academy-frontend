@@ -55,7 +55,7 @@
     },
     "menu": {
       "home": "Home",
-      "freeStudy": "Free study",
+      "freeStudy": "Studies",
       "academy": "Academy",
       "language": "English",
       "notifications": {
@@ -68,7 +68,8 @@
     }
   },
   "home": {
-    "Continue learning": "Continue learning"
+    "Continue learning": "Continue learning",
+    "Get starts with MTN Institute studies": "Get starts with MTN Institute studies"
   },
   "diplomaCarousel": {
     "error": {
@@ -87,7 +88,7 @@
     }
   },
   "course": {
-    "by": "A course by",
+    "by": " course by",
     "noVideoAvailable": "No preview video available",
     "whoShouldJoin": "Who Should Join",
     "enrollNow": "Enroll Now",
@@ -134,5 +135,16 @@
     "title": "Page Not Found",
     "description": "Sorry, we couldn't find the page you're looking for. Please check the URL or go back home.",
     "backHome": "Back to Home"
+  },
+  "Footer": {
+    "studyTitle": "Study's",
+    "mainStudy": "Main Study",
+    "technicalStudy": "Technical Study",
+    "specializedStudy": "Specialized study",
+    "getToKnowUs": "Get to know us",
+    "aboutUs": "About US",
+    "contactUs": "Contact US",
+    "homePage": "Home Page",
+    "copyright": "© {year} MTN Institute Inc. All rights reserved."
   }
 }

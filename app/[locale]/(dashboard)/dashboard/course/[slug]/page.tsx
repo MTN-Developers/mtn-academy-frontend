@@ -18,6 +18,8 @@ import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ShareButton } from '@/app/components/common/ShareButton';
+import basicAr from '@/public/images/Basic study ar.png';
+import basicEn from '@/public/images/Basic study en.png';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -74,6 +76,8 @@ const CoursePage = () => {
     return <NotFoundState />;
   }
 
+  const discount = ((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0);
+
   return (
     <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
       <BreadcrumbFragment
@@ -86,7 +90,7 @@ const CoursePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="md:col-span-2">
-            <div className="flex my-4 items-center w-full justify-between">
+            <div className="flex my-2 items-center w-full justify-between">
               <div className="flex items-center gap-4">
                 <Image
                   src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
@@ -97,7 +101,7 @@ const CoursePage = () => {
                 />
                 <div>
                   <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
-                    {isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                    {isRTL ? courseDetails.name_ar : courseDetails.name_en}
                   </h1>
                   <p className="text-gray-600 text-sm">
                     {tCourse('by')} <span className="font-semibold">{'By Ahmed Eldmallawy'}</span>
@@ -113,9 +117,15 @@ const CoursePage = () => {
             </div>
 
             {/* Video Preview */}
-            {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
-              <div className="relative aspect-video bg-gray-900 rounded-lg mb-8 w-full">
-                {/* Add your video player component here */}
+            <div className="relative aspect-video overflow-hidden bg-gray-900 rounded-lg mb-8 w-full">
+              <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
+                {/* {tCourse('noVideoAvailable')}
+                 */}
+                <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+              </div>
+            </div>
+            {/* {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
+              <div className="relative aspect-video bg-gray-900 rounded-lg mb-3 w-full">
                 <iframe
                   style={{
                     borderRadius: '20px',
@@ -125,9 +135,6 @@ const CoursePage = () => {
                   key={courseDetails.id}
                   className="w-full h-full"
                   src={courseDetails.promotion_video_url}
-                  // src={`https://therapy-gym-intimate-relationships.pages.dev/?stream#${src}`}
-                  // src={`https://video-player-cxd.pages.dev/?stream#${src}`}
-                  // src={`https://stream.mtninstitute.net/streaming/index.html?stream#${src}`}
                 />
               </div>
             ) : (
@@ -136,11 +143,11 @@ const CoursePage = () => {
                   {tCourse('noVideoAvailable')}
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Tabs */}
             <div className="w-full overflow-x-auto">
-              <Tabs defaultValue="information" className="mb-8">
+              <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
                 <TabsList className="w-full flex-nowrap bg-white">
                   <TabsTrigger value="information" className="tabs-trigger">
                     {tTabs('information')}
@@ -179,12 +186,13 @@ const CoursePage = () => {
             <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
               <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
               <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
-              <p className="text-center text-sm font-normal  text-red-400 ">
-                <span className="line-through">${semesterDetails.price}</span>
-                <span className="text-red-400 inline mx-2 text-lg">
-                  %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
-                </span>
-              </p>
+              {Number(discount) > 0 && (
+                <p className="text-center text-sm font-normal  text-red-400 ">
+                  <span className="line-through">${semesterDetails.price}</span>
+                  <span className="text-red-400 inline mx-2 text-lg">%{discount} Discount</span>
+                </p>
+              )}
+
               <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
               <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
                 <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>

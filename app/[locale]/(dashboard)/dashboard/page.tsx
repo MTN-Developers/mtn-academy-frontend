@@ -5,8 +5,8 @@ import { useEffect } from 'react';
 // import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/app/lib/redux/store';
 import { fetchCourses } from '@/app/lib/redux/features/courseSlice';
-// import LoadingSpinner from "@/app/components/common/LoadingSpinner";
-// import ContinueLearningComp from "@/app/components/ui/home/ContinueLearningComp";
+// import LoadingSpinner from '@/app/components/common/LoadingSpinner';
+// import ContinueLearningComp from '@/app/components/ui/home/ContinueLearningComp';
 import { MainCarousel } from '@/app/components/ui/home/MainCarousel';
 import FreeStudiesComp from '@/app/components/ui/home/FreeStudiesComp';
 import { usePathname } from 'next/navigation';
@@ -42,7 +42,7 @@ const Page = () => {
   return (
     <div dir={direction} className="w-full bg-[#f2f2f2] lg:px-[130px] p-4">
       <MainCarousel key={locale} direction={direction} />
-      {/* {status === "loading" ? <LoadingSpinner /> : <ContinueLearningComp />} */}
+      {/* {status === 'loading' ? <LoadingSpinner /> : <ContinueLearningComp />} */}
       {status === 'failed' && ' error fetching courses'}
       {/* Add free studies component */}
       {semesters && <FreeStudiesComp semesters={semesters} direction={direction} />}

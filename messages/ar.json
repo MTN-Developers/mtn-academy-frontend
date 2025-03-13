@@ -55,7 +55,7 @@
     },
     "menu": {
       "home": "الرئيسية",
-      "freeStudy": "دراسة مجانية",
+      "freeStudy": "دراسات",
       "academy": "الأكاديمية",
       "language": "العربية",
       "notifications": {
@@ -68,7 +68,8 @@
     }
   },
   "home": {
-    "Continue learning": "إستمر بالتعلم"
+    "Continue learning": "إستمر بالتعلم",
+    "Get starts with MTN Institute studies": "ابدأ دراستك مع معهد MTN"
   },
   "diplomaCarousel": {
     "error": {
@@ -134,5 +135,16 @@
     "title": "الصفحة غير موجودة",
     "description": "عذراً، لم نتمكن من العثور على الصفحة التي تبحث عنها. يرجى التحقق من الرابط أو العودة إلى الصفحة الرئيسية.",
     "backHome": "العودة إلى الرئيسية"
+  },
+  "Footer": {
+    "studyTitle": "الدراسات",
+    "mainStudy": "الدراسة الرئيسية",
+    "technicalStudy": "الدراسة التقنية",
+    "specializedStudy": "الدراسة المتخصصة",
+    "getToKnowUs": "تعرف علينا",
+    "aboutUs": "من نحن",
+    "contactUs": "اتصل بنا",
+    "homePage": "الصفحة الرئيسية",
+    "copyright": "© {year} معهد MTN. جميع الحقوق محفوظة."
   }
 }
