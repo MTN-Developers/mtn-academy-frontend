@@ -17,9 +17,11 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
   //     (1 - course.pricing.discountPercentage / 100)
   //   : course.pricing.originalPrice;
 
+  const routingLink = semester.name_ar === 'المرحلة الأساسية' ? `dashboard/semester/${semester.id}` : '#';
+
   return (
     <Link
-      href={`dashboard/semester/${semester.id}`}
+      href={routingLink}
       className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
     >
       <div className="relative h-48">
