@@ -12,7 +12,7 @@ import * as yup from 'yup';
 import bannerMob from '@/public/images/login-banner-mob.svg';
 import bannerWeb from '@/public/images/login-banner-web.svg';
 import mtnLogo from '@/public/images/mtn-logo.svg';
-import googleIcon from '@/public/icons/google-icon.svg';
+// import googleIcon from '@/public/icons/google-icon.svg';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -331,19 +331,19 @@ export default function RegisterPage() {
                   ...
                 </div>
               ) : (
-                t('Sign in')
+                t('Sign up')
               )}
             </Button>
 
             {/* Google sign in */}
-            <Button
+            {/* <Button
               type="button"
               onClick={() => toast.info('Google sign up not implemented yet')}
               className="w-full bg-[#333333] text-white py-2 mb-8 flex items-center justify-center gap-2"
             >
               <Image src={googleIcon} alt="google icon" className="mr-2" />
               {t('Or sign in with Google')}
-            </Button>
+            </Button> */}
 
             {/* Login link */}
             <p className="text-center text-sm">

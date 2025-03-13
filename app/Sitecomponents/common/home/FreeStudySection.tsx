@@ -1,19 +1,22 @@
-'use client';
-import useGetAllSemesters from '@/app/hooks/useGetAllSemesters';
+import { useEffect, useState } from 'react';
 import StudyCard from './StudyCard';
+import axios from 'axios';
 
 export default function FreeStudySection() {
-  const { data: semesters, isLoading, error } = useGetAllSemesters();
+  const [semesters, setSemeters] = useState([]);
+  useEffect(() => {
+    const fetchPublicSemesters = async () => {
+      const response = await axios('https://api.academy.mtninstitute.net/api/semesters');
 
-  console.log('data is ', semesters);
+      console.log('global semesters ', semesters);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+      setSemeters(response.data.data.data);
 
-  if (error) {
-    return <div>Error</div>;
-  }
+      return response;
+    };
+
+    fetchPublicSemesters();
+  }, [semesters]);
 
   // const studiesInfo = [
   //   {
@@ -53,9 +56,10 @@ export default function FreeStudySection() {
         {/* <span className="hidden md:inline text-lg">See all</span> */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
-        {semesters?.map((semester, index) => {
-          return <StudyCard key={index} semester={semester} />;
-        })}
+        {semesters.length > 0 &&
+          semesters.map((study, index) => {
+            return <StudyCard key={index} study={study} />;
+          })}
       </div>
     </div>
   );

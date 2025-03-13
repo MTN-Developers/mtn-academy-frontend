@@ -1,10 +1,11 @@
-"use client";
+'use client';
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import mtnLogo from "@/public/images/mtn-logo.svg";
-import { Menu } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
+import mtnLogo from '@/public/images/mtn-logo.svg';
+import { Menu } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 interface Props {
   isOpen: boolean;
@@ -39,10 +40,7 @@ Props) => {
               <Menu className="h-6 w-6" />
             </Button>
           </SheetTrigger>
-          <SheetContent
-            side={locale === "ar" ? "left" : "right"}
-            className="w-[300px]"
-          >
+          <SheetContent side={locale === 'ar' ? 'left' : 'right'} className="w-[300px]">
             {/* <SheetHeader>
               <SheetTitle
                 className={locale === "ar" ? "text-right" : "text-left"}
@@ -65,7 +63,7 @@ Props) => {
                 />
               </div> */}
               {/* Mobile Navigation Items */}
-              {menuItems.map((item) => (
+              {menuItems.map(item => (
                 <Button
                   key={item.href}
                   variant="ghost"
@@ -77,29 +75,25 @@ Props) => {
               ))}
               {/* Mobile Language Switcher */}
               <div className="flex mx-4 flex-col gap-2">
-                <p className="text-sm font-medium">{t("menu.language")}</p>
+                <p className="text-sm font-medium">{t('menu.language')}</p>
                 <div className="flex gap-2">
-                  <Button
-                    variant={locale === "ar" ? "default" : "outline"}
-                    onClick={() => handleLanguageChange("ar")}
-                  >
+                  <Button variant={locale === 'ar' ? 'default' : 'outline'} onClick={() => handleLanguageChange('ar')}>
                     العربية
                   </Button>
-                  <Button
-                    variant={locale === "en" ? "default" : "outline"}
-                    onClick={() => handleLanguageChange("en")}
-                  >
+                  <Button variant={locale === 'en' ? 'default' : 'outline'} onClick={() => handleLanguageChange('en')}>
                     English
                   </Button>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
                 <Button className=" bg-white border text-primary-blue  mx-2 border-primary-blue hover:bg-primary-blue hover:text-white">
-                  {locale === "ar" ? "اشتراك" : "Signup"}
+                  {locale === 'ar' ? 'اشتراك' : 'Signup'}
                 </Button>
-                <Button className="bg-primary-blue border-primary-blue min-w-fit  hover:bg-primary-blue">
-                  {locale === "ar" ? "تسجيل الدخول" : "Login"}
-                </Button>
+                <Link href={'/login'}>
+                  <Button className="bg-primary-blue border-primary-blue min-w-fit  hover:bg-primary-blue">
+                    {locale === 'ar' ? 'تسجيل الدخول' : 'Login'}
+                  </Button>
+                </Link>
               </div>
               {/* Mobile Notifications */}
               {/* <div className="flex items-center gap-2">

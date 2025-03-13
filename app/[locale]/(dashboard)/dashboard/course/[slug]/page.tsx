@@ -14,16 +14,15 @@ import { ErrorState } from '@/app/components/common/ErrorState';
 import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
-import { useSemesterDetailsById } from '@/app/hooks/useSemesterDetails';
-import fileIcon from '@/public/icons/file.svg';
-import personIcon from '@/public/icons/person-1.svg';
-import clipIcon from '@/public/icons/clip.svg';
-import smileIcon from '@/public/icons/smile.svg';
-import infiniteIcon from '@/public/icons/infinite.svg';
-import volumeIcon from '@/public/icons/volume.svg';
+import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { ShareButton } from '@/app/components/common/ShareButton';
 
 const CoursePage = () => {
   const { slug } = useParams();
+  const [showDialog, setShowDialog] = useState(false);
+  const [goToPayment, setGoToPayment] = useState(false);
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
 
@@ -31,8 +30,13 @@ const CoursePage = () => {
     data: semesterDetails,
     isLoading: loadingSemester,
     error: errorSemester,
-  } = useSemesterDetailsById(courseDetails?.semester_id || '');
-  console.log('courseDetails is ', courseDetails);
+  } = useSemesterDetails(courseDetails?.semester_id || '');
+
+  console.log('data course', courseDetails);
+
+  console.log('semester course', semesterDetails);
+
+  // console.log('courseDetails is ', courseDetails);
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
   const path = usePathname();
@@ -40,7 +44,20 @@ const CoursePage = () => {
   const locale = pathArr[1];
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
-  console.log(semesterDetails);
+
+  // Move the dialog logic to useEffect so it only runs when dependencies change
+  useEffect(() => {
+    if (semesterDetails?.is_purchased === true && courseDetails?.is_locked === true) {
+      setShowDialog(true);
+    } else if (semesterDetails?.is_purchased === false) {
+      setGoToPayment(true);
+      setShowDialog(false);
+      console.log('gotopayment', goToPayment);
+    } else {
+      setShowDialog(false);
+    }
+  }, [semesterDetails?.is_purchased, courseDetails?.is_locked]);
+
   if (isLoading || loadingSemester) {
     return <PathDetailsSkeleton />;
   }
@@ -60,27 +77,39 @@ const CoursePage = () => {
   return (
     <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
       <BreadcrumbFragment
-        pathName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
-        pathSlug={courseDetails.slug}
+        semesterName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+        semesterId={semesterDetails.id}
+        courseName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
       />
 
       <div className="w-full p-4 px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Content */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-4 mb-4 flex-wrap">
-              <Image
-                src={isRTL ? courseDetails.logo_ar : courseDetails.logo_en}
-                alt={isRTL ? courseDetails.name_ar : courseDetails.name_en}
-                width={64}
-                height={64}
-                className="rounded-lg"
-              />
-              <div>
-                <h1 className="text-xl md:text-2xl font-normal text-[#10458c] break-words">
-                  {isRTL ? courseDetails.name_ar : courseDetails.name_en}
-                </h1>
+            <div className="flex my-4 items-center w-full justify-between">
+              <div className="flex items-center gap-4">
+                <Image
+                  src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
+                  alt={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                  width={64}
+                  height={64}
+                  className="rounded-lg"
+                />
+                <div>
+                  <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
+                    {isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                  </h1>
+                  <p className="text-gray-600 text-sm">
+                    {tCourse('by')} <span className="font-semibold">{'By Ahmed Eldmallawy'}</span>
+                  </p>
+                </div>
               </div>
+              <ShareButton
+                title="Share this semester"
+                customShareText={`Hi, I am taking this amazing semester: ${
+                  isRTL ? courseDetails.name_ar : courseDetails.name_en
+                }`}
+              />
             </div>
 
             {/* Video Preview */}
@@ -96,6 +125,9 @@ const CoursePage = () => {
                   key={courseDetails.id}
                   className="w-full h-full"
                   src={courseDetails.promotion_video_url}
+                  // src={`https://therapy-gym-intimate-relationships.pages.dev/?stream#${src}`}
+                  // src={`https://video-player-cxd.pages.dev/?stream#${src}`}
+                  // src={`https://stream.mtninstitute.net/streaming/index.html?stream#${src}`}
                 />
               </div>
             ) : (
@@ -131,62 +163,62 @@ const CoursePage = () => {
                   </div>
                 </TabsContent>
                 <TabsContent value="playlist" className="mt-6">
-                  <ChaptersAccordion courseDetails={courseDetails} innerBackground="bg-[#F7F7F7CF]" />
+                  <ChaptersAccordion
+                    semester={semesterDetails}
+                    showDialog={showDialog}
+                    courseDetails={courseDetails}
+                    innerBackground="bg-[#F7F7F7CF]"
+                  />
                 </TabsContent>
               </Tabs>
             </div>
           </div>
 
           {/* Right Sectio */}
-          <div className="md:col-span-1 lg:relative w-[90%] mx-4 fixed bottom-4 left-0 ">
-            <div className="bg-white p-4 md:p-6 rounded-[14px] my-4 md:sticky md:top-4 flex flex-col gap-3 justify-start items-center shadow-[0px_4px_16px_0px_rgba(0,0,0,0.12)]">
+          <div className="md:col-span-1 hidden lg:block lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
+            <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
               <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
-              <div className="text-[64px] font-bold">${semesterDetails.price_after_discount}</div>
-              {semesterDetails.price_after_discount < semesterDetails.price && (
-                <p className="text-center text-sm font-normal text-red-400 mt-2">
-                  <span className="line-through">${semesterDetails.price}</span>
-                  <span className="text-red-400 inline mx-2 text-lg">
-                    %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
-                  </span>
-                </p>
-              )}
+              <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
+              <p className="text-center text-sm font-normal  text-red-400 ">
+                <span className="line-through">${semesterDetails.price}</span>
+                <span className="text-red-400 inline mx-2 text-lg">
+                  %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+                </span>
+              </p>
               <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
-              <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
+              <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
+                <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
+              </Link>
+              <div className="space-y-4 text-sm">
+                {/* <div className="flex items-center gap-2">
+                      <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
+                      <span className="break-words">
+                        {semesterDetails.
+                          ? `${courseDetails.course_duration} ${tCourse('hours')}`
+                          : tCourse('durationNotSpecified')}
+                      </span>
+                    </div> */}
+                {/* Add more course metadata here */}
+              </div>
             </div>
-            <ul className="flex flex-col gap-y-3 mt-6">
-              <li className="flex items-center gap-2">
-                <Image width={13} height={13} src={personIcon} alt="person-icon" />
-                <span className="text-sm text-[#161616]">
-                  {courseDetails.enrolled_count} {tCourse('students')}
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Image width={13} height={13} src={clipIcon} alt="clip-icon" />
-                <span className="text-sm text-[#161616]">
-                  {courseDetails.videos_count} {tCourse('lessons')}
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Image width={13} height={13} src={fileIcon} alt="file-icon" />
-                <span className="text-sm text-[#161616]">
-                  {courseDetails.resources_count} {tCourse('additionalResources')}
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Image width={13} height={13} src={smileIcon} alt="smile-icon" />
-                <span className="text-sm text-[#161616]">{tCourse('online')}</span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Image width={13} height={13} src={volumeIcon} alt="volume-icon" />
-                <span className="text-sm text-[#161616]">
-                  {tCourse('audio')}: {tCourse('arabic')}
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <Image width={13} height={13} src={infiniteIcon} alt="infinite-icon" />
-                <span className="text-sm text-[#161616]">{tCourse('unlimitedAccess')}</span>
-              </li>
-            </ul>
+          </div>
+
+          {/* Right Sidebar on mobile */}
+          <div className="md:col-span-1 p-4 rounded-lg bg-white block lg:hidden lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
+            <p className="text-center flex items-center text-sm font-normal  text-red-400 ">
+              <span className="line-through">${semesterDetails.price}</span>
+              <span className="text-red-400 text-nowrap inline mx-2 text-sm">
+                %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
+              </span>
+            </p>
+            <div className="   my-4 shadow-sm md:sticky md:top-4 flex  gap-3 justify-start items-center">
+              <div>
+                <div className="text-[30px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
+              </div>
+              <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
+                <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

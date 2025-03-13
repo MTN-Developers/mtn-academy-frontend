@@ -6,9 +6,10 @@ import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion'
 import { VideoPlayer } from '@/app/components/ui/course/VideoPlayer';
 import { PathDetailsSkeleton } from '@/app/components/ui/home/PathDetailsSkeleton';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails';
+import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
 import { RootState } from '@/app/lib/redux/store';
 import { Chapter, Video } from '@/app/types/video';
-import { Comments } from '@/components/ui/Comments';
+import { Comments } from '@/app/components/ui/comments/Comments';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
@@ -44,6 +45,14 @@ export default function WatchPage() {
 
   // Use redux data if available, otherwise use query data
   const courseData = reduxData || data?.data;
+
+  // Fetch semester details
+  const {
+    data: semesterData,
+    isLoading: loadingSemester,
+    error: errorSemester,
+  } = useSemesterDetails(courseData?.semester_id || '');
+
   // Update URL when current video changes
   useEffect(() => {
     if (currentVideo && currentVideo.id !== videoId) {
@@ -55,6 +64,7 @@ export default function WatchPage() {
       router.replace(`${window.location.pathname}?${newParams.toString()}`, { scroll: false });
     }
   }, [currentVideo, router, searchParams, videoId]);
+
   useEffect(() => {
     if (!courseData) return;
     if (courseData.is_locked === true) {
@@ -113,7 +123,9 @@ export default function WatchPage() {
         }),
       );
     }
-  }, [courseData, videoId, slug]);
+  }, [courseData, videoId, slug, router]);
+
+  // console.log('watch is ', courseData);
 
   // Handle video selection from chapters list
   const handleVideoSelect = (video: Video, chapter: Chapter) => {
@@ -129,12 +141,13 @@ export default function WatchPage() {
     );
   };
 
-  if (isLoading) {
+  if (isLoading || loadingSemester) {
     return <PathDetailsSkeleton />;
   }
-
-  if (error) {
-    return <ErrorState error={error} />;
+  if (error || errorSemester) {
+    // Ensure we always pass an Error object
+    const errorToDisplay = error || errorSemester || new Error('Unknown error');
+    return <ErrorState error={errorToDisplay} />;
   }
 
   // console.log('curent video is ', currentVideo);
@@ -142,7 +155,7 @@ export default function WatchPage() {
   // Define content elements to be ordered based on direction
   const VideoSection = (
     <div className="lg:col-span-2">
-      <VideoPlayer url={currentVideo?.video_url} />
+      <VideoPlayer chapterVideoId={currentChapter?.id} video={currentVideo} url={currentVideo?.video_url} />
       {/* Tabs */}
       <div className="w-full overflow-x-auto mt-5">
         <Tabs defaultValue="session" className="mb-8 shadow-none rounded-none">
@@ -169,7 +182,6 @@ export default function WatchPage() {
             <p className="text-sm md:text-base text-[#161616] mb-4">
               {isRTL ? currentVideo?.description_ar : currentVideo?.description_en}
             </p>
-            <></>
           </TabsContent>
 
           <TabsContent value="comments">
@@ -190,6 +202,8 @@ export default function WatchPage() {
           onVideoSelect={handleVideoSelect}
           noBackground={true}
           innerBackground="bg-[#E7E7E7]"
+          semester={semesterData} // Add the semester prop
+          showDialog={false} // Since we're in the watch page, we don't need to show the dialog
         />
       </div>
     </div>
@@ -206,8 +220,8 @@ export default function WatchPage() {
           </>
         ) : (
           <>
-            {ChaptersSection}
             {VideoSection}
+            {ChaptersSection}
           </>
         )}
       </div>

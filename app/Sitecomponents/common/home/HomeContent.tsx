@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import * as React from 'react';
 import bg from '@/public/icons/spiral.svg';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 
 export default function HomeContent() {
   const params = useParams();
@@ -21,14 +22,28 @@ export default function HomeContent() {
       </div>
 
       {/* Right Section */}
-      <div className="py-5 md:px-6 flex flex-col items-start justify-center">
-        <p className="text-xl">
-          اختار ما يناسبك من مجموعة شاملة من البرامج المختصة بكل ما يتعلق بتحسين حياتك والارتقاء بمشاعرك، لتنعكس على كل
-          جوانب حياتك بالمزيد من الاتزان والصحة النفسية والجسدية
-        </p>
-        <Button className="bg-primary-blue mt-5 border-primary-blue min-w-fit hover:bg-primary-blue">
-          {locale === 'ar' ? 'تسجيل الدخول' : 'Join now'}
-        </Button>
+      <div className="py-5 md:px-6 flex flex-col  items-start justify-center">
+        {locale === 'ar' ? (
+          <>
+            <p className="text-xl">
+              اختار ما يناسبك من مجموعة شاملة من البرامج المختصة بكل ما يتعلق بتحسين حياتك والارتقاء بمشاعرك، لتنعكس على
+              كل جوانب حياتك بالمزيد من الاتزان والصحة النفسية والجسدية
+            </p>
+          </>
+        ) : (
+          <>
+            <p className="text-xl">
+              Choose what suits you from a comprehensive group of programs specialized in everything related to
+              improving your life and elevating your feelings, to reflect on all aspects of your life with more balance
+              and mental and physical health
+            </p>
+          </>
+        )}
+        <Link href={'/login'}>
+          <Button className="bg-primary-blue mt-5 border-primary-blue min-w-fit hover:bg-primary-blue">
+            {locale === 'ar' ? 'تسجيل الدخول' : 'Join now'}
+          </Button>
+        </Link>
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+'use client';
+
 //the land page which is in
 // app/[locale]/page.tsx
 
@@ -18,6 +20,7 @@ export default function Page() {
         <MainCarousel />
         <HomeContent />
         <FreeStudySection />
+        {/* <FreeStudiesComp semesters={semesters} direction="ltr" /> */}
         <HomeBanner />
         <OurDiplomas />
         <FeedbackCarousel />

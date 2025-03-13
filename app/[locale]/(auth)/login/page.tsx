@@ -1,30 +1,30 @@
 // src/app/[locale]/login/page.tsx
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 // import { useAuth } from "@/app/hooks/useAuth";
-import { useTranslations } from "next-intl";
-import Link from "next/link";
-import Image from "next/image";
-import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import bannerMob from "@/public/images/login-banner-mob.svg";
-import bannerWeb from "@/public/images/login-banner-web.svg";
-import mtnLogo from "@/public/images/mtn-logo.svg";
-import googleIcon from "@/public/icons/google-icon.svg";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Eye, EyeOff } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
-import { toast } from "sonner"; // Add toast notifications
-import { setCookie } from "cookies-next";
-import { useRouter, useSearchParams } from "next/navigation";
-import { usePathname } from "next/navigation";
-import { login } from "@/app/lib/redux/features/authActions";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/app/lib/redux/store";
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import bannerMob from '@/public/images/login-banner-mob.svg';
+import bannerWeb from '@/public/images/login-banner-web.svg';
+import mtnLogo from '@/public/images/mtn-logo.svg';
+// import googleIcon from "@/public/icons/google-icon.svg";
+import { Button } from '@/components/ui/button';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Eye, EyeOff } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
+import { toast } from 'sonner'; // Add toast notifications
+import { setCookie } from 'cookies-next';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { login } from '@/app/lib/redux/features/authActions';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from '@/app/lib/redux/store';
 // import axiosInstance from "@/app/lib/axios/instance";
 
 // Form schema
@@ -41,14 +41,8 @@ interface LoginFormData {
 // }
 
 const schema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: yup
-    .string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
+  email: yup.string().email('Invalid email format').required('Email is required'),
+  password: yup.string().min(8, 'Password must be at least 8 characters').required('Password is required'),
   rememberMe: yup.boolean().required().default(false),
 });
 
@@ -58,15 +52,18 @@ export default function LoginPage() {
   // const { loginFn, loading } = useAuth();
   const router = useRouter();
   const path = usePathname();
-  const pathArr = path.split("/");
+  const pathArr = path.split('/');
   const locale = pathArr[1];
   const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect");
-  const { loading } = useSelector((state: RootState) => state.auth);
+  const redirect = searchParams.get('redirect');
+  const [loading, setLoading] = useState(false);
+  // const { loading } = useSelector((state: RootState) => state.auth);
+  // Add this at the top of your component
+  const [pageLoadTime] = useState(Date.now());
 
-  console.log("path is", path);
-  console.log("local is", locale);
-  const t = useTranslations("login");
+  console.log('path is', path);
+  console.log('local is', locale);
+  const t = useTranslations('login');
 
   const {
     register,
@@ -76,29 +73,33 @@ export default function LoginPage() {
   } = useForm<LoginFormData>({
     resolver: yupResolver(schema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
       rememberMe: false,
     },
   });
 
   const onSubmit = async (data: LoginFormData) => {
+    // Check if this is an auto-filled submission (happens too quickly after page load)
+    const isAutoFilled = document.activeElement === null;
+    if (isAutoFilled && Date.now() - pageLoadTime < 1000) {
+      return; // Prevent submission if it's likely an auto-fill
+    }
     try {
-      const resultAction = await dispatch(
-        login({ email: data.email, password: data.password })
-      );
-      console.log("resultAction", resultAction);
+      setLoading(true);
+      const resultAction = await dispatch(login({ email: data.email, password: data.password }));
+      console.log('resultAction', resultAction);
 
       if (login.fulfilled.match(resultAction)) {
-        toast.success("Login successful");
+        toast.success('Login successful');
         // Set cookies with appropriate options
-        setCookie("access_token", resultAction.payload.access_token, {
-          path: "/",
+        setCookie('access_token', resultAction.payload.access_token, {
+          path: '/',
         });
-        setCookie("refresh_token", resultAction.payload.refresh_token, {
-          path: "/",
+        setCookie('refresh_token', resultAction.payload.refresh_token, {
+          path: '/',
         });
-        setCookie("user", resultAction.payload.user, { path: "/" });
+        setCookie('user', resultAction.payload.user, { path: '/' });
 
         // if (package_id) {
         //   try {
@@ -115,111 +116,90 @@ export default function LoginPage() {
         // }
         // router.push("/"); // Redirect to home page
         router.replace(`
-          ${redirect ? decodeURIComponent(redirect) : "/"}
+          ${redirect ? decodeURIComponent(redirect) : '/'}
           `);
       } else {
         toast.error(resultAction.payload as string);
       }
+      setLoading(false);
     } catch (err) {
-      console.error("Login error:", err);
-      toast.error("An unexpected error occurred");
+      setLoading(false);
+
+      console.error('Login error:', err);
+      toast.error('An unexpected error occurred');
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      // Implement Google login logic here
-      toast.info("Google login not implemented yet");
-    } catch (error) {
-      toast.error(`${error}`);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     // Implement Google login logic here
+  //     toast.info("Google login not implemented yet");
+  //   } catch (error) {
+  //     toast.error(`${error}`);
+  //   }
+  // };
 
   return (
-    <div
-      dir={`${locale === "en" ? "ltr" : "rtl"}`}
-      className="w-full h-full bg-white"
-    >
+    <div dir={`${locale === 'en' ? 'ltr' : 'rtl'}`} className="w-full h-full bg-white">
       <div className="w-full h-screen flex justify-center items-center">
         {/* Banner web */}
         <div className="w-full h-full hidden lg:block bg-gray-400 overflow-hidden">
-          <Image
-            src={bannerWeb}
-            alt="banner web"
-            className="w-full h-full object-cover"
-          />
+          <Image src={bannerWeb} alt="banner web" className="w-full h-full object-cover" />
         </div>
         <div>
           {/* Banner mob */}
           <div className="block overflow-hidden relative lg:hidden w-full h-[360px]">
-            <Image
-              src={bannerMob}
-              alt="banner-mob"
-              className="object-cover w-full"
-            />
+            <Image src={bannerMob} alt="banner-mob" className="object-cover w-full" />
             <div className={`absolute bottom-4 p-4`}>
               <Image src={mtnLogo} alt="mtn logo" />
-              <h2 className="font-bold mt-6">{t("Nice to see you again")}</h2>
+              <h2 className="font-bold mt-6">{t('Nice to see you again')}</h2>
             </div>
           </div>
 
           {/* Form body */}
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="lg:w-[456px] w-full p-4 lg:p-[48px]"
-          >
+          <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="lg:w-[456px] w-full p-4 lg:p-[48px]">
             <div className={`hidden lg:block`}>
               <Image src={mtnLogo} alt="mtn logo" />
-              <h2 className="font-bold my-6">{t("Nice to see you again")}</h2>
+              <h2 className="font-bold my-6">{t('Nice to see you again')}</h2>
             </div>
 
             {/* Email field */}
             <div className="grid w-full mb-8 items-center gap-1.5">
-              <Label htmlFor="email">{t("email.label")}</Label>
+              <Label htmlFor="email">{t('email.label')}</Label>
               <Input
-                {...register("email")}
+                {...register('email')}
                 type="email"
                 id="email"
-                placeholder={t("email.label")}
+                autoComplete="new-email" // Use a non-standard value
+                placeholder={t('email.label')}
                 className="bg-[#f2f2f2] focus:bg-white transition-colors"
               />
-              {errors.email && (
-                <span className="text-red-500 text-sm">
-                  {errors.email.message}
-                </span>
-              )}
+              {errors.email && <span className="text-red-500 text-sm">{errors.email.message}</span>}
             </div>
 
             {/* Password field */}
             <div className="grid w-full mb-8 items-center gap-1.5">
-              <Label htmlFor="password">{t("password.label")}</Label>
+              <Label htmlFor="password">{t('password.label')}</Label>
               <div className="relative">
                 <Input
-                  {...register("password")}
-                  type={showPassword ? "text" : "password"}
+                  {...register('password')}
+                  type={showPassword ? 'text' : 'password'}
                   id="password"
-                  placeholder={t("password.label")}
+                  autoComplete="new-password" // Use a non-standard value
+                  placeholder={t('password.label')}
                   className="bg-[#f2f2f2] focus:bg-white transition-colors pr-10"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className={`absolute ${
-                    locale === "ar" ? "left-3" : "right-3"
+                    locale === 'ar' ? 'left-3' : 'right-3'
                   } top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none`}
                 >
-                  {showPassword ? (
-                    <EyeOff className="h-4 w-4" />
-                  ) : (
-                    <Eye className="h-4 w-4" />
-                  )}
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
               </div>
-              {errors.password && (
-                <span className="text-red-500 text-sm">
-                  {errors.password.message}
-                </span>
-              )}
+              {errors.password && <span className="text-red-500 text-sm">{errors.password.message}</span>}
             </div>
 
             {/* Remember me and Forgot password */}
@@ -237,42 +217,32 @@ export default function LoginPage() {
                     />
                   )}
                 />
-                <Label htmlFor="remember-me">{t("button.RememberMe")}</Label>
+                <Label htmlFor="remember-me">{t('button.RememberMe')}</Label>
               </div>
-              <Link
-                href={`/${locale}/forgot-password`}
-                className="text-xs text-blue-600 underline"
-              >
-                {t("password.forgotPassword")}
+              <Link href={`/${locale}/forgot-password`} className="text-xs text-blue-600 underline">
+                {t('password.forgotPassword')}
               </Link>
             </div>
 
             {/* Buttons */}
             <div className="grid w-full mb-8 items-center gap-1.5">
-              <Button
-                type="submit"
-                disabled={loading}
-                className="bg-[#007aff] py-2 my-[28px] text-white"
-              >
-                {loading ? t("button.loading") : t("button.submit")}
+              <Button type="submit" disabled={loading} className="bg-[#007aff] py-2 my-[28px] text-white">
+                {loading ? t('button.loading') : t('button.submit')}
               </Button>
 
-              <Button
+              {/* <Button
                 type="button"
                 onClick={handleGoogleLogin}
                 className="bg-[#333333] py-2 my-[28px] text-white"
               >
                 <Image src={googleIcon} alt="google icon" className="mr-2" />
                 {t("button.signWithGoogle")}
-              </Button>
+              </Button> */}
 
               <p className="text-center text-sm">
-                {t("button.dontHaveAccount")}{" "}
-                <Link
-                  href={`/${locale}/register`}
-                  className="cursor-pointer text-blue-500 underline"
-                >
-                  {t("button.createAccount")}
+                {t('button.dontHaveAccount')}{' '}
+                <Link href={`/${locale}/register`} className="cursor-pointer text-blue-500 underline">
+                  {t('button.createAccount')}
                 </Link>
               </p>
             </div>
@@ -280,10 +250,10 @@ export default function LoginPage() {
             {/* Language switcher */}
             <div className="mt-4 text-center">
               <Link
-                href={locale === "en" ? "/ar/login" : "/en/login"}
+                href={locale === 'en' ? '/ar/login' : '/en/login'}
                 className="text-sm text-primary hover:text-primary/90"
               >
-                {locale === "en" ? "العربية" : "English"}
+                {locale === 'en' ? 'العربية' : 'English'}
               </Link>
             </div>
           </form>
