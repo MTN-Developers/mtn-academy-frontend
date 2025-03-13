@@ -43,7 +43,9 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
           A course by {course.instructor.name}
         </p> */}
 
-        <p className="mt-4 text-gray-700">{direction === 'ltr' ? semester.description_en : semester.description_ar}</p>
+        <p className="mt-4 text-gray-700">
+          {direction === 'ltr' ? semester.description_en.slice(0, 50) : semester.description_ar.slice(0, 50)}
+        </p>
 
         {/* <div className="flex  items-center mt-6 space-x-4">
           <div className="flex items-center">
