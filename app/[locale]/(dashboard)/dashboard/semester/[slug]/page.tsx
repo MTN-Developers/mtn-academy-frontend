@@ -15,8 +15,8 @@ import { ErrorState } from '@/app/components/common/ErrorState';
 import Link from 'next/link';
 import { ShareButton } from '@/app/components/common/ShareButton';
 // import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
-import basicAr from '@/public/images/Basic-study-ar.png';
-import basicEn from '@/public/images/Basic-study-en.png';
+import basicAr from '@/public/images/basicAr.png';
+import basicEn from '@/public/images/basicEn.png';
 
 const SemesterPage = () => {
   const { slug } = useParams();
