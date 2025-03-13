@@ -20,7 +20,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner'; // Add toast notifications
 import { setCookie } from 'cookies-next';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 import { login } from '@/app/lib/redux/features/authActions';
 import { useDispatch } from 'react-redux';
@@ -52,8 +52,10 @@ export default function LoginPage() {
   // const { loginFn, loading } = useAuth();
   const router = useRouter();
   const path = usePathname();
-  const pathArr = path.split('/');
-  const locale = pathArr[1];
+  // const pathArr = path.split('/');
+  // const locale = pathArr[1];
+  const params = useParams();
+  const locale = params.locale as string;
   const searchParams = useSearchParams();
   const redirect = searchParams.get('redirect');
   const [loading, setLoading] = useState(false);
@@ -116,7 +118,7 @@ export default function LoginPage() {
         // }
         // router.push("/"); // Redirect to home page
         router.replace(`
-          ${redirect ? decodeURIComponent(redirect) : '/'}
+          ${redirect ? decodeURIComponent(redirect) : `/${locale}/dashboard`}
           `);
       } else {
         toast.error(resultAction.payload as string);

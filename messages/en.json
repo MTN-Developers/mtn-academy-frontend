@@ -54,7 +54,7 @@
     },
     "menu": {
       "home": "Home",
-      "freeStudy": "Free study",
+      "freeStudy": "Studies",
       "academy": "Academy",
       "language": "English",
       "notifications": {
@@ -67,7 +67,8 @@
     }
   },
   "home": {
-    "Continue learning": "Continue learning"
+    "Continue learning": "Continue learning",
+    "Get starts with MTN Institute studies": "Get starts with MTN Institute studies"
   },
   "diplomaCarousel": {
     "error": {

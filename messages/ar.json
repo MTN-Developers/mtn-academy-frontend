@@ -54,7 +54,7 @@
     },
     "menu": {
       "home": "الرئيسية",
-      "freeStudy": "دراسة مجانية",
+      "freeStudy": "دراسات",
       "academy": "الأكاديمية",
       "language": "العربية",
       "notifications": {
@@ -67,7 +67,8 @@
     }
   },
   "home": {
-    "Continue learning": "إستمر بالتعلم"
+    "Continue learning": "إستمر بالتعلم",
+    "Get starts with MTN Institute studies": "ابدأ دراستك مع معهد MTN"
   },
   "diplomaCarousel": {
     "error": {

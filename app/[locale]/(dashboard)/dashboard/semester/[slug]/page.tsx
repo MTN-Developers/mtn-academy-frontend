@@ -14,6 +14,7 @@ import { CoursesGrid } from '@/app/components/common/CoursesGrid';
 import { ErrorState } from '@/app/components/common/ErrorState';
 import Link from 'next/link';
 import { ShareButton } from '@/app/components/common/ShareButton';
+// import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 
 const SemesterPage = () => {
   const { slug } = useParams();
@@ -49,7 +50,7 @@ const SemesterPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Left Content */}
               <div className="md:col-span-2">
-                <div className="flex items-center gap-4 mb-4 flex-wrap">
+                <div className="flex items-center gap-4 mb-3 flex-wrap">
                   <div className="flex items-center w-full justify-between">
                     <div className="flex items-center gap-4">
                       <Image
@@ -78,7 +79,7 @@ const SemesterPage = () => {
 
                   {/* Video Preview */}
                   {semesterDetails.promotion_video_url ? (
-                    <div className="relative aspect-video rounded-lg mb-8 w-full">
+                    <div className="relative aspect-video rounded-lg w-full">
                       <iframe
                         style={{
                           borderRadius: '20px',
@@ -98,19 +99,19 @@ const SemesterPage = () => {
                     </div>
                   )}
 
-                  <div>
+                  {/* <div>
                     <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
                       {isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
                     </h1>
                     <p className="text-gray-600 text-sm">
                       {tCourse('semester')} {semesterDetails.order}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Tabs */}
                 <div className="w-full overflow-x-auto">
-                  <Tabs defaultValue="information" className="mb-8">
+                  <Tabs defaultValue="information" className="mb-10">
                     <TabsList className="w-full flex-nowrap bg-white">
                       <TabsTrigger value="information" className="tabs-trigger">
                         {tTabs('information')}
@@ -155,6 +156,8 @@ const SemesterPage = () => {
                     <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
                   </Link>
                 </div>
+
+                {/* <ProgressSidebar progress={90} /> */}
               </div>
 
               {/* Right Sidebar on mobile */}
