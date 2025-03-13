@@ -1,148 +1,100 @@
 // components/footer/Footer.tsx
-import Image from "next/image";
-import Link from "next/link";
-import { FaFacebook, FaLinkedin } from "react-icons/fa";
-import { AiFillTwitterCircle } from "react-icons/ai";
-import { FaSquareYoutube } from "react-icons/fa6";
-
-// import { Facebook, Linkedin, Twitter, Youtube, Instagram } from "lucide-react";
-import mtnLogo from "@/public/images/mtn-logo.svg";
-import googlePlay from "@/public/images/google-play-logo.svg";
-import appStore from "@/public/images/app-store-logo.svg";
-import { FaInstagramSquare } from "react-icons/fa";
-
-// Define the program categories and their items
-const programCategories = [
-  {
-    title: "Learn Key Programmers",
-    items: [
-      "Masculinity GYM",
-      "Pregnancy",
-      "Estro Gym",
-      "Intimate relationships",
-      "Fitra",
-    ],
-  },
-  {
-    title: "Essential Skills",
-    items: [
-      "Data Analytics",
-      "Artificial Intelligence",
-      "Cybersecurity",
-      "Digital Marketing",
-      "Machine Learning",
-      "Statistical Analysis",
-      "Database Management",
-      "Web Development",
-      "Financial Modeling",
-      "Business Analysis",
-    ],
-  },
-  {
-    title: "Industry Solutions",
-    items: [
-      "Healthcare Analytics",
-      "Sales",
-      "Digital Transformation",
-      "Supply Chain",
-      "Marketing Analytics",
-      "HR Analytics",
-      "Social Media Marketing",
-      "Risk Management",
-      "Sustainability",
-      "E-commerce",
-    ],
-  },
-];
+'use client';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+import { FaFacebook, FaLinkedin, FaInstagram, FaTiktok } from 'react-icons/fa';
+import { FaXTwitter, FaYoutube } from 'react-icons/fa6';
+import mtnLogo from '@/public/images/mtn-logo.svg';
+import { useParams } from 'next/navigation';
 
 const socialLinks = [
-  { icon: <FaFacebook size={30} />, href: "#", label: "Facebook" },
-  { icon: <FaLinkedin size={30} />, href: "#", label: "LinkedIn" },
-  { icon: <AiFillTwitterCircle size={30} />, href: "#", label: "Twitter" },
-  { icon: <FaSquareYoutube size={30} />, href: "#", label: "YouTube" },
-  { icon: <FaInstagramSquare size={30} />, href: "#", label: "Instagram" },
-  //   { icon: TiktokIcon, href: "#", label: "TikTok" },
+  { icon: <FaFacebook size={24} />, href: '#', label: 'Facebook' },
+  { icon: <FaLinkedin size={24} />, href: '#', label: 'LinkedIn' },
+  { icon: <FaXTwitter size={24} />, href: '#', label: 'Twitter' },
+  { icon: <FaYoutube size={24} />, href: '#', label: 'YouTube' },
+  { icon: <FaInstagram size={24} />, href: '#', label: 'Instagram' },
+  { icon: <FaTiktok size={22} />, href: '#', label: 'TikTok' },
 ];
 
 export function Footer() {
+  const t = useTranslations('Footer');
+  const params = useParams();
+
+  const locale = params.locale as string;
+
   return (
-    <footer className="bg-[#d0e1f4] py-12">
-      <div className="container mx-auto px-4">
+    <footer dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} className="bg-[#d0e1f4] py-8">
+      <div className="container  mx-auto px-4">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8">
-          {/* Logo and App Store Links Section */}
-          <div className="md:col-span-3 space-y-6">
-            <Image
-              src={mtnLogo}
-              alt="MTN Institute"
-              width={180}
-              height={160}
-              className="mb-6 lg:w-[180px] w-[120px] lg:mb-20"
-            />
-            <div className="space-y-4">
-              <Link href="#" className="block">
-                <Image
-                  src={appStore}
-                  alt="Download on the App Store"
-                  width={140}
-                  height={42}
-                />
-              </Link>
-              <Link href="#" className="block">
-                <Image
-                  src={googlePlay}
-                  alt="Get it on Google Play"
-                  width={140}
-                  height={42}
-                />
-              </Link>
+        <div className="grid grid-cols-1 md:grid-cols-3 px-4 lg:px-20 gap-8">
+          {/* Study Section */}
+          <div className="flex items-start">
+            <Image src={mtnLogo} alt="MTN Institute" width={140} height={80} className="mb-4" />
+          </div>
+          <div className="space-y-6">
+            <div>
+              <h3 className="font-bold text-lg mb-4">{t('studyTitle')}</h3>
+              <ul className="space-y-2">
+                <li>
+                  <Link href="#" className="text-gray-700 hover:text-gray-900 text-sm">
+                    {t('mainStudy')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="text-gray-700 hover:text-gray-900 text-sm">
+                    {t('technicalStudy')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href="#" className="text-gray-700 hover:text-gray-900 text-sm">
+                    {t('specializedStudy')}
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
 
-          {/* Programs Categories */}
-          <div className="md:col-span-9">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {programCategories.map((category) => (
-                <div key={category.title}>
-                  <h3 className="font-bold text-lg mb-4">{category.title}</h3>
-                  <ul className="space-y-2">
-                    {category.items.map((item) => (
-                      <li key={item}>
-                        <Link
-                          href="#"
-                          className="text-gray-600 hover:text-gray-900 text-sm"
-                        >
-                          {item}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
+          {/* Get to know us Section */}
+          <div className="space-y-6">
+            <h3 className="font-bold text-lg mb-4">{t('getToKnowUs')}</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link href="#" className="text-gray-700 hover:text-gray-900 text-sm">
+                  {t('aboutUs')}
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-gray-700 hover:text-gray-900 text-sm">
+                  {t('contactUs')}
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="text-gray-700 hover:text-gray-900 text-sm">
+                  {t('homePage')}
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
+      {/* Bottom Footer */}
+      <div className="mt-8 px-4 lg:px-20 pt-4 border-t border-gray-300">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          <p className="text-sm text-gray-600">{t('copyright', { year: new Date().getFullYear() })}</p>
 
-        {/* Bottom Footer */}
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-gray-600">
-              © 2024 MTN Institute Inc. All rights reserved.
-            </p>
-
-            {/* Social Media Links */}
-            <div className="flex space-x-6">
-              {socialLinks.map((social) => (
-                <Link
-                  key={social.label}
-                  href={social.href}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                  aria-label={social.label}
-                >
-                  {social.icon}
-                </Link>
-              ))}
-            </div>
+          {/* Social Media Links */}
+          <div className="flex space-x-4">
+            {socialLinks.map(social => (
+              <Link
+                key={social.label}
+                href={social.href}
+                className="text-gray-700 mx-4 hover:text-gray-900 transition-colors"
+                aria-label={social.label}
+              >
+                {social.icon}
+              </Link>
+            ))}
           </div>
         </div>
       </div>
