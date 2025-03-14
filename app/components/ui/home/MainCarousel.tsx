@@ -64,7 +64,7 @@ export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
       >
         {slides.map(slide => (
           <SwiperSlide key={slide.id}>
-            <div className="relative  w-full h-[200px] rounded-lg overflow-hidden">
+            <div className="relative  w-full h-[400px] md:h-[200px] rounded-lg overflow-hidden">
               <Image
                 src={slide.image}
                 alt="carousel background"
@@ -76,7 +76,7 @@ export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
                 src={slide.imageMob}
                 alt="carousel background"
                 fill
-                className="md:hidden block object-cover w-full"
+                className="md:hidden block object-contain w-full"
                 priority
               />
             </div>
