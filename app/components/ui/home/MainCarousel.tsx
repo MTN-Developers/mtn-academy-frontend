@@ -10,21 +10,27 @@ import 'swiper/css/pagination';
 // import saleImg from "@/public/images/sale-slide.svg";
 import { cn } from '@/lib/utils';
 import tamahy from '@/public/images/tamahy.png';
+import tamahyMob from '@/public/images/TamahiMob.png';
 import lucher from '@/public/images/LuscherOffer.png';
+import lucherMob from '@/public/images/luscherMob.png';
 import epm from '@/public/images/EBMOffer.png';
+import epmMob from '@/public/images/EBMMob.png';
 
 const slides = [
   {
     id: 1,
     image: tamahy,
+    imageMob: tamahyMob,
   },
   {
     id: 2,
     image: lucher,
+    imageMob: lucherMob,
   },
   {
     id: 3,
     image: epm,
+    imageMob: epmMob,
   },
 ];
 
@@ -58,8 +64,21 @@ export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
       >
         {slides.map(slide => (
           <SwiperSlide key={slide.id}>
-            <div className="relative w-full h-[200px] rounded-lg overflow-hidden">
-              <Image src={slide.image} alt="carousel background" fill className="object-cover w-full" priority />
+            <div className="relative  w-full h-[200px] rounded-lg overflow-hidden">
+              <Image
+                src={slide.image}
+                alt="carousel background"
+                fill
+                className="hidden md:block object-cover w-full"
+                priority
+              />
+              <Image
+                src={slide.imageMob}
+                alt="carousel background"
+                fill
+                className="md:hidden block object-cover w-full"
+                priority
+              />
             </div>
           </SwiperSlide>
         ))}
