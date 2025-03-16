@@ -34,6 +34,7 @@ export interface SemesterDetails {
   slug: string;
   description_ar: string;
   description_en: string;
+  is_locked: boolean;
   order?: number;
   image_url_ar: string;
   image_url_en: string;

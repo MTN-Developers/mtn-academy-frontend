@@ -16,6 +16,9 @@ import { ShareButton } from '@/app/components/common/ShareButton';
 import basicAr from '@/public/images/basicAr.png';
 import basicEn from '@/public/images/basicEn.png';
 import SidebarSemester from '@/app/components/common/SidebarSemester';
+import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
+
+import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 
 const SemesterPage = () => {
   const { slug } = useParams();
@@ -120,6 +123,8 @@ const SemesterPage = () => {
                   </div> */}
                 </div>
 
+                <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
+
                 {/* Tabs */}
                 <div className="w-full overflow-x-auto">
                   <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-10">
@@ -151,7 +156,15 @@ const SemesterPage = () => {
                 </div>
               </div>
 
-              <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
+              {semesterDetails.is_locked === true ? (
+                <>
+                  <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
+                </>
+              ) : (
+                <>
+                  <ProgressSidebar semesterId={semesterDetails.id} />
+                </>
+              )}
             </div>
           </div>
         </div>

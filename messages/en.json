@@ -136,5 +136,44 @@
     "contactUs": "Contact US",
     "homePage": "Home Page",
     "copyright": "© {year} MTN Institute Inc. All rights reserved."
+  },
+  "PasswordResetRequestPage": {
+    "Heading": "Reset Your Password",
+    "EmailLabel": "Email Address",
+    "EnterEmail": "Enter your email",
+    "SendResetLink": "Send Reset Link",
+    "Sending": "Sending...",
+    "CheckEmailHeading": "Check Your Email",
+    "EmailSentMessage": "A password reset link has been sent to {email}. You will be redirected to the login page in 5 seconds.",
+    "UnexpectedError": "An unexpected error occurred",
+    "PasswordResetLinkSent": "Password reset link sent",
+    "BackToLogin": "Back to login",
+    "Validation": {
+      "InvalidEmail": "Invalid email address",
+      "EmailRequired": "Email is required"
+    }
+  },
+  "ResetPasswordPage": {
+    "Heading": "Reset Your Password",
+    "NewPassword": "New Password",
+    "ConfirmNewPassword": "Confirm New Password",
+    "EnterNewPassword": "Enter new password",
+    "ConfirmPassword": "Confirm new password",
+    "ResetPassword": "Reset Password",
+    "Resetting": "Resetting...",
+    "InvalidToken": "Invalid or missing reset token",
+    "PasswordResetSuccess": "Password reset successfully",
+    "UnexpectedError": "An unexpected error occurred",
+    "BackToLogin": "Back to login"
+  },
+  "ResetPasswordValidation": {
+    "PasswordRequired": "Password is required",
+    "PasswordMin": "Password must be at least 8 characters",
+    "PasswordUppercase": "Password must contain at least one uppercase letter",
+    "PasswordLowercase": "Password must contain at least one lowercase letter",
+    "PasswordNumber": "Password must contain at least one number",
+    "PasswordSpecial": "Password must contain at least one special character",
+    "ConfirmPasswordRequired": "Confirm password is required",
+    "PasswordsMustMatch": "Passwords must match"
   }
 }
