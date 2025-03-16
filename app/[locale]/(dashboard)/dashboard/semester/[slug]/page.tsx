@@ -12,7 +12,6 @@ import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { CoursesGrid } from '@/app/components/common/CoursesGrid';
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { ShareButton } from '@/app/components/common/ShareButton';
-// import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import basicAr from '@/public/images/basicAr.png';
 import basicEn from '@/public/images/basicEn.png';
 import SidebarSemester from '@/app/components/common/SidebarSemester';
@@ -25,12 +24,12 @@ const SemesterPage = () => {
   const { data, isLoading, error } = useSemesterDetails(slug as string);
   const semesterDetails = data;
 
+  console.log('ffffff', semesterDetails);
+
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
   const params = useParams();
-  // const path = usePathname();
-  // const pathArr = path.split('/');
-  // const locale = pathArr[1];
+
   const locale = params.locale as string;
   const direction = getLangDir(locale);
   const isRTL = direction === 'rtl';
@@ -156,7 +155,7 @@ const SemesterPage = () => {
                 </div>
               </div>
 
-              {semesterDetails.is_locked === true ? (
+              {semesterDetails.is_purchased === false ? (
                 <>
                   <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
                 </>

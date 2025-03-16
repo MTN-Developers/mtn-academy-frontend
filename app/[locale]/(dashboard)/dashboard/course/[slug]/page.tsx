@@ -184,7 +184,7 @@ const CoursePage = () => {
             </div>
           </div>
 
-          {semesterDetails.is_locked === true ? (
+          {semesterDetails.is_purchased === false ? (
             <>
               <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
             </>
