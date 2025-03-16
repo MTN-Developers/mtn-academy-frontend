@@ -3,15 +3,15 @@ import { useQuery } from '@tanstack/react-query';
 import { SemesterDetails } from '../types/semester';
 import axiosInstance from '../lib/axios/instance';
 
-async function fetchSemester(id: string) {
-  const response = await axiosInstance.get(`/semesters/${id}`);
+async function fetchSemester(slug: string) {
+  const response = await axiosInstance.get(`/semesters/${slug}`);
   return response.data.data as SemesterDetails;
 }
 
-export const useSemesterDetails = (id: string) => {
+export const useSemesterDetails = (slug: string) => {
   return useQuery({
-    queryKey: ['semester', id],
-    queryFn: () => fetchSemester(id),
-    enabled: !!id && id !== '', // Only run query if id exists and is not empty
+    queryKey: ['semester', slug],
+    queryFn: () => fetchSemester(slug),
+    enabled: !!slug && slug !== '', // Only run query if id exists and is not empty
   });
 };
