@@ -6,7 +6,7 @@ const SidebarSemester = ({ tCourse, semesterDetails, discount }) => {
   return (
     <>
       {/* Right Sidebar on web */}
-      <div className="md:col-span-1 hidden lg:block lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
+      <div className="md:col-span-1 hidden md:block lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
         <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
           <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
           <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
@@ -21,8 +21,6 @@ const SidebarSemester = ({ tCourse, semesterDetails, discount }) => {
             <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
           </Link>
         </div>
-
-        {/* <ProgressSidebar progress={90} /> */}
       </div>
 
       {/* Right Sidebar on mobile */}
