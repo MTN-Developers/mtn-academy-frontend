@@ -221,7 +221,7 @@ export default function LoginPage() {
                 />
                 <Label htmlFor="remember-me">{t('button.RememberMe')}</Label>
               </div>
-              <Link href={`/${locale}/forgot-password`} className="text-xs text-blue-600 underline">
+              <Link href={`/${locale}/request-reset-password`} className="text-xs text-blue-600 underline">
                 {t('password.forgotPassword')}
               </Link>
             </div>
