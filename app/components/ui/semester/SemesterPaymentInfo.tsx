@@ -59,7 +59,7 @@ const SemesterPaymentInfo = ({ semester }: { semester: SemesterDetails }) => {
               <div className="text-muted-foreground font-sans text-base font-normal">${stripeAmount}</div>
             </div>
             <div className="flex-row flex-wrap w-full flex justify-between items-start lg:items-center">
-              <p className="text-muted-foreground font-sans text-base font-normal">رسوم البوابة</p>
+              <p className="text-muted-foreground font-sans text-base font-normal">رسوم بوابة الدفع </p>
               <div className="text-muted-foreground font-sans text-base font-normal">
                 ${calculatedGatewayFees.toFixed(2)}
               </div>
