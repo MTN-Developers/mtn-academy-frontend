@@ -146,7 +146,9 @@ const CoursePage = () => {
               </div>
             )} */}
 
-            <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
+            {courseDetails.is_locked === false ? (
+              <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
+            ) : null}
 
             {/* Tabs */}
             <div className="w-full overflow-x-auto">
