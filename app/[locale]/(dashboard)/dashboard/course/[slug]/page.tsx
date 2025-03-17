@@ -190,7 +190,11 @@ const CoursePage = () => {
             </>
           ) : (
             <>
-              <ProgressSidebar semesterId={semesterDetails.id} />
+              {courseDetails.is_locked === false ? (
+                <>
+                  <ProgressSidebar semesterId={semesterDetails.id} />
+                </>
+              ) : null}
             </>
           )}
         </div>

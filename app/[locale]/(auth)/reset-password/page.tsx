@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useTranslations } from 'next-intl';
@@ -20,6 +20,8 @@ const Page = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const params = useParams();
+  const locale = params.locale as string;
 
   // Validation schema for passwords
   const passwordSchema = Yup.object().shape({
@@ -133,7 +135,7 @@ const Page = () => {
             {isLoading ? t('Resetting') : t('ResetPassword')}
           </button>
 
-          <Link className="block text-center text-blue-500 mt-4" href="/login">
+          <Link className="block text-center text-blue-500 mt-4" href={`/${locale}/login`}>
             {t('BackToLogin')}
           </Link>
         </form>
