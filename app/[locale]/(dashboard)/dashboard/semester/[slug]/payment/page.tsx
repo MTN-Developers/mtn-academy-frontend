@@ -26,7 +26,7 @@ const Page = () => {
   }
 
   return (
-    <div className="size-full flex-wrap px-4 py-10 lg:p-0 gap-0 flex justify-between h-full bg-white rounded-lg shadow-md">
+    <div className="size-full min-h-screen flex-wrap px-4 py-10 lg:p-0 gap-0 flex justify-between h-full bg-white rounded-lg shadow-md">
       <div className="w-full lg:w-1/2 lg:flex relative">
         <div
           className="relative lg:absolute w-full"
@@ -43,7 +43,7 @@ const Page = () => {
       <div className="w-full lg:w-1/2 py-[28px]">
         <div dir="rtl" className="w-[540px] min-h-full mx-auto h-fit p-4 max-w-full flex justify-center flex-col">
           <div className="flex flex-col gap-4">
-            <StepperPayment />
+            <StepperPayment semester={semester} />
           </div>
         </div>
       </div>

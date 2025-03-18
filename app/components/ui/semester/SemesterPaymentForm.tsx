@@ -130,7 +130,11 @@ const SemesterPaymentForm = ({ semester }: { semester: SemesterDetails }) => {
               <ErrorMsg message={errors.cardInfo?.message as string} />
             </div>
 
-            <Button className="mt-4 font-sans  w-full h-12 text-lg font-semibold" type="submit" disabled={loading}>
+            <Button
+              className="mt-4 font-sans  w-full h-12 text-lg bg-[#07519C] hover:bg-[#06407d] font-semibold"
+              type="submit"
+              disabled={loading}
+            >
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
