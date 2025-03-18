@@ -23,9 +23,6 @@ const ContinueLearningMob = ({ semesterDetails, isRTL, locale }) => {
   // If no related semester is found, don't render anything
   if (!relatedSemester) return null;
 
-  // If last_video_course_slug is null, don't render anything
-  if (!relatedSemester.last_video_course_slug) return null;
-
   return (
     <>
       {relatedSemester.last_video_course_slug && (
