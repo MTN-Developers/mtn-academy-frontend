@@ -27,9 +27,9 @@ const ContinueLearningComp = () => {
       {startedSemesters && startedSemesters?.length > 0 && (
         <div className="w-full max-w-[1005px]  lg:my-[60px] my-[20px] flex items-start justify-start   flex-col gap-4">
           <h1 className="text-2xl text-[#353535] font-bold text-start">{t('Continue learning')}</h1>
-          {startedSemesters.map(semester => (
-            <LearningStudyProgressCard key={semester.id} semester={semester} />
-          ))}
+          {startedSemesters.map(
+            semester => semester.last_video && <LearningStudyProgressCard key={semester.id} semester={semester} />,
+          )}
         </div>
       )}
     </>
