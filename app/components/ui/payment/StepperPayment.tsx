@@ -7,8 +7,11 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import SemesterPaymentForm from '@/app/components/ui/semester/SemesterPaymentForm';
+import correct from '@/public/icons/correct.png';
+import correct1 from '@/public/icons/correct1.png';
 
 import { Check } from 'lucide-react';
+import Image from 'next/image';
 
 const StepperPayment = () => {
   const params = useParams();
@@ -51,78 +54,94 @@ const StepperPayment = () => {
   return (
     <>
       {/* Stepper */}
-      <div dir={locale === 'en' ? 'ltr' : 'rtl'} className="mb-8">
+      <div dir={locale === 'en' ? 'ltr' : 'rtl'} className="mb-8  ">
+        <h2 className="text-2xl font-medium mb-6">{locale === 'en' ? 'Choose Payment Way' : 'اختر طريقة الدفع'}</h2>
+
         <div className="flex justify-between items-center">
-          <div className="flex flex-col items-center">
+          <div className="flex relative w-fit flex-col items-center">
             <div
-              className={`w-5 h-5 p-2 rounded-full flex items-center justify-center ${
+              className={`w-5 h-5  rounded-full flex items-center justify-center ${
                 currentStep >= 1 ? 'bg-primary text-white' : 'bg-gray-200'
               }`}
             >
               {currentStep > 1 ? (
-                <Check className=" w-5 h-5 rounded-full bg-green-500 border-none " />
+                // <Check className=" w-5 h-5 rounded-full bg-green-500 border-none " />
+                <Image width={20} height={20} src={correct1} alt="icon" />
               ) : (
-                <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                // <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                <Image width={20} height={20} src={correct} alt="icon" />
               )}
             </div>
-            <span className="text-xs mt-1">{locale === 'en' ? 'Payment method' : 'طريقة الدفع'}</span>
+            <span className="text-xs mt-1 absolute z-10 left-0 -bottom-6 text-nowrap ">
+              {locale === 'en' ? 'Payment method' : 'طريقة الدفع'}
+            </span>
           </div>
-          <div className="flex-1 h-[2px] mx-2 bg-gray-200">
+          <div className="flex-1 h-[2px] bg-gray-200">
             <div
-              className={`h-full bg-primary ${currentStep >= 2 ? 'w-full' : 'w-0'} transition-all duration-300`}
+              className={`h-full bg-green-500  ${currentStep >= 2 ? 'w-full ' : 'w-0'} transition-all duration-300`}
             ></div>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col relative items-center">
             <div
               className={`w-5 h-5 rounded-full flex items-center justify-center ${
                 currentStep >= 2 ? 'bg-primary text-white' : 'bg-gray-200'
               }`}
             >
               {currentStep > 2 ? (
-                <Check className=" w-5 h-5 rounded-full bg-green-500" />
+                // <Check className=" w-5 h-5 rounded-full bg-green-500 border-none " />
+                <Image width={20} height={20} src={correct1} alt="icon" />
               ) : (
-                <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                // <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                <Image width={20} height={20} src={correct} alt="icon" />
               )}
             </div>
-            <span className="text-xs mt-1">{locale === 'en' ? 'Card Information' : 'معلومات البطاقة'}</span>
+            <span className="text-xs mt-1 absolute z-10 -bottom-6 text-nowrap">
+              {locale === 'en' ? 'Card Information' : 'معلومات البطاقة'}
+            </span>
           </div>
-          <div className="flex-1 h-[2px] mx-2 bg-gray-200">
+          <div className="flex-1 h-[2px]  bg-gray-200">
             <div
-              className={`h-full bg-primary ${currentStep >= 3 ? 'w-full' : 'w-0'} transition-all duration-300`}
+              className={`h-full  bg-green-500  ${currentStep >= 3 ? 'w-full' : 'w-0'} transition-all duration-300`}
             ></div>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex relative flex-col items-center">
             <div
               className={`w-5 h-5 rounded-full flex items-center justify-center ${
                 currentStep >= 3 ? 'bg-primary text-white' : 'bg-gray-200'
               }`}
             >
               {currentStep > 3 ? (
-                <Check className=" w-5 h-5 rounded-full bg-green-500" />
+                // <Check className=" w-5 h-5 rounded-full bg-green-500 border-none " />
+                <Image width={20} height={20} src={correct1} alt="icon" />
               ) : (
-                <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                // <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                <Image width={20} height={20} src={correct} alt="icon" />
               )}
             </div>
-            <span className="text-xs mt-1">{locale === 'en' ? 'Confirm payment' : 'تأكيد الدفع'}</span>
+            <span className="text-xs absolute z-10 -bottom-6 text-nowrap mt-1">
+              {locale === 'en' ? 'Confirm payment' : 'تأكيد الدفع'}
+            </span>
           </div>
-          <div className="flex-1 h-[2px] mx-2 bg-gray-200">
+          <div className="flex-1 h-[2px]  bg-gray-200">
             <div
-              className={`h-full bg-primary ${currentStep >= 4 ? 'w-full' : 'w-0'} transition-all duration-300`}
+              className={`h-full bg-green-500 ${currentStep >= 4 ? 'w-full' : 'w-0'} transition-all duration-300`}
             ></div>
           </div>
-          <div className="flex flex-col items-center">
+          <div className="flex relative flex-col items-center">
             <div
               className={`w-5 h-5 rounded-full flex items-center justify-center ${
                 currentStep >= 4 ? 'bg-primary text-white' : 'bg-gray-200'
               }`}
             >
               {currentStep > 4 ? (
-                <Check className=" w-5 h-5 rounded-full bg-green-500" />
+                // <Check className=" w-5 h-5 rounded-full bg-green-500 border-none " />
+                <Image width={20} height={20} src={correct1} alt="icon" />
               ) : (
-                <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                // <Check className="w-5 h-5 rounded-full bg-[#a2a2a2]" />
+                <Image width={20} height={20} src={correct} alt="icon" />
               )}
             </div>
-            <span className="text-xs mt-1">{locale === 'en' ? 'Success' : 'نجاح'}</span>
+            <span className="text-xs absolute z-10 -bottom-6 mt-1">{locale === 'en' ? 'Success' : 'نجاح'}</span>
           </div>
         </div>
       </div>
@@ -130,17 +149,16 @@ const StepperPayment = () => {
       {/* Step 1: Payment Method */}
       {currentStep === 1 && (
         <div className="mt-6">
-          <h2 className="text-2xl font-medium mb-6">اختر طريقة الدفع</h2>
           <RadioGroup
             value={paymentMethod || ''}
-            onValueChange={value => handlePaymentMethodChange(value as 'card' | 'mtn' | 'paymob')}
+            onValueChange={value => handlePaymentMethodChange(value as 'card' | 'paymob')}
             className="space-y-4"
           >
             <div className="flex items-center justify-between border rounded-md p-4 cursor-pointer hover:border-primary">
               <div className="flex items-center">
                 <RadioGroupItem value="card" id="card" />
-                <Label htmlFor="card" className="mr-2 cursor-pointer">
-                  البطاقات
+                <Label htmlFor="card" className="mx-2 cursor-pointer">
+                  {locale === 'en' ? 'Cards' : 'البطاقات'}
                 </Label>
               </div>
               <div className="flex gap-2">
@@ -159,7 +177,7 @@ const StepperPayment = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between border rounded-md p-4 cursor-pointer hover:border-primary">
+            {/* <div className="flex items-center justify-between border rounded-md p-4 cursor-pointer hover:border-primary">
               <div className="flex items-center">
                 <RadioGroupItem value="mtn" id="mtn" />
                 <Label htmlFor="mtn" className="mr-2 cursor-pointer">
@@ -169,13 +187,13 @@ const StepperPayment = () => {
               <div className="w-10 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs">
                 JCB
               </div>
-            </div>
+            </div> */}
 
             <div className="flex items-center justify-between border rounded-md p-4 cursor-pointer hover:border-primary">
               <div className="flex items-center">
                 <RadioGroupItem value="paymob" id="paymob" />
-                <Label htmlFor="paymob" className="mr-2 cursor-pointer">
-                  Paymob
+                <Label htmlFor="paymob" className="mx-2 cursor-pointer">
+                  {locale === 'en' ? 'Paymob' : 'باي موب'}
                 </Label>
               </div>
               <div className="w-20 h-6 bg-blue-500 rounded flex items-center justify-center text-white text-xs">
@@ -259,7 +277,7 @@ const StepperPayment = () => {
       )}
 
       {/* Step 2: MTN Wallet */}
-      {currentStep === 2 && paymentMethod === 'mtn' && (
+      {/* {currentStep === 2 && paymentMethod === 'mtn' && (
         <div className="mt-6">
           <h2 className="text-2xl font-medium mb-6">MTN Wallet</h2>
           <div className="space-y-4">
@@ -278,7 +296,7 @@ const StepperPayment = () => {
             </Button>
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Step 2: Paymob */}
       {currentStep === 2 && paymentMethod === 'paymob' && (
@@ -304,9 +322,7 @@ const StepperPayment = () => {
           <div className="border rounded-md p-4 mb-6">
             <div className="flex justify-between py-2 border-b">
               <span className="text-gray-600">طريقة الدفع:</span>
-              <span className="font-medium">
-                {paymentMethod === 'card' ? 'بطاقة ائتمان' : paymentMethod === 'mtn' ? 'MTN Wallet' : 'Paymob'}
-              </span>
+              <span className="font-medium">{paymentMethod === 'card' ? 'بطاقة ائتمان' : 'Paymob'}</span>
             </div>
 
             {paymentMethod === 'card' && (
