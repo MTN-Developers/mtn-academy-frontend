@@ -64,12 +64,12 @@ export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
       >
         {slides.map(slide => (
           <SwiperSlide key={slide.id}>
-            <div className="relative  w-full h-[400px] md:h-[200px] rounded-lg overflow-hidden">
+            <div className="relative  w-full h-[400px] md:h-[300px] rounded-lg overflow-hidden">
               <Image
                 src={slide.image}
                 alt="carousel background"
                 fill
-                className="hidden md:block object-cover w-full"
+                className="hidden md:block object-contain w-full"
                 priority
               />
               <Image
