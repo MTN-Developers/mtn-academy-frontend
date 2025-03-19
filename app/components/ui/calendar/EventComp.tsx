@@ -1,4 +1,5 @@
 import { EventDetails } from '@/app/types/Events';
+import { getEventColor } from '@/app/utils/colorUtils';
 import { useParams } from 'next/navigation';
 import React from 'react';
 
@@ -9,18 +10,8 @@ interface IProps {
 const EventComp = ({ event }: IProps) => {
   const params = useParams();
   const locale = params.locale as string;
-
-  const colors = [
-    { front: '#e1f9ff', Back: '#2fa4e4' },
-    { front: '#ffdcdc', Back: '#e34444' },
-    { front: '#d4fffd', Back: '#5ebfba' },
-  ];
-
-  const getrandaomColor = () => {
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
-  const randomColor = getrandaomColor();
+  // Get consistent color based on event ID
+  const eventColor = getEventColor(event.id);
 
   const formatDateTime = (isoString: string) => {
     const date = new Date(isoString);
@@ -45,9 +36,9 @@ const EventComp = ({ event }: IProps) => {
   return (
     <div
       style={{
-        backgroundColor: randomColor.front,
-        borderLeft: `5px solid ${randomColor.Back}`,
-        color: randomColor.Back,
+        backgroundColor: eventColor.front,
+        borderLeft: `5px solid ${eventColor.back}`,
+        color: eventColor.back,
       }}
       className={`lg:w-[178px] p-2 my-2 rounded-md w-full`}
     >

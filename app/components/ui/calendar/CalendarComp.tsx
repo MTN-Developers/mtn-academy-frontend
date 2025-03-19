@@ -5,7 +5,7 @@ import useGetEvents from '@/app/hooks/useGetEvents';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { EventDetails } from '@/app/types/Events';
+import { getEventColor } from '@/app/utils/colorUtils';
 
 interface IProps {
   semesterId: string;
@@ -20,7 +20,6 @@ const CalendarComp = ({ semesterId }: IProps) => {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [selectedEvents, setSelectedEvents] = useState<EventDetails[]>([]);
 
   // Get current month and year
   const currentMonth = currentDate.getMonth();
@@ -61,47 +60,31 @@ const CalendarComp = ({ semesterId }: IProps) => {
     setCurrentDate(new Date(currentYear, currentMonth + 1, 1));
   };
 
-  // Check if a date has events
-  const hasEvents = (date: Date): { hasEvent: boolean; eventType: string } => {
-    if (!events) return { hasEvent: false, eventType: '' };
+  // Check if a date has events and get the color
+  const getDateEventInfo = (date: Date) => {
+    if (!events || events.length === 0) return { hasEvent: false, colorInfo: null };
 
     const dateStr = date.toISOString().split('T')[0];
 
-    for (const event of events) {
-      const startDate = new Date(event.start_date).toISOString().split('T')[0];
-      const endDate = new Date(event.end_date).toISOString().split('T')[0];
-
-      if (dateStr >= startDate && dateStr <= endDate) {
-        // Determine event type based on some criteria (you can customize this)
-        // For example, using the first character of the event ID to assign different colors
-        const eventType = event.id.charAt(0).charCodeAt(0) % 3;
-
-        if (eventType === 0) return { hasEvent: true, eventType: 'primary' };
-        if (eventType === 1) return { hasEvent: true, eventType: 'secondary' };
-        return { hasEvent: true, eventType: 'accent' };
-      }
-    }
-
-    return { hasEvent: false, eventType: '' };
-  };
-
-  // Handle date selection
-  const handleDateClick = (date: Date) => {
-    setSelectedDate(date);
-
-    if (!events) {
-      setSelectedEvents([]);
-      return;
-    }
-
-    const dateStr = date.toISOString().split('T')[0];
-    const filteredEvents = events.filter(event => {
+    // Find events for this date
+    const dateEvents = events.filter(event => {
       const startDate = new Date(event.start_date).toISOString().split('T')[0];
       const endDate = new Date(event.end_date).toISOString().split('T')[0];
       return dateStr >= startDate && dateStr <= endDate;
     });
 
-    setSelectedEvents(filteredEvents);
+    if (dateEvents.length === 0) return { hasEvent: false, colorInfo: null };
+
+    // Use the first event's color for the date cell
+    const firstEvent = dateEvents[0];
+    const colorInfo = getEventColor(firstEvent.id);
+
+    return { hasEvent: true, colorInfo };
+  };
+
+  // Handle date selection
+  const handleDateClick = (date: Date) => {
+    setSelectedDate(date);
   };
 
   // Generate calendar days
@@ -116,7 +99,7 @@ const CalendarComp = ({ semesterId }: IProps) => {
     // Add cells for each day of the month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(currentYear, currentMonth, day);
-      const { hasEvent, eventType } = hasEvents(date);
+      const { hasEvent, colorInfo } = getDateEventInfo(date);
       const isSelected =
         selectedDate &&
         selectedDate.getDate() === day &&
@@ -130,9 +113,8 @@ const CalendarComp = ({ semesterId }: IProps) => {
           className={cn(
             'h-10 w-10 rounded-full flex items-center justify-center cursor-pointer transition-colors',
             isSelected && 'border-2 border-blue-500',
-            hasEvent && eventType === 'primary' && 'bg-yellow-200 hover:bg-yellow-300',
-            hasEvent && eventType === 'secondary' && 'bg-red-200 hover:bg-red-300',
-            hasEvent && eventType === 'accent' && 'bg-cyan-200 hover:bg-cyan-300',
+            hasEvent && colorInfo ? colorInfo.bgClass : 'hover:bg-gray-100',
+            hasEvent && colorInfo ? colorInfo.hoverClass : '',
             !hasEvent && 'hover:bg-gray-100',
           )}
         >
@@ -150,23 +132,19 @@ const CalendarComp = ({ semesterId }: IProps) => {
         <>
           <div>
             <h1 className="m-4 text-xl text-gray-800">{t('calendar')}</h1>
-            <div className="flex flex-col lg:flex-row justify-center lg:justify-start my-4 items-start gap-4">
+            <div className="flex flex-col-reverse lg:flex-row justify-center lg:justify-start my-4 items-start gap-4">
               {/* events */}
-              <div className="w-full lg:w-[209px] max-h-[400px] overflow-scroll scrollbar-hide bg-white p-4 rounded-xl shadow-md">
+              <div className="w-full lg:!w-[280px] max-h-[400px] lg:h-[370px] overflow-scroll scrollbar-hide bg-white p-4 rounded-xl shadow-md">
                 <h2 className="text-lg font-base text-gray-800 mb-3">{t('events')}</h2>
                 {isLoading && <p>Loading...</p>}
                 {error && <p>Error</p>}
-                {selectedDate && selectedEvents.length > 0 ? (
-                  selectedEvents.map(event => <EventComp key={event.id} event={event} />)
-                ) : selectedDate ? (
-                  <p className="text-gray-500">No events for this date</p>
-                ) : (
-                  events.map(event => <EventComp key={event.id} event={event} />)
-                )}
+                {events.map(event => (
+                  <EventComp key={event.id} event={event} />
+                ))}
               </div>
 
               {/* calendar */}
-              <div className="bg-white p-4 rounded-xl shadow-md w-full lg:w-auto">
+              <div className="bg-white p-4 rounded-xl shadow-md w-full lg:w-full">
                 <div className="flex justify-between items-center mb-4">
                   <Button variant="outline" size="icon" onClick={prevMonth} className="h-8 w-8">
                     <ChevronLeft className="h-4 w-4" />
