@@ -109,7 +109,8 @@
     "courses": "الكورسات",
     "playlist": "القوائم",
     "session": "الجلسة",
-    "comments": "التعليقات"
+    "comments": "التعليقات",
+    "calendar": "أجندة البرنامج"
   },
   "error": {
     "title": "حدث خطأ ما",
@@ -175,5 +176,9 @@
     "PasswordSpecial": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل",
     "ConfirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
     "PasswordsMustMatch": "يجب أن تكون كلمات المرور متطابقة"
+  },
+  "calendar": {
+    "calendar": "أجندة البرنامج",
+    "events": "الأحداث"
   }
 }

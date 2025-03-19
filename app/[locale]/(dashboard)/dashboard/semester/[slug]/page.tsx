@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LockKeyhole } from 'lucide-react';
+// import { LockKeyhole } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
@@ -18,13 +18,14 @@ import SidebarSemester from '@/app/components/common/SidebarSemester';
 import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
+import CalendarComp from '@/app/components/ui/calendar/CalendarComp';
 
 const SemesterPage = () => {
   const { slug } = useParams();
   const { data, isLoading, error } = useSemesterDetails(slug as string);
   const semesterDetails = data;
 
-  console.log('ffffff', semesterDetails);
+  // console.log('ffffff', semesterDetails);
 
   const tCourse = useTranslations('course');
   const tTabs = useTranslations('tabs');
@@ -134,10 +135,13 @@ const SemesterPage = () => {
                       <TabsTrigger value="courses" className="tabs-trigger">
                         {tTabs('courses')}
                       </TabsTrigger>
-                      <TabsTrigger value="discussions" disabled>
+                      <TabsTrigger value="calendar" className="tabs-trigger">
+                        {tTabs('calendar')}
+                      </TabsTrigger>
+                      {/* <TabsTrigger value="discussions" disabled>
                         <LockKeyhole size={15} />
                         {tTabs('discussions')}
-                      </TabsTrigger>
+                      </TabsTrigger> */}
                     </TabsList>
 
                     <TabsContent value="information" className="mt-6">
@@ -150,6 +154,10 @@ const SemesterPage = () => {
 
                     <TabsContent value="courses">
                       <CoursesGrid courses={semesterDetails.courses} isRTL={isRTL} />
+                    </TabsContent>
+
+                    <TabsContent value="calendar">
+                      <CalendarComp semesterId={semesterDetails.id} />
                     </TabsContent>
                   </Tabs>
                 </div>
