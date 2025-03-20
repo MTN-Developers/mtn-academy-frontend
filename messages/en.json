@@ -109,7 +109,8 @@
     "courses": "Courses",
     "playlist": "Playlist",
     "session": "Session",
-    "comments": "Comments"
+    "comments": "Comments",
+    "materials": "materials"
   },
   "error": {
     "title": "Something went wrong",

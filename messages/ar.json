@@ -109,7 +109,8 @@
     "courses": "الكورسات",
     "playlist": "القوائم",
     "session": "الجلسة",
-    "comments": "التعليقات"
+    "comments": "التعليقات",
+    "materials": "كتيب المادة العلمية"
   },
   "error": {
     "title": "حدث خطأ ما",

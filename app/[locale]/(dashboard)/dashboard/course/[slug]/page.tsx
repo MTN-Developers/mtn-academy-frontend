@@ -21,6 +21,7 @@ import basicEn from '@/public/images/basicEn.png';
 import SidebarSemester from '@/app/components/common/SidebarSemester';
 import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
+import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -160,6 +161,9 @@ const CoursePage = () => {
                   <TabsTrigger value="playlist" className="tabs-trigger">
                     {tTabs('playlist')}
                   </TabsTrigger>
+                  <TabsTrigger value="materials" className="tabs-trigger">
+                    {tTabs('materials')}
+                  </TabsTrigger>
                   <TabsTrigger value="discussions" disabled>
                     <LockKeyhole size={15} />
                     {tTabs('discussions')}
@@ -181,6 +185,9 @@ const CoursePage = () => {
                     courseDetails={courseDetails}
                     innerBackground="bg-[#F7F7F7CF]"
                   />
+                </TabsContent>
+                <TabsContent value="materials" className="mt-6">
+                  <MaterialsComp courseDetails={courseDetails} />
                 </TabsContent>
               </Tabs>
             </div>
