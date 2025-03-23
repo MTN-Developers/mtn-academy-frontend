@@ -152,9 +152,9 @@ const CoursePage = () => {
             ) : null}
 
             {/* Tabs */}
-            <div className="w-full overflow-x-scroll">
+            <div className="w-full overflow-x-scroll lg:overflow-x-auto">
               <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
-                <TabsList className="w-auto flex-nowrap bg-white">
+                <TabsList className="w-auto lg:w-full flex-nowrap bg-white">
                   <TabsTrigger value="information" className="tabs-trigger">
                     {tTabs('information')}
                   </TabsTrigger>
