@@ -120,7 +120,7 @@
     "playlist": "Playlist",
     "session": "Session",
     "comments": "Comments",
-    "calendar": "calendar"
+    "materials": "materials"
   },
   "error": {
     "title": "Something went wrong",
