@@ -152,16 +152,17 @@ const CoursePage = () => {
             ) : null}
 
             {/* Tabs */}
-            <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-scroll">
               <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
-                <TabsList className="w-full flex-nowrap bg-white">
+                <TabsList className="w-auto flex-nowrap bg-white">
                   <TabsTrigger value="information" className="tabs-trigger">
                     {tTabs('information')}
                   </TabsTrigger>
                   <TabsTrigger value="playlist" className="tabs-trigger">
                     {tTabs('playlist')}
                   </TabsTrigger>
-                  <TabsTrigger value="materials" className="tabs-trigger">
+                  <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
+                    {courseDetails.is_locked && <LockKeyhole size={15} />}
                     {tTabs('materials')}
                   </TabsTrigger>
                   <TabsTrigger value="discussions" disabled>

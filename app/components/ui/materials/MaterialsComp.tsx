@@ -66,17 +66,17 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
 
   return (
     <>
-      {materials && materials.data.length > 0 && (
+      {materials && materials.data.length > 0 ? (
         <Card className="bg-white rounded-md">
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-4">
               <div className="flex justify-start gap-4 items-center">
                 <Image src={courseDetails.logo_en} alt="logo" width={24} height={24} className="rounded-md" />
-                <h2 className="text-lg font-medium">
-                  {locale === 'en' ? 'Emotional literacy Materials' : 'مواد محو الأمية العاطفية'}
+                <h2 className="text-sm lg:text-lg font-medium">
+                  {locale === 'en' ? 'Emotional literacy ' : 'مواد محو الأمية العاطفية'}
                 </h2>
               </div>
-              <Button onClick={handleDownloadAll} className="bg-blue-600 hover:bg-blue-700">
+              <Button onClick={handleDownloadAll} className="bg-blue-600  hover:bg-blue-700">
                 {locale === 'en' ? 'Download All' : 'تنزيل الكل'} <DownloadIcon className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -85,18 +85,18 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
               {materials.data.map((material, index) => (
                 <div key={material.id}>
                   <div className="flex justify-between items-center py-3">
-                    <div className="flex items-center gap-2">
+                    <div className="flex  items-center gap-2">
                       {/* <FileIcon className="h-5 w-5 text-gray-500" /> */}
                       <Image src={doc} alt="doc" width={40} height={40} />
-                      <span className="text-lg text-gray-700">{formatDate(material.created_at)}</span>
+                      <span className="text-sm lg:text-lg text-gray-700">{formatDate(material.created_at)}</span>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-blue-600 text-lg hover:text-blue-700 hover:bg-blue-50"
+                      className="text-blue-600 text-sm lg:text-lg hover:text-blue-700 hover:bg-blue-50"
                       onClick={() => handleDownloadSingle(material)}
                     >
-                      {locale === 'en' ? 'Download now' : 'تنزيل'} <DownloadIcon className="ml-2 h-8 w-8" />
+                      {locale === 'en' ? 'Download' : 'تنزيل'} <DownloadIcon className="ml-2 h-8 w-8" />
                     </Button>
                   </div>
                   {index < materials.data.length - 1 && <Separator className="my-1" />}
@@ -105,6 +105,8 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
             </div>
           </CardContent>
         </Card>
+      ) : (
+        <>No Materials yet...</>
       )}
     </>
   );
