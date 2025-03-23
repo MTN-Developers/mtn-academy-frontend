@@ -41,8 +41,7 @@
     "Login now": "Login now",
     "registration": {
       "success": "Registration successful!",
-      "error": "Registration failed. Please try again.",
-      "userExists": "Email or phone number already exists"
+      "error": "Registration failed. Please try again."
     },
     "Gender": "Gender",
     "Male": "Male",
@@ -100,16 +99,7 @@
     "semesterOrder": "Semester {order}",
     "startLearning": "Start Learning",
     "noCourses": "No courses available",
-    "enjoyTheCourse": "Enjoy the course",
-    "additionalResources": "additional resources",
-    "students": "students",
-    "lessons": "lessons",
-    "positiveReviews": "Positive Reviews",
-    "online": "Online and at your own pace",
-    "audio": "Audio",
-    "english": "English",
-    "arabic": "Arabic",
-    "unlimitedAccess": "Unlimited access forever"
+    "enjoyTheCourse": "Enjoy the course"
   },
   "tabs": {
     "information": "Information",
@@ -119,6 +109,7 @@
     "courses": "Courses",
     "playlist": "Playlist",
     "session": "Session",
+    "calendar": "Calendar",
     "comments": "Comments",
     "materials": "materials"
   },
@@ -186,9 +177,5 @@
     "PasswordSpecial": "Password must contain at least one special character",
     "ConfirmPasswordRequired": "Confirm password is required",
     "PasswordsMustMatch": "Passwords must match"
-  },
-  "calendar": {
-    "calendar": "Calendar",
-    "events": "Events"
   }
 }
