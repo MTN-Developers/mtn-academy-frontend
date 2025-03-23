@@ -15,13 +15,13 @@ export function middleware(req: NextRequest) {
   // Step 1: Extract Locale from Path
   const locale = pathname.split('/')[1];
 
-  console.log('locales from mw', locale);
+  // console.log('locales from mw', locale);
 
   const supportedLocales = ['en', 'ar'];
   const isLocaleValid = supportedLocales.includes(locale);
 
   // Step 2: Define Public Routes
-  const publicRoutes = ['login', 'register', 'forgot-password', 'reset-password'];
+  const publicRoutes = ['login', 'register', 'reset-password', 'request-reset-password'];
 
   // Check if current route is public
   const isPublicRoute = publicRoutes.some(route => pathname.includes(`/${route}`));

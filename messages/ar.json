@@ -119,7 +119,8 @@
     "courses": "الكورسات",
     "playlist": "القوائم",
     "session": "الجلسة",
-    "comments": "التعليقات"
+    "comments": "التعليقات",
+    "calendar": "أجندة البرنامج"
   },
   "error": {
     "title": "حدث خطأ ما",
@@ -146,5 +147,48 @@
     "contactUs": "اتصل بنا",
     "homePage": "الصفحة الرئيسية",
     "copyright": "© {year} معهد MTN. جميع الحقوق محفوظة."
+  },
+  "PasswordResetRequestPage": {
+    "Heading": "إعادة تعيين كلمة المرور",
+    "EmailLabel": "عنوان البريد الإلكتروني",
+    "EnterEmail": "أدخل بريدك الإلكتروني",
+    "SendResetLink": "إرسال رابط إعادة التعيين",
+    "Sending": "جارٍ الإرسال...",
+    "CheckEmailHeading": "تحقق من بريدك الإلكتروني",
+    "EmailSentMessage": "تم إرسال رابط إعادة تعيين كلمة المرور إلى {email}. سيتم إعادة توجيهك إلى صفحة تسجيل الدخول في غضون 5 ثوانٍ.",
+    "UnexpectedError": "حدث خطأ غير متوقع",
+    "PasswordResetLinkSent": "تم إرسال رابط إعادة تعيين كلمة المرور",
+    "BackToLogin": "العودة إلى تسجيل الدخول",
+    "Validation": {
+      "InvalidEmail": "عنوان البريد الإلكتروني غير صالح",
+      "EmailRequired": "البريد الإلكتروني مطلوب"
+    }
+  },
+  "ResetPasswordPage": {
+    "Heading": "إعادة تعيين كلمة المرور",
+    "NewPassword": "كلمة مرور جديدة",
+    "ConfirmNewPassword": "تأكيد كلمة المرور الجديدة",
+    "EnterNewPassword": "أدخل كلمة المرور الجديدة",
+    "ConfirmPassword": "أكد كلمة المرور الجديدة",
+    "ResetPassword": "إعادة تعيين كلمة المرور",
+    "Resetting": "جارٍ إعادة التعيين...",
+    "InvalidToken": "رمز التحقق غير صالح أو مفقود",
+    "PasswordResetSuccess": "تمت إعادة تعيين كلمة المرور بنجاح",
+    "UnexpectedError": "حدث خطأ غير متوقع",
+    "BackToLogin": "العودة إلى تسجيل الدخول"
+  },
+  "ResetPasswordValidation": {
+    "PasswordRequired": "كلمة المرور مطلوبة",
+    "PasswordMin": "يجب أن تكون كلمة المرور مكونة من 8 أحرف على الأقل",
+    "PasswordUppercase": "يجب أن تحتوي كلمة المرور على حرف كبير واحد على الأقل",
+    "PasswordLowercase": "يجب أن تحتوي كلمة المرور على حرف صغير واحد على الأقل",
+    "PasswordNumber": "يجب أن تحتوي كلمة المرور على رقم واحد على الأقل",
+    "PasswordSpecial": "يجب أن تحتوي كلمة المرور على رمز خاص واحد على الأقل",
+    "ConfirmPasswordRequired": "تأكيد كلمة المرور مطلوب",
+    "PasswordsMustMatch": "يجب أن تكون كلمات المرور متطابقة"
+  },
+  "calendar": {
+    "calendar": "أجندة البرنامج",
+    "events": "الأحداث"
   }
 }

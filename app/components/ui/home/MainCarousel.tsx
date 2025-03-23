@@ -1,31 +1,40 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Image from "next/image";
-import { Swiper as SwiperType } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/pagination";
-import saleImg from "@/public/images/sale-slide.svg";
-import { cn } from "@/lib/utils";
+import * as React from 'react';
+import Image from 'next/image';
+import { Swiper as SwiperType } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/pagination';
+// import saleImg from "@/public/images/sale-slide.svg";
+import { cn } from '@/lib/utils';
+import tamahy from '@/public/images/tamahy.png';
+import tamahyMob from '@/public/images/TamahiMob.png';
+import lucher from '@/public/images/LuscherOffer.png';
+import lucherMob from '@/public/images/luscherMob.png';
+import epm from '@/public/images/EBMOffer.png';
+import epmMob from '@/public/images/EBMMob.png';
 
 const slides = [
   {
     id: 1,
-    image: saleImg,
+    image: tamahy,
+    imageMob: tamahyMob,
   },
   {
     id: 2,
-    image: saleImg,
+    image: lucher,
+    imageMob: lucherMob,
   },
   {
     id: 3,
-    image: saleImg,
+    image: epm,
+    imageMob: epmMob,
   },
 ];
 
-export function MainCarousel({ direction }: { direction: "ltr" | "rtl" }) {
+export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
   const [activeIndex, setActiveIndex] = React.useState(0);
   const swiperRef = React.useRef<SwiperType | null>(null);
 
@@ -47,20 +56,27 @@ export function MainCarousel({ direction }: { direction: "ltr" | "rtl" }) {
           delay: 4000,
           disableOnInteraction: false,
         }}
-        onSwiper={(swiper) => {
+        onSwiper={swiper => {
           swiperRef.current = swiper;
         }}
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        onSlideChange={swiper => setActiveIndex(swiper.realIndex)}
         className="w-full"
       >
-        {slides.map((slide) => (
+        {slides.map(slide => (
           <SwiperSlide key={slide.id}>
-            <div className="relative w-full h-[200px] rounded-lg overflow-hidden">
+            <div className="relative  w-full h-[400px] md:h-[300px] rounded-lg overflow-hidden">
               <Image
                 src={slide.image}
                 alt="carousel background"
                 fill
-                className="object-cover w-full"
+                className="hidden md:block object-contain w-full"
+                priority
+              />
+              <Image
+                src={slide.imageMob}
+                alt="carousel background"
+                fill
+                className="md:hidden block object-contain w-full"
                 priority
               />
             </div>
@@ -75,10 +91,10 @@ export function MainCarousel({ direction }: { direction: "ltr" | "rtl" }) {
             key={index}
             onClick={() => handleDotClick(index)}
             className={cn(
-              "w-2 h-2 rounded-full transition-all",
+              'w-2 h-2 rounded-full transition-all',
               activeIndex === index
-                ? "bg-blue-600 w-6" // Active dot
-                : "bg-gray-300 hover:bg-gray-400" // Inactive dot
+                ? 'bg-blue-600 w-6' // Active dot
+                : 'bg-gray-300 hover:bg-gray-400', // Inactive dot
             )}
             aria-label={`Go to slide ${index + 1}`}
           />

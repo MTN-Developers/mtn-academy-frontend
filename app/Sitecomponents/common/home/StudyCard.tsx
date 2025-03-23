@@ -4,6 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import Image from 'next/image';
 // import { Badge } from "@/components/ui/badge";
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 export default function StudyCard({
   semester,
@@ -17,13 +18,15 @@ export default function StudyCard({
     url: string;
   };
 }) {
+  const params = useParams();
+  const locale = params.locale as string;
   return (
     <Card className="py-3 px-2 flex flex-col justify-between ">
-      <div className="h-[200px] w-[100px] mx-auto overflow-hidden flex justify-center items-center">
+      <div className="h-[200px]  w-full mx-auto overflow-hidden flex justify-center items-center">
         <Image
           alt="cardImage"
           src={study.image_url_en}
-          className="w-full h-full object-contain"
+          className="w-full h-full object-cover rounded-lg"
           width={500}
           height={160}
         />
@@ -34,10 +37,10 @@ export default function StudyCard({
         {/* <Badge className="w-fit bg-[#73B8FF] text-sm font-normal rounded-2xl">
           Free study
         </Badge> */}
-        <CardTitle className="text-xl text-center">{study.name_en}</CardTitle>
+        <CardTitle className="text-xl text-center">{locale === 'en' ? study.name_en : study.name_ar}</CardTitle>
       </CardHeader>
       <CardContent className="px-3  text-sm text-gray-500 text-ellipsis text-center break-words">
-        {study.description_en}
+        {locale === 'en' ? study.description_en.slice(0, 100) : study.description_ar.slice(0, 100)}
       </CardContent>
       <CardFooter className="py-0  px-3 pt-6 pb-5 flex flex-col space-y-2 justify-between w-full">
         {/* <div className="flex items-center justify-start w-full space-x-3">
@@ -61,7 +64,7 @@ export default function StudyCard({
             href={'/login'}
             className="text-white bg-[#017AFD] py-3 rounded-lg  w-full text-center text-base font-semibold"
           >
-            سجل الان
+            {locale === 'en' ? 'Start Now' : 'سجل الان'}
           </Link>
           {/* <span className="text-red-500 text-base">%40 Discount</span> */}
         </div>

@@ -17,9 +17,14 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
   //     (1 - course.pricing.discountPercentage / 100)
   //   : course.pricing.originalPrice;
 
+  const routingLink =
+    semester.id === '20d67b1a-0d30-4d77-9cfe-efbbd3c8c611' ? `dashboard/semester/${semester.id}` : '#';
+
+  // const routingLink = `dashboard/semester/${semester.id}`;
+
   return (
     <Link
-      href={`dashboard/semester/${semester.slug}`}
+      href={routingLink}
       className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
     >
       <div className="relative h-48">
@@ -41,7 +46,9 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
           A course by {course.instructor.name}
         </p> */}
 
-        <p className="mt-4 text-gray-700">{direction === 'ltr' ? semester.description_en : semester.description_ar}</p>
+        <p className="mt-4 text-gray-700">
+          {direction === 'ltr' ? semester.description_en.slice(0, 80) : semester.description_ar.slice(0, 80)}
+        </p>
 
         {/* <div className="flex  items-center mt-6 space-x-4">
           <div className="flex items-center">

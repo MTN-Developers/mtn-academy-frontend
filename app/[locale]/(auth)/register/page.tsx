@@ -23,6 +23,7 @@ import 'react-phone-input-2/lib/style.css';
 import axiosInstance from '@/app/lib/axios/instance';
 import { endpoints } from '@/app/utils/endpoints';
 import { AxiosError } from 'axios';
+import { useCheckPhone } from '@/app/hooks/useCheckPhone';
 
 // Form schema
 interface RegisterFormData {
@@ -62,11 +63,13 @@ export default function RegisterPage() {
   const params = useParams();
   const locale = params.locale as string;
   const [isLoading, setIsLoading] = useState(false);
+  const { handleCheckPhoneNumber } = useCheckPhone();
 
   const {
     register,
     handleSubmit,
     setValue,
+    setError,
     reset,
     formState: { errors },
   } = useForm<RegisterFormData>({
@@ -114,6 +117,28 @@ export default function RegisterPage() {
       };
 
       console.log('onSubmit', formattedData);
+
+      const { isPhoneValid, isMsgSent, status } = await handleCheckPhoneNumber({
+        phoneNumber: formattedData.phone,
+      });
+
+      console.log('is phone valid', { isPhoneValid, isMsgSent, status });
+
+      if (!isPhoneValid || !status) {
+        setError('phone', {
+          type: 'manual',
+          message: locale === 'en' ? 'Invalid phone number' : 'رقم الهاتف غير صحيح',
+        });
+        return;
+      }
+      if (!isMsgSent) {
+        setError('phone', {
+          type: 'manual',
+          message:
+            locale === 'en' ? 'This number does not have a whatsapp account' : 'هذا الرقم لا يحتوي علي حساب واتساب',
+        });
+        return;
+      }
 
       const response = await axiosInstance.post(endpoints.register, formattedData);
       if (response.data.message === 'Success' || response.data.status === 201) {

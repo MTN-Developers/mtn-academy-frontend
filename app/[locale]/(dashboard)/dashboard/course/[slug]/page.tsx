@@ -2,7 +2,6 @@
 'use client';
 
 import Image from 'next/image';
-import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LockKeyhole } from 'lucide-react';
 import { useParams, usePathname } from 'next/navigation';
@@ -15,11 +14,13 @@ import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { useSemesterDetails } from '@/app/hooks/useSemesterDetails';
-import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ShareButton } from '@/app/components/common/ShareButton';
-import basicAr from '@/public/images/Basic study ar.png';
-import basicEn from '@/public/images/Basic study en.png';
+import basicAr from '@/public/images/basicAr.png';
+import basicEn from '@/public/images/basicEn.png';
+import SidebarSemester from '@/app/components/common/SidebarSemester';
+import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
+import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -34,9 +35,9 @@ const CoursePage = () => {
     error: errorSemester,
   } = useSemesterDetails(courseDetails?.semester_id || '');
 
-  console.log('data course', courseDetails);
+  // console.log('data course', courseDetails);
 
-  console.log('semester course', semesterDetails);
+  // console.log('semester course', semesterDetails);
 
   // console.log('courseDetails is ', courseDetails);
   const tCourse = useTranslations('course');
@@ -145,6 +146,10 @@ const CoursePage = () => {
               </div>
             )} */}
 
+            {courseDetails.is_locked === false ? (
+              <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
+            ) : null}
+
             {/* Tabs */}
             <div className="w-full overflow-x-auto">
               <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
@@ -181,53 +186,19 @@ const CoursePage = () => {
             </div>
           </div>
 
-          {/* Right Sectio */}
-          <div className="md:col-span-1 hidden lg:block lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
-            <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
-              <p className="text-2xl font-normal text-[#353535]">{tCourse('enrollNow')}</p>
-              <div className="text-[64px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
-              {Number(discount) > 0 && (
-                <p className="text-center text-sm font-normal  text-red-400 ">
-                  <span className="line-through">${semesterDetails.price}</span>
-                  <span className="text-red-400 inline mx-2 text-lg">%{discount} Discount</span>
-                </p>
-              )}
-
-              <p className="text-center text-sm font-normal text-[#454545]">{tCourse('enjoyTheCourse')}</p>
-              <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
-                <Button className="w-full bg-[#07519C] mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
-              </Link>
-              <div className="space-y-4 text-sm">
-                {/* <div className="flex items-center gap-2">
-                      <Globe className="w-4 h-4 flex-shrink-0 text-gray-600" />
-                      <span className="break-words">
-                        {semesterDetails.
-                          ? `${courseDetails.course_duration} ${tCourse('hours')}`
-                          : tCourse('durationNotSpecified')}
-                      </span>
-                    </div> */}
-                {/* Add more course metadata here */}
-              </div>
-            </div>
-          </div>
-
-          {/* Right Sidebar on mobile */}
-          <div className="md:col-span-1 p-4 rounded-lg bg-white block lg:hidden lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
-            <p className="text-center flex items-center text-sm font-normal  text-red-400 ">
-              <span className="line-through">${semesterDetails.price}</span>
-              <span className="text-red-400 text-nowrap inline mx-2 text-sm">
-                %{((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0)} Discount
-              </span>
-            </p>
-            <div className="   my-4 shadow-sm md:sticky md:top-4 flex  gap-3 justify-start items-center">
-              <div>
-                <div className="text-[30px] font-bold mb-2">${semesterDetails.price_after_discount}</div>
-              </div>
-              <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
-                <Button className="w-full bg-[#07519C]  text-lg h-14">{tCourse('enrollNow')}</Button>
-              </Link>
-            </div>
-          </div>
+          {semesterDetails.is_purchased === false ? (
+            <>
+              <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
+            </>
+          ) : (
+            <>
+              {courseDetails.is_locked === false ? (
+                <>
+                  <ProgressSidebar semesterId={semesterDetails.id} />
+                </>
+              ) : null}
+            </>
+          )}
         </div>
       </div>
     </div>

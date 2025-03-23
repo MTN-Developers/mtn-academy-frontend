@@ -117,9 +117,7 @@ export default function LoginPage() {
         //   }
         // }
         // router.push("/"); // Redirect to home page
-        router.replace(`
-          ${redirect ? decodeURIComponent(redirect) : `/${locale}/dashboard`}
-          `);
+        router.replace(redirect ? `/${locale}${decodeURIComponent(redirect)}` : `/${locale}/dashboard`);
       } else {
         toast.error(resultAction.payload as string);
       }
@@ -221,7 +219,7 @@ export default function LoginPage() {
                 />
                 <Label htmlFor="remember-me">{t('button.RememberMe')}</Label>
               </div>
-              <Link href={`/${locale}/forgot-password`} className="text-xs text-blue-600 underline">
+              <Link href={`/${locale}/request-reset-password`} className="text-xs text-blue-600 underline">
                 {t('password.forgotPassword')}
               </Link>
             </div>
