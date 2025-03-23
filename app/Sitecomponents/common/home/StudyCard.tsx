@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 export default function StudyCard({
-  semester,
+  study,
 }: {
   study: {
     name_ar: string;
