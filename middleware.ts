@@ -52,9 +52,6 @@ export function middleware(req: NextRequest) {
     const redirectURL = `/${locale}/login?redirect=${pathnameWithoutLocale}`;
     const response = NextResponse.redirect(new URL(redirectURL, req.url));
 
-    //
-    response.headers.set('Connection', 'close');
-
     // Clear any existing auth cookies
     response.cookies.delete('accessToken');
     response.cookies.delete('refreshToken');
