@@ -110,6 +110,7 @@
     "playlist": "Playlist",
     "session": "Session",
     "comments": "Comments",
+    "materials": "materials",
     "calendar": "calendar"
   },
   "error": {
