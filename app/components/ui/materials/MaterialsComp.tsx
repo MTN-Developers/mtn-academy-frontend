@@ -73,7 +73,7 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
               <div className="flex justify-start gap-4 items-center">
                 <Image src={courseDetails.logo_en} alt="logo" width={24} height={24} className="rounded-md" />
                 <h2 className="text-sm lg:text-lg font-medium">
-                  {locale === 'en' ? 'Emotional literacy ' : 'مواد محو الأمية العاطفية'}
+                  {locale === 'en' ? courseDetails.name_en : courseDetails.name_ar}
                 </h2>
               </div>
               <Button onClick={handleDownloadAll} className="bg-blue-600  hover:bg-blue-700">
@@ -88,7 +88,9 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
                     <div className="flex  items-center gap-2">
                       {/* <FileIcon className="h-5 w-5 text-gray-500" /> */}
                       <Image src={doc} alt="doc" width={40} height={40} />
-                      <span className="text-sm lg:text-lg text-gray-700">{formatDate(material.created_at)}</span>
+                      <span className="text-sm lg:text-lg text-gray-700">
+                        {locale === 'en' ? material.title_en : material.title_ar}-{formatDate(material.created_at)}
+                      </span>
                     </div>
                     <Button
                       variant="ghost"
