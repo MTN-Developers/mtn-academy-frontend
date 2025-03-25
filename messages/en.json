@@ -112,6 +112,7 @@
     "calendar": "Calendar",
     "comments": "Comments",
     "materials": "materials"
+
   },
   "error": {
     "title": "Something went wrong",
