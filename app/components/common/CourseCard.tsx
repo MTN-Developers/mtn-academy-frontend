@@ -22,6 +22,8 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
 
   const routingLink = `dashboard/semester/${semester.id}`;
 
+  // const routingLink = `dashboard/semester/${semester.id}`;
+
   return (
     <Link
       href={routingLink}

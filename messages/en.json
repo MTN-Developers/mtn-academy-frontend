@@ -110,7 +110,8 @@
     "playlist": "Playlist",
     "session": "Session",
     "comments": "Comments",
-    "materials": "materials"
+    "materials": "materials",
+    "calendar": "calendar"
   },
   "error": {
     "title": "Something went wrong",
@@ -176,5 +177,9 @@
     "PasswordSpecial": "Password must contain at least one special character",
     "ConfirmPasswordRequired": "Confirm password is required",
     "PasswordsMustMatch": "Passwords must match"
+  },
+  "calendar": {
+    "calendar": "Calendar",
+    "events": "Events"
   }
 }
