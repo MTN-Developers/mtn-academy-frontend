@@ -24,11 +24,14 @@ FROM base AS production
 # Set the working directory
 WORKDIR /app
 
-# Copy only the necessary production files
-COPY --from=base /app/package.json /app/bun.lockb ./
-COPY --from=base /app/.next ./.next
-COPY --from=base /app/public ./public
-COPY --from=base /app/next.config.mjs ./
+# # Copy only the necessary production files
+# COPY --from=base /app/package.json /app/bun.lockb ./
+# COPY --from=base /app/.next ./.next
+# COPY --from=base /app/public ./public
+# COPY --from=base /app/next.config.mjs ./
+
+# Remove cached dependencies to ensure a fresh install
+RUN rm -rf node_modules bun.lockb && bun install 
 
 # Set and expose port
 ARG APP_PORT=5556
