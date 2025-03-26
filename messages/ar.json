@@ -121,8 +121,8 @@
     "session": "الجلسة",
     "comments": "التعليقات",
     "calendar": "أجندة البرنامج",
-    "materials": "كتيب المادة العلمية"
-
+    "materials": "كتيب المادة العلمية",
+    "Practical exercises": "التمارين العملية"
   },
   "error": {
     "title": "حدث خطأ ما",
