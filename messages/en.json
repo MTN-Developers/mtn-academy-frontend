@@ -111,8 +111,8 @@
     "session": "Session",
     "calendar": "Calendar",
     "comments": "Comments",
-    "materials": "materials"
-
+    "materials": "materials",
+    "Practical exercises": "Practical exercises"
   },
   "error": {
     "title": "Something went wrong",
