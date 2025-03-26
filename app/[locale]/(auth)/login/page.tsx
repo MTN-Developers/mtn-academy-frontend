@@ -159,7 +159,7 @@ export default function LoginPage() {
           {/* Form body */}
           <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="lg:w-[456px] w-full p-4 lg:p-[48px]">
             <div className={`hidden lg:block`}>
-              <Image src={mtnLogo} alt="mtn logo" />
+              <Image src={mtnLogo} alt="mtn logoooooooooooo" />
               <h2 className="font-bold my-6">{t('Nice to see you again')}</h2>
             </div>
 

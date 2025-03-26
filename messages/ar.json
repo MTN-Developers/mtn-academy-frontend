@@ -41,7 +41,8 @@
     "Login now": "سجل دخول الآن",
     "registration": {
       "success": "تم التسجيل بنجاح!",
-      "error": "فشل التسجيل. يرجى المحاولة مرة أخرى."
+      "error": "فشل التسجيل. يرجى المحاولة مرة أخرى.",
+      "userExists": "البريد الإلكتروني أو رقم الهاتف موجود بالفعل"
     },
     "Gender": "الجنس",
     "Male": "ذكر",
@@ -99,7 +100,16 @@
     "semesterOrder": "الفصل {order}",
     "startLearning": "ابدأ التعلم",
     "noCourses": "لا توجد دورات متاحة",
-    "enjoyTheCourse": "استمتع بالدورة"
+    "enjoyTheCourse": "استمتع بالدورة",
+    "additionalResources": "موارد إضافية",
+    "students": "طالب",
+    "lessons": "محاضرة",
+    "positiveReviews": "تقييمات إيجابية",
+    "online": "عبر الإنترنت وبوتيرتك الخاصة",
+    "audio": "صوت",
+    "english": "الإنجليزية",
+    "arabic": "العربية",
+    "unlimitedAccess": "وصول غير محدود"
   },
   "tabs": {
     "information": "المعلومات",
@@ -110,7 +120,9 @@
     "playlist": "القوائم",
     "session": "الجلسة",
     "comments": "التعليقات",
-    "calendar": "أجندة البرنامج"
+    "calendar": "أجندة البرنامج",
+    "materials": "كتيب المادة العلمية"
+
   },
   "error": {
     "title": "حدث خطأ ما",

@@ -5,7 +5,7 @@ FROM oven/bun:1 AS base
 WORKDIR /app
 
 # First copy only files needed for installation
-COPY package.json bun.lockb ./
+COPY package.json bun.lock ./
 
 
 # Install dependencies with cache mounting
@@ -25,7 +25,7 @@ FROM base AS production
 WORKDIR /app
 
 # Copy only the necessary production files
-COPY --from=base /app/package.json /app/bun.lockb ./
+COPY --from=base /app/package.json /app/bun.lock ./
 COPY --from=base /app/.next ./.next
 COPY --from=base /app/public ./public
 COPY --from=base /app/next.config.mjs ./

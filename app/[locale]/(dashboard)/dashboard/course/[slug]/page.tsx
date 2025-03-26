@@ -21,6 +21,7 @@ import basicEn from '@/public/images/basicEn.png';
 import SidebarSemester from '@/app/components/common/SidebarSemester';
 import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
+import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -151,14 +152,19 @@ const CoursePage = () => {
             ) : null}
 
             {/* Tabs */}
-            <div className="w-full overflow-x-auto">
+            <div className="w-full overflow-x-scroll lg:overflow-x-auto">
               <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
-                <TabsList className="w-full flex-nowrap bg-white">
+                <TabsList className="w-auto lg:w-full flex-nowrap bg-white">
+
                   <TabsTrigger value="information" className="tabs-trigger">
                     {tTabs('information')}
                   </TabsTrigger>
                   <TabsTrigger value="playlist" className="tabs-trigger">
                     {tTabs('playlist')}
+                  </TabsTrigger>
+                  <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
+                    {courseDetails.is_locked && <LockKeyhole size={15} />}
+                    {tTabs('materials')}
                   </TabsTrigger>
                   <TabsTrigger value="discussions" disabled>
                     <LockKeyhole size={15} />
@@ -181,6 +187,9 @@ const CoursePage = () => {
                     courseDetails={courseDetails}
                     innerBackground="bg-[#F7F7F7CF]"
                   />
+                </TabsContent>
+                <TabsContent value="materials" className="mt-6">
+                  <MaterialsComp courseDetails={courseDetails} />
                 </TabsContent>
               </Tabs>
             </div>
