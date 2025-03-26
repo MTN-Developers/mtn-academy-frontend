@@ -20,6 +20,11 @@ jobs:
       - name: Overwrite .env.production file
         run: |
           echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_ZOOM_MEETING_NUMBER=${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_NUMBER }}" >> .env.production
+          echo "NEXT_PUBLIC_ZOOM_MEETING_PASSWORD=${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_PASSWORD }}" >> .env.production
+          echo "ZOOM_SDK_KEY=${{ secrets.ZOOM_SDK_KEY }}" >> .env.production
+          echo "ZOOM_SDK_SECRET=${{ secrets.ZOOM_SDK_SECRET }}" >> .env.production
+
       - name: Extract version from package.json
         id: extract_version
         run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
@@ -43,6 +48,10 @@ jobs:
           VM_IP: ${{ secrets.VM_IP }}
           PORT: ${{ secrets.STAGING_PORT }}
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_ZOOM_MEETING_NUMBER: ${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_NUMBER }}
+          NEXT_PUBLIC_ZOOM_MEETING_PASSWORD: ${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_PASSWORD }}
+          ZOOM_SDK_KEY: ${{ secrets.ZOOM_SDK_KEY }}
+          ZOOM_SDK_SECRET: ${{ secrets.ZOOM_SDK_SECRET }}
           VERSION: ${{ env.VERSION }}
         run: |
           # Store private key securely
@@ -70,11 +79,14 @@ jobs:
             docker run -d --restart unless-stopped -p "$PORT:$PORT" --name mtn_academy_frontend_staging \
               -e PORT="$PORT" \
               -e NEXT_PUBLIC_BASE_URL="$NEXT_PUBLIC_BASE_URL" \
+              -e NEXT_PUBLIC_ZOOM_MEETING_NUMBER="$NEXT_PUBLIC_ZOOM_MEETING_NUMBER" \
+              -e NEXT_PUBLIC_ZOOM_MEETING_PASSWORD="$NEXT_PUBLIC_ZOOM_MEETING_PASSWORD" \
+              -e ZOOM_SDK_KEY="$ZOOM_SDK_KEY" \
+              -e ZOOM_SDK_SECRET="$ZOOM_SDK_SECRET" \
               mazinmtn/mtn_academy_frontend:${VERSION}
 
             docker image prune -f
           EOF
-
 
           # Clean up the private key
           rm -f ~/.ssh/private_key
