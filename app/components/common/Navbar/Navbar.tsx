@@ -19,7 +19,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  if (pathname.includes('live-stream')) {
+  if (pathname.includes('live-session')) {
     return null;
   }
 
