@@ -17,10 +17,8 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
   //     (1 - course.pricing.discountPercentage / 100)
   //   : course.pricing.originalPrice;
 
-  // const routingLink =
-  //   semester.id === '20d67b1a-0d30-4d77-9cfe-efbbd3c8c611' ? `dashboard/semester/${semester.id}` : '#';
-
-  const routingLink = `dashboard/semester/${semester.id}`;
+  const routingLink =
+    semester.id === '20d67b1a-0d30-4d77-9cfe-efbbd3c8c611' ? `dashboard/semester/${semester.id}` : '#';
 
   // const routingLink = `dashboard/semester/${semester.id}`;
 
