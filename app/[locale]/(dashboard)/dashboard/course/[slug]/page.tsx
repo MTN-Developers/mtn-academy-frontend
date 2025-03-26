@@ -153,28 +153,30 @@ const CoursePage = () => {
             ) : null}
 
             {/* Tabs */}
-            <div className="w-full overflow-x-scroll lg:overflow-x-auto">
+            <div className="w-full  lg:overflow-x-auto">
               <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
-                <TabsList className="w-auto lg:w-full flex-nowrap bg-white">
-                  <TabsTrigger value="information" className="tabs-trigger">
-                    {tTabs('information')}
-                  </TabsTrigger>
-                  <TabsTrigger value="playlist" className="tabs-trigger">
-                    {tTabs('playlist')}
-                  </TabsTrigger>
-                  <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
-                    {courseDetails.is_locked && <LockKeyhole size={15} />}
-                    {tTabs('materials')}
-                  </TabsTrigger>
-                  <TabsTrigger value="practicalExercises" disabled={courseDetails.is_locked} className="tabs-trigger">
-                    {courseDetails.is_locked && <LockKeyhole size={15} />}
-                    {tTabs('Practical exercises')}
-                  </TabsTrigger>
-                  <TabsTrigger value="discussions" disabled>
-                    <LockKeyhole size={15} />
-                    {tTabs('discussions')}
-                  </TabsTrigger>
-                </TabsList>
+                <div className="overflow-x-auto">
+                  <TabsList className="w-auto lg:w-full flex-nowrap bg-white ">
+                    <TabsTrigger value="information" className="tabs-trigger">
+                      {tTabs('information')}
+                    </TabsTrigger>
+                    <TabsTrigger value="playlist" className="tabs-trigger">
+                      {tTabs('playlist')}
+                    </TabsTrigger>
+                    <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
+                      {courseDetails.is_locked && <LockKeyhole size={15} />}
+                      {tTabs('materials')}
+                    </TabsTrigger>
+                    <TabsTrigger value="practicalExercises" disabled={courseDetails.is_locked} className="tabs-trigger">
+                      {courseDetails.is_locked && <LockKeyhole size={15} />}
+                      {tTabs('Practical exercises')}
+                    </TabsTrigger>
+                    <TabsTrigger value="discussions" disabled>
+                      <LockKeyhole size={15} />
+                      {tTabs('discussions')}
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
                 <TabsContent value="information" className="mt-6">
                   <div className="prose max-w-none">

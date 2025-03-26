@@ -249,3 +249,8 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+/* In your global CSS file */
+.zoom-container {
+  padding-top: 10rem !important;
+}
