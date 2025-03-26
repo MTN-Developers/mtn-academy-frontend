@@ -11,14 +11,24 @@ const ZoomMeeting = ({
   client_name,
   meetingId,
   passcode,
+  containerId = 'zmmtg-root',
 }: {
   client_name: string;
   meetingId: string;
   passcode: string;
+  containerId?: string;
 }) => {
   const meeting_number = meetingId;
   const meeting_password = passcode;
   useEffect(() => {
+    const container = document.getElementById(containerId);
+    if (!container) {
+      const div = document.createElement('div');
+      div.id = containerId;
+      div.style.marginTop = '4rem'; // Add your desired spacing
+      document.body.appendChild(div);
+    }
+
     const asyncFunction = async () => {
       try {
         const _res = await import('@zoomus/websdk/embedded');

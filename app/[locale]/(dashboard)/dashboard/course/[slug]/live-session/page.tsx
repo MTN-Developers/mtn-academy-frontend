@@ -39,7 +39,7 @@ const Page = () => {
   console.log('slug', params);
 
   return (
-    <div className="flex flex-col  gap-2 w-full h-full items-center justify-center">
+    <div className="flex flex-col  zoom-container gap-2 w-full h-full items-center justify-center">
       <h2 className="font-semibold text-xl"> live stream</h2>
       {/* <p>{params.courseId}</p> */}
       <ZoomMeeting client_name={`${user?.name} - ${user?.country}`} meetingId={'81297066423'} passcode={'169998'} />
