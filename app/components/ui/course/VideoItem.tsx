@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { CheckCircle2, FileText } from 'lucide-react';
 import useGetAssigmentWithAnswers from '@/app/hooks/useGetAssigmentWithAnswers';
 import { CourseDetailsResponse } from '@/app/hooks/useCourseDetails';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 interface IProps {
   video: Video;
@@ -22,6 +22,8 @@ interface IProps {
 const VideoItem = ({ video, courseDetails, chapter, currentVideoId, isRTL, formatDuration, handleRouting }: IProps) => {
   const { data: questions } = useGetAssigmentWithAnswers({ videoId: video.id });
   const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string;
 
   const isReachable = !courseDetails?.is_locked;
   const hasAssignment = questions && questions.length > 0;
@@ -47,11 +49,11 @@ const VideoItem = ({ video, courseDetails, chapter, currentVideoId, isRTL, forma
 
       // Wait a bit for the navigation to complete
       setTimeout(() => {
-        router.push(`/dashboard/course/${courseDetails.slug}/watch?videoId=${video.id}&view=assignment`);
+        router.push(`/${locale}/dashboard/course/${courseDetails.slug}/watch?videoId=${video.id}&view=assignment`);
       }, 100);
     } else {
       // If already on the correct video, just add the assignment view parameter
-      router.push(`/dashboard/course/${courseDetails.slug}/watch?videoId=${video.id}&view=assignment`);
+      router.push(`/${locale}/dashboard/course/${courseDetails.slug}/watch?videoId=${video.id}&view=assignment`);
     }
   };
 
