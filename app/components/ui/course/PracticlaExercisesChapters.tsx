@@ -47,9 +47,15 @@ const PracticalExercisesChapters = ({ courseDetails }: IProps) => {
     return <div className="p-8 text-center">Loading practical exercises...</div>;
   }
 
-  if (error || !chapters || chapters.length === 0) {
-    return <div className="p-8 text-center text-gray-500">No practical exercises available for this course.</div>;
+  if (error) {
+    console.log('error', error);
+
+    return <div className="p-8 text-center text-gray-500">Error</div>;
   }
+
+  // if (error || !chapters || chapters.length === 0) {
+  //   return <div className="p-8 text-center text-gray-500">No practical exercises available for this course.</div>;
+  // }
 
   return (
     <div className="w-full rounded-lg p-4 bg-white">
@@ -73,48 +79,50 @@ const PracticalExercisesChapters = ({ courseDetails }: IProps) => {
         value={openChapter}
         onValueChange={setOpenChapter}
       >
-        {chapters.map(chapter => (
-          <AccordionItem key={chapter.id} value={chapter.id} className="ml-6">
-            <AccordionTrigger className="hover:no-underline py-6">
-              <div className="flex items-center gap-4">
-                <Image src={videoLibrary} alt="video library icon" width={24} height={24} />
-                <h3
-                  className={`font-medium text-xl ${
-                    !currentChapterId
-                      ? 'text-[#07519C]'
-                      : currentChapterId === chapter.id
-                      ? 'text-[#07519C]'
-                      : 'text-[#545353]'
-                  }`}
-                >
-                  {locale === 'ar' ? chapter.title_ar : chapter.title_en}
-                </h3>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="py-4">
-              <div className="space-y-2">
-                {chapter.videos?.map(video => (
-                  <div
-                    key={video.id}
-                    className={`flex items-center justify-between text-gray-700 hover:text-[#07519C] rounded-lg cursor-pointer py-2`}
-                    onClick={() => handleRouting(video, chapter)}
+        {chapters &&
+          chapters?.length > 0 &&
+          chapters.map(chapter => (
+            <AccordionItem key={chapter.id} value={chapter.id} className="ml-6">
+              <AccordionTrigger className="hover:no-underline py-6">
+                <div className="flex items-center gap-4">
+                  <Image src={videoLibrary} alt="video library icon" width={24} height={24} />
+                  <h3
+                    className={`font-medium text-xl ${
+                      !currentChapterId
+                        ? 'text-[#07519C]'
+                        : currentChapterId === chapter.id
+                        ? 'text-[#07519C]'
+                        : 'text-[#545353]'
+                    }`}
                   >
-                    <div className="flex items-center gap-4">
-                      <DisplayIcon color={video.id === currentVideoId ? '#07519C' : '#6B7280'} />
+                    {locale === 'ar' ? chapter.title_ar : chapter.title_en}
+                  </h3>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent className="py-4">
+                <div className="space-y-2">
+                  {chapter.videos?.map(video => (
+                    <div
+                      key={video.id}
+                      className={`flex items-center justify-between text-gray-700 hover:text-[#07519C] rounded-lg cursor-pointer py-2`}
+                      onClick={() => handleRouting(video, chapter)}
+                    >
+                      <div className="flex items-center gap-4">
+                        <DisplayIcon color={video.id === currentVideoId ? '#07519C' : '#6B7280'} />
 
-                      <span className={`text-sm ${video.id === currentVideoId ? 'text-[#07519C] font-medium' : ''}`}>
-                        {isRTL ? video.title_ar : video.title_en}
+                        <span className={`text-sm ${video.id === currentVideoId ? 'text-[#07519C] font-medium' : ''}`}>
+                          {isRTL ? video.title_ar : video.title_en}
+                        </span>
+                      </div>
+                      <span className="flex items-center gap-1 text-sm text-gray-500">
+                        {formatDuration(video.duration)}
                       </span>
                     </div>
-                    <span className="flex items-center gap-1 text-sm text-gray-500">
-                      {formatDuration(video.duration)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          ))}
       </Accordion>
     </div>
   );
