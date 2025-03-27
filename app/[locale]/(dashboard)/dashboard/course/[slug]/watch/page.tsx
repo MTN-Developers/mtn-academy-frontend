@@ -16,6 +16,8 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getLangDir } from 'rtl-detect';
+import useGetAssigmentWithAnswers from '@/app/hooks/useGetAssigmentWithAnswers';
+import { AssignmentView } from '@/app/components/ui/course/AssignmentView';
 
 const findVideoInChapters = (chapters: Chapter[], videoId: string): { video: Video; chapter: Chapter } | null => {
   for (const chapter of chapters) {
@@ -37,6 +39,40 @@ export default function WatchPage() {
   const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const isRTL = getLangDir(locale as string) === 'rtl';
   const tTabs = useTranslations('tabs');
+
+  const [viewMode, setViewMode] = useState<'video' | 'assignment'>('video');
+  const { data: assignmentQuestions } = useGetAssigmentWithAnswers({
+    videoId: currentVideo?.id || '',
+  });
+
+  const hasAssignment = assignmentQuestions && assignmentQuestions.length > 0;
+
+  // Determine if we should show assignment view
+  useEffect(() => {
+    // Check if the URL has an assignment parameter
+    const showAssignment = searchParams.get('view') === 'assignment';
+    if (showAssignment && hasAssignment) {
+      setViewMode('assignment');
+    } else {
+      setViewMode('video');
+    }
+  }, [searchParams, hasAssignment]);
+
+  // Function to toggle between video and assignment views
+  const toggleViewMode = (mode: 'video' | 'assignment') => {
+    // Create a new URLSearchParams object
+    const newParams = new URLSearchParams(searchParams.toString());
+
+    if (mode === 'assignment') {
+      newParams.set('view', 'assignment');
+    } else {
+      newParams.delete('view');
+    }
+
+    // Update the URL with the new query parameter
+    router.replace(`${window.location.pathname}?${newParams.toString()}`, { scroll: false });
+    setViewMode(mode);
+  };
 
   // Only fetch if redux data is not available
   const { data, isLoading, error } = useCourseDetails(slug as string, {
@@ -155,23 +191,45 @@ export default function WatchPage() {
   // Define content elements to be ordered based on direction
   const VideoSection = (
     <div className="lg:col-span-2">
-      <VideoPlayer chapterVideoId={currentChapter?.id} video={currentVideo} url={currentVideo?.video_url} />
+      {viewMode === 'video' ? (
+        <VideoPlayer chapterVideoId={currentChapter?.id} video={currentVideo} url={currentVideo?.video_url} />
+      ) : (
+        currentVideo && <AssignmentView videoId={currentVideo.id} />
+      )}
+
       {/* Tabs */}
       <div className="w-full overflow-x-auto mt-5">
-        <Tabs defaultValue="session" className="mb-8 shadow-none rounded-none">
+        <Tabs
+          defaultValue={viewMode === 'assignment' ? 'assignment' : 'session'}
+          className="mb-8 shadow-none rounded-none"
+        >
           <TabsList className="w-full flex-nowrap bg-[#F2F2F2] border-b border-[#DFDFDF] p-0 m-0 shadow-none rounded-none">
             <TabsTrigger
               value="session"
+              onClick={() => viewMode === 'assignment' && toggleViewMode('video')}
               className="tabs-trigger text-[#656565] font-normal ml-4 py-5 px-4 rounded-none data-[state=active]:shadow-none data-[state=active]:ring-transparent data-[state=active]:bg-[#F2F2F2] data-[state=active]:no-underline data-[state=active]:border-b-2 data-[state=active]:border-[#017AFD] data-[state=active]:font-medium data-[state=active]:text-[#017AFD]"
             >
               {tTabs('session')}
             </TabsTrigger>
+
             <TabsTrigger
               value="comments"
+              onClick={() => viewMode === 'assignment' && toggleViewMode('video')}
               className="tabs-trigger text-[#656565] font-normal py-5 px-4 rounded-none data-[state=active]:shadow-none data-[state=active]:ring-transparent data-[state=active]:bg-[#F2F2F2] data-[state=active]:no-underline data-[state=active]:border-b-2 data-[state=active]:border-[#017AFD] data-[state=active]:font-medium data-[state=active]:text-[#017AFD]"
             >
               {tTabs('comments')}
             </TabsTrigger>
+
+            {/* Only show assignment tab if assignment exists */}
+            {/* {hasAssignment && (
+              <TabsTrigger
+                value="assignment"
+                onClick={() => viewMode === 'video' && toggleViewMode('assignment')}
+                className="tabs-trigger text-[#656565] font-normal py-5 px-4 rounded-none data-[state=active]:shadow-none data-[state=active]:ring-transparent data-[state=active]:bg-[#F2F2F2] data-[state=active]:no-underline data-[state=active]:border-b-2 data-[state=active]:border-[#017AFD] data-[state=active]:font-medium data-[state=active]:text-[#017AFD]"
+              >
+                {isRTL ? 'التطبيق' : 'Assignment'}
+              </TabsTrigger>
+            )} */}
           </TabsList>
 
           <TabsContent value="session" className="mt-6 ml-4">
@@ -186,6 +244,10 @@ export default function WatchPage() {
 
           <TabsContent value="comments">
             {videoId && currentVideo ? <Comments videoId={currentVideo.id} /> : null}
+          </TabsContent>
+
+          <TabsContent value="assignment">
+            {/* This is intentionally empty as we're showing the assignment view instead of the video player */}
           </TabsContent>
         </Tabs>
       </div>

@@ -22,11 +22,12 @@ import SidebarSemester from '@/app/components/common/SidebarSemester';
 import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
+import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExercisesChapters';
 
 const CoursePage = () => {
   const { slug } = useParams();
   const [showDialog, setShowDialog] = useState(false);
-  const [goToPayment, setGoToPayment] = useState(false);
+  const [_goToPayment, setGoToPayment] = useState(false);
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
 
@@ -56,7 +57,7 @@ const CoursePage = () => {
     } else if (semesterDetails?.is_purchased === false) {
       setGoToPayment(true);
       setShowDialog(false);
-      console.log('gotopayment', goToPayment);
+      // console.log('gotopayment', goToPayment);
     } else {
       setShowDialog(false);
     }
@@ -152,25 +153,30 @@ const CoursePage = () => {
             ) : null}
 
             {/* Tabs */}
-            <div className="w-full overflow-x-scroll lg:overflow-x-auto">
+            <div className="w-full  lg:overflow-x-auto">
               <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
-                <TabsList className="w-auto lg:w-full flex-nowrap bg-white">
-
-                  <TabsTrigger value="information" className="tabs-trigger">
-                    {tTabs('information')}
-                  </TabsTrigger>
-                  <TabsTrigger value="playlist" className="tabs-trigger">
-                    {tTabs('playlist')}
-                  </TabsTrigger>
-                  <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
-                    {courseDetails.is_locked && <LockKeyhole size={15} />}
-                    {tTabs('materials')}
-                  </TabsTrigger>
-                  <TabsTrigger value="discussions" disabled>
-                    <LockKeyhole size={15} />
-                    {tTabs('discussions')}
-                  </TabsTrigger>
-                </TabsList>
+                <div className="overflow-x-auto">
+                  <TabsList className="w-auto lg:w-full flex-nowrap bg-white ">
+                    <TabsTrigger value="information" className="tabs-trigger">
+                      {tTabs('information')}
+                    </TabsTrigger>
+                    <TabsTrigger value="playlist" className="tabs-trigger">
+                      {tTabs('playlist')}
+                    </TabsTrigger>
+                    <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
+                      {courseDetails.is_locked && <LockKeyhole size={15} />}
+                      {tTabs('materials')}
+                    </TabsTrigger>
+                    <TabsTrigger value="practicalExercises" disabled={courseDetails.is_locked} className="tabs-trigger">
+                      {courseDetails.is_locked && <LockKeyhole size={15} />}
+                      {tTabs('Practical exercises')}
+                    </TabsTrigger>
+                    <TabsTrigger value="discussions" disabled>
+                      <LockKeyhole size={15} />
+                      {tTabs('discussions')}
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
 
                 <TabsContent value="information" className="mt-6">
                   <div className="prose max-w-none">
@@ -190,6 +196,10 @@ const CoursePage = () => {
                 </TabsContent>
                 <TabsContent value="materials" className="mt-6">
                   <MaterialsComp courseDetails={courseDetails} />
+                </TabsContent>
+                <TabsContent value="practicalExercises" className="mt-6">
+                  {/* here should go the practicalExercises videos */}
+                  <PracticlaExercisesChapters courseDetails={courseDetails} />
                 </TabsContent>
               </Tabs>
             </div>

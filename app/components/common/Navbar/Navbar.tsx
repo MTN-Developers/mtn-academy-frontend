@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/lib/redux/store';
@@ -17,6 +17,13 @@ const Navbar = () => {
   const router = useRouter();
   const locale = params.locale as string;
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
+  if (pathname.includes('live-session')) {
+    return null;
+  }
+
+  // console.log('pathname', pathname);
 
   const handleLanguageChange = (newLocale: string) => {
     const currentPathname = window.location.pathname;

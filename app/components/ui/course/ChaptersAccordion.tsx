@@ -5,10 +5,8 @@ import { getLangDir } from 'rtl-detect';
 import { PlaylistSkeleton } from '../../common/PlaylistSkeleton';
 import { CourseDetailsResponse } from '@/app/hooks/useCourseDetails';
 import videoLibrary from '@/public/icons/video-library.svg';
-import playIcon from '@/public/icons/play.svg';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import DisplayIcon from '@/components/icons/DisplayIcon';
 import { Chapter, Video } from '@/app/types/video';
 import {
   Dialog,
@@ -21,6 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { SemesterDetails } from '@/app/types/semester';
+import VideoItem from './VideoItem';
 
 export const ChaptersAccordion = ({
   courseDetails,
@@ -166,35 +165,16 @@ export const ChaptersAccordion = ({
                 <AccordionContent className="py-4">
                   <div className="space-y-2">
                     {chapter.videos?.map(video => (
-                      <div
+                      <VideoItem
                         key={video.id}
-                        className={`flex items-center justify-between text-gray-700 hover:text-[#07519C] rounded-lg cursor-pointer py-2`}
-                        onClick={() => handleRouting(video, chapter)}
-                      >
-                        <div className="flex items-center gap-4">
-                          <DisplayIcon color={video.id === currentVideoId ? '#07519C' : '#6B7280'} />
-                          <span
-                            className={`text-sm ${video.id === currentVideoId ? 'text-[#07519C] font-medium' : ''}`}
-                          >
-                            {isRTL ? video.title_ar : video.title_en}
-                          </span>
-                        </div>
-                        <span className="flex items-center gap-1 text-sm text-gray-500">
-                          {video.id === currentVideoId ? (
-                            <div className="flex-shrink-0 w-[35px] h-[35px]">
-                              <Image
-                                src={playIcon}
-                                alt="play icon"
-                                width={35}
-                                height={35}
-                                style={{ width: '35px', height: '35px', flexShrink: 0 }}
-                              />
-                            </div>
-                          ) : (
-                            formatDuration(video.duration)
-                          )}
-                        </span>
-                      </div>
+                        formatDuration={formatDuration}
+                        video={video}
+                        chapter={chapter}
+                        handleRouting={handleRouting}
+                        isRTL={isRTL}
+                        currentVideoId={currentVideoId}
+                        courseDetails={courseDetails}
+                      />
                     ))}
                   </div>
                 </AccordionContent>

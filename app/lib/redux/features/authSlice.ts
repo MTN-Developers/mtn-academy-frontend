@@ -1,8 +1,8 @@
 // src/lib/redux/features/authSlice.ts
-import { createSlice } from "@reduxjs/toolkit";
-import { User } from "@/app/types/auth";
-import { login, refreshAccessToken } from "./authActions";
-import { deleteCookie, setCookie } from "cookies-next";
+import { createSlice } from '@reduxjs/toolkit';
+import { User } from '@/app/types/auth';
+import { login, refreshAccessToken } from './authActions';
+import { deleteCookie, setCookie } from 'cookies-next';
 
 interface AuthState {
   user: User | null;
@@ -23,12 +23,12 @@ const initialState: AuthState = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     initializeAuthState(state) {
-      const accessToken = localStorage.getItem("accessToken");
-      const tokenExpiry = localStorage.getItem("tokenExpiry");
+      const accessToken = localStorage.getItem('accessToken');
+      const tokenExpiry = localStorage.getItem('tokenExpiry');
 
       if (accessToken && tokenExpiry) {
         const expiryTime = parseInt(tokenExpiry);
@@ -38,9 +38,9 @@ const authSlice = createSlice({
         } else {
           // Token has expired
           // state.isAuthenticated = false;
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("tokenExpiry");
+          localStorage.removeItem('accessToken');
+          localStorage.removeItem('refreshToken');
+          localStorage.removeItem('tokenExpiry');
         }
       }
     },
@@ -53,19 +53,19 @@ const authSlice = createSlice({
       state.error = null;
 
       // Clear tokens and expiration
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("tokenExpiry");
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('tokenExpiry');
 
       // Delete cookies
-      deleteCookie("access_token");
-      deleteCookie("refresh_token");
+      deleteCookie('access_token');
+      deleteCookie('refresh_token');
 
       // Delete cookies
-      deleteCookie("accessToken");
-      deleteCookie("refreshToken");
-      deleteCookie("user");
-      console.log("Delete Cookie from authSlice - 2");
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
+      deleteCookie('user');
+      // console.log('Delete Cookie from authSlice - 2');
     },
     setCredentials(state, action) {
       state.accessToken = action.payload.accessToken;
@@ -74,9 +74,9 @@ const authSlice = createSlice({
       // state.isAuthenticated = !!action.payload.accessToken;
     },
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(login.pending, (state) => {
+      .addCase(login.pending, state => {
         state.loading = true;
         state.error = null;
       })
@@ -89,16 +89,16 @@ const authSlice = createSlice({
         state.error = null;
 
         // Store tokens in localStorage
-        localStorage.setItem("accessToken", action.payload.access_token);
-        localStorage.setItem("refreshToken", action.payload.refresh_token);
+        localStorage.setItem('accessToken', action.payload.access_token);
+        localStorage.setItem('refreshToken', action.payload.refresh_token);
 
         // Store tokens in cookies
-        setCookie("accessToken", action.payload.access_token, {
-          path: "/",
+        setCookie('accessToken', action.payload.access_token, {
+          path: '/',
           maxAge: 60 * 60 * 24 * 7, // 1 week
         });
-        setCookie("refreshToken", action.payload.refresh_token, {
-          path: "/",
+        setCookie('refreshToken', action.payload.refresh_token, {
+          path: '/',
           maxAge: 60 * 60 * 24 * 7, // 1 week
         });
       })
@@ -110,7 +110,7 @@ const authSlice = createSlice({
         state.accessToken = action.payload.access_token;
         // state.isAuthenticated = true;
       })
-      .addCase(refreshAccessToken.rejected, (state) => {
+      .addCase(refreshAccessToken.rejected, state => {
         state.user = null;
         state.accessToken = null;
         state.refreshToken = null;

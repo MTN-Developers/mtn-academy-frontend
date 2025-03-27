@@ -14,10 +14,10 @@ export const useCheckPhone = () => {
       });
 
       check_phone_is_valid = data.is_valid;
-      console.log('is phone number valid? ', check_phone_is_valid);
+      // console.log('is phone number valid? ', check_phone_is_valid);
 
       check_phone_status = String(status);
-      console.log('is phone number status? ', check_phone_status);
+      // console.log('is phone number status? ', check_phone_status);
     } catch (e) {
       console.log(e, 'Error');
     }
