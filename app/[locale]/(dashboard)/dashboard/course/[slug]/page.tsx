@@ -23,6 +23,7 @@ import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
 import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExercisesChapters';
+import TherapyGymChapters from '@/app/components/ui/therapy/TherapyGymChapters';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -171,6 +172,10 @@ const CoursePage = () => {
                       {courseDetails.is_locked && <LockKeyhole size={15} />}
                       {tTabs('Practical exercises')}
                     </TabsTrigger>
+                    <TabsTrigger value="therapyGym" disabled={courseDetails.is_locked} className="tabs-trigger">
+                      {courseDetails.is_locked && <LockKeyhole size={15} />}
+                      {tTabs('Therapy Gym')}
+                    </TabsTrigger>
                     <TabsTrigger value="discussions" disabled>
                       <LockKeyhole size={15} />
                       {tTabs('discussions')}
@@ -200,6 +205,10 @@ const CoursePage = () => {
                 <TabsContent value="practicalExercises" className="mt-6">
                   {/* here should go the practicalExercises videos */}
                   <PracticlaExercisesChapters courseDetails={courseDetails} />
+                </TabsContent>
+                <TabsContent value="therapyGym" className="mt-6">
+                  {/* here should go the therapyGym videos */}
+                  <TherapyGymChapters courseDetails={courseDetails} />
                 </TabsContent>
               </Tabs>
             </div>
