@@ -51,9 +51,9 @@ const PracticalExercisesChapters = ({ courseDetails }: IProps) => {
     console.log('error in fetching practice', error);
   }
 
-  // if (error || !chapters || chapters.length === 0) {
-  //   return <div className="p-8 text-center text-gray-500">No practical exercises available for this course.</div>;
-  // }
+  if (error || !chapters || chapters.length === 0) {
+    return <div className="p-8 text-center text-gray-500">No practical exercises available for this course.</div>;
+  }
 
   return (
     <div className="w-full rounded-lg p-4 bg-white">
