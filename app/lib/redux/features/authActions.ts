@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../axios/instance';
-
-import { getCookie, setCookie } from 'cookies-next';
+import { deleteCookie } from 'cookies-next';
 import { AxiosError } from 'axios';
 
 export const login = createAsyncThunk(
@@ -41,7 +40,7 @@ export const login = createAsyncThunk(
 
 export const refreshAccessToken = createAsyncThunk('auth/refreshToken', async (_, { rejectWithValue }) => {
   try {
-    const refreshToken = getCookie('refresh_token');
+    const refreshToken = localStorage.getItem('refreshToken');
 
     if (!refreshToken) {
       throw new Error('No refresh token available');
@@ -53,20 +52,22 @@ export const refreshAccessToken = createAsyncThunk('auth/refreshToken', async (_
 
     const { access_token } = response.data.data;
 
-    // Update access token in cookies
-    setCookie('access_token', access_token, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 7, // 1 week
-    });
+    //   // Update access token in cookies
+    //   Cookies.set("accessToken", access_token, {
+    //     secure: true,
+    //     sameSite: "strict",
+    //   });
 
-    // Update tokens in localStorage
+    // Update tokens and expiration
     localStorage.setItem('accessToken', access_token);
 
     return { access_token };
   } catch (error: any) {
-    // Don't clear cookies here - only log the error
-    console.error('Failed to refresh token:', error);
-
+    // Clear all auth data on refresh failure
+    deleteCookie('access_token');
+    deleteCookie('refresh_token');
+    deleteCookie('user');
+    console.log('Delete Cookie from authSlice');
     let errorMessage = 'An unknown error occurred';
 
     if (error instanceof AxiosError) {
