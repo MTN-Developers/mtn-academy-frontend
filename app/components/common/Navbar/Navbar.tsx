@@ -23,7 +23,7 @@ const Navbar = () => {
     return null;
   }
 
-  console.log('pathname', pathname);
+  // console.log('pathname', pathname);
 
   const handleLanguageChange = (newLocale: string) => {
     const currentPathname = window.location.pathname;

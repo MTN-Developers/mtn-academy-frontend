@@ -14,7 +14,7 @@ interface IProps {
 const CalendarComp = ({ semesterId }: IProps) => {
   const { data: events, error, isLoading } = useGetEvents({ semesterId, page: 1, limit: 5000 });
 
-  console.log('data', events);
+  // console.log('data', events);
 
   const t = useTranslations('calendar');
 

@@ -27,7 +27,7 @@ import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExer
 const CoursePage = () => {
   const { slug } = useParams();
   const [showDialog, setShowDialog] = useState(false);
-  const [goToPayment, setGoToPayment] = useState(false);
+  const [_goToPayment, setGoToPayment] = useState(false);
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
 
@@ -57,7 +57,7 @@ const CoursePage = () => {
     } else if (semesterDetails?.is_purchased === false) {
       setGoToPayment(true);
       setShowDialog(false);
-      console.log('gotopayment', goToPayment);
+      // console.log('gotopayment', goToPayment);
     } else {
       setShowDialog(false);
     }
