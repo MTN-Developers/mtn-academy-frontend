@@ -8,6 +8,7 @@ interface AuthState {
   user: User | null;
   accessToken: string | null;
   refreshToken: string | null;
+  // isAuthenticated: boolean;
   loading: boolean;
   error: string | null;
 }
@@ -16,6 +17,7 @@ const initialState: AuthState = {
   user: null,
   accessToken: null,
   refreshToken: null,
+  // isAuthenticated: false,
   loading: false,
   error: null,
 };
@@ -32,7 +34,10 @@ const authSlice = createSlice({
         const expiryTime = parseInt(tokenExpiry);
         if (expiryTime > Date.now()) {
           state.accessToken = accessToken;
+          // state.isAuthenticated = true;
         } else {
+          // Token has expired
+          // state.isAuthenticated = false;
           localStorage.removeItem('accessToken');
           localStorage.removeItem('refreshToken');
           localStorage.removeItem('tokenExpiry');
@@ -43,6 +48,7 @@ const authSlice = createSlice({
       state.user = null;
       state.accessToken = null;
       state.refreshToken = null;
+      // state.isAuthenticated = false;
       state.loading = false;
       state.error = null;
 
@@ -54,21 +60,18 @@ const authSlice = createSlice({
       // Delete cookies
       deleteCookie('access_token');
       deleteCookie('refresh_token');
+
+      // Delete cookies
+      deleteCookie('accessToken');
+      deleteCookie('refreshToken');
       deleteCookie('user');
       console.log('Delete Cookie from authSlice - 2');
     },
     setCredentials(state, action) {
       state.accessToken = action.payload.accessToken;
-
-      // Only update refresh token if it's provided
-      if (action.payload.refreshToken) {
-        state.refreshToken = action.payload.refreshToken;
-      }
-
-      // Only update user if it's provided
-      if (action.payload.user) {
-        state.user = action.payload.user;
-      }
+      state.refreshToken = action.payload.refreshToken;
+      // state.user = action.payload.user;
+      // state.isAuthenticated = !!action.payload.accessToken;
     },
   },
   extraReducers: builder => {
@@ -82,6 +85,7 @@ const authSlice = createSlice({
         state.user = action.payload.user;
         state.accessToken = action.payload.access_token;
         state.refreshToken = action.payload.refresh_token;
+        // state.isAuthenticated = true;
         state.error = null;
 
         // Store tokens in localStorage
@@ -104,9 +108,16 @@ const authSlice = createSlice({
       })
       .addCase(refreshAccessToken.fulfilled, (state, action) => {
         state.accessToken = action.payload.access_token;
+        // state.isAuthenticated = true;
+      })
+      .addCase(refreshAccessToken.rejected, state => {
+        state.user = null;
+        state.accessToken = null;
+        state.refreshToken = null;
+        // state.isAuthenticated = false;
       });
   },
 });
 
-export const { logout, initializeAuthState, setCredentials } = authSlice.actions;
+export const { logout, initializeAuthState } = authSlice.actions;
 export default authSlice.reducer;
