@@ -20,7 +20,7 @@ const ContinueLearningComp = () => {
     return null;
   }
 
-  console.log('semesters', semesters);
+  // console.log('semesters', semesters);
 
   return (
     <>

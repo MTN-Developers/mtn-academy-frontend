@@ -11,7 +11,7 @@ const ContinueLearningMob = ({ semesterDetails, isRTL, locale }) => {
   const relatedSemester: UserSemester | undefined = semesters?.find(
     semester => semester.semester.id === semesterDetails.id,
   );
-  console.log('related', relatedSemester);
+  // console.log('related', relatedSemester);
 
   if (isLoading) return <>loading...</>;
 

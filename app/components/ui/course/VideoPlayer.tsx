@@ -46,7 +46,7 @@ export const VideoPlayer = ({
 
     // Only set up the timer if we have a valid chapterVideoId and the video is loaded
     if (chapterVideoId && url && !isLoading) {
-      console.log('Starting 30-second completion timer for video');
+      // console.log('Starting 30-second completion timer for video');
 
       completionTimerRef.current = setTimeout(() => {
         markVideoAsCompleted();
@@ -65,12 +65,12 @@ export const VideoPlayer = ({
     if (!chapterVideoId || hasMarkedAsCompleted) return;
 
     try {
-      console.log('Marking video as completed:', chapterVideoId);
+      // console.log('Marking video as completed:', chapterVideoId);
       await axiosInstance.post('/completed-video', {
         video_id: video?.id,
       });
 
-      console.log('Video marked as completed successfully');
+      // console.log('Video marked as completed successfully');
       setHasMarkedAsCompleted(true);
     } catch (error) {
       console.error('Error marking video as completed:', error);

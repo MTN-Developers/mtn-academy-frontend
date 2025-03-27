@@ -116,13 +116,13 @@ export default function RegisterPage() {
         country: phoneData.country,
       };
 
-      console.log('onSubmit', formattedData);
+      // console.log('onSubmit', formattedData);
 
       const { isPhoneValid, isMsgSent, status } = await handleCheckPhoneNumber({
         phoneNumber: formattedData.phone,
       });
 
-      console.log('is phone valid', { isPhoneValid, isMsgSent, status });
+      // console.log('is phone valid', { isPhoneValid, isMsgSent, status });
 
       if (!isPhoneValid || !status) {
         setError('phone', {

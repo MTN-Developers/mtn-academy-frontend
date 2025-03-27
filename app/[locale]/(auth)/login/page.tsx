@@ -21,7 +21,6 @@ import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner'; // Add toast notifications
 import { setCookie } from 'cookies-next';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { usePathname } from 'next/navigation';
 import { login } from '@/app/lib/redux/features/authActions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/lib/redux/store';
@@ -51,7 +50,6 @@ export default function LoginPage() {
   const dispatch = useDispatch<AppDispatch>();
   // const { loginFn, loading } = useAuth();
   const router = useRouter();
-  const path = usePathname();
   // const pathArr = path.split('/');
   // const locale = pathArr[1];
   const params = useParams();
@@ -63,8 +61,6 @@ export default function LoginPage() {
   // Add this at the top of your component
   const [pageLoadTime] = useState(Date.now());
 
-  console.log('path is', path);
-  console.log('local is', locale);
   const t = useTranslations('login');
 
   const {
@@ -90,7 +86,7 @@ export default function LoginPage() {
     try {
       setLoading(true);
       const resultAction = await dispatch(login({ email: data.email, password: data.password }));
-      console.log('resultAction', resultAction);
+      // console.log('resultAction', resultAction);
 
       if (login.fulfilled.match(resultAction)) {
         toast.success('Login successful');

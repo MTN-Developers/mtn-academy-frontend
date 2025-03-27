@@ -67,7 +67,7 @@ export const refreshAccessToken = createAsyncThunk('auth/refreshToken', async (_
     deleteCookie('access_token');
     deleteCookie('refresh_token');
     deleteCookie('user');
-    console.log('Delete Cookie from authSlice');
+    // console.log('Delete Cookie from authSlice');
     let errorMessage = 'An unknown error occurred';
 
     if (error instanceof AxiosError) {

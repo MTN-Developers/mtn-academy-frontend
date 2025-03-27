@@ -36,7 +36,7 @@ const Page = () => {
     return <div>Course is locked</div>;
   }
 
-  console.log('slug', params);
+  // console.log('slug', params);
 
   return (
     <div className="flex flex-col  zoom-container gap-2 w-full h-full items-center justify-center">

@@ -65,7 +65,7 @@ const authSlice = createSlice({
       deleteCookie('accessToken');
       deleteCookie('refreshToken');
       deleteCookie('user');
-      console.log('Delete Cookie from authSlice - 2');
+      // console.log('Delete Cookie from authSlice - 2');
     },
     setCredentials(state, action) {
       state.accessToken = action.payload.accessToken;

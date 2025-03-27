@@ -24,7 +24,7 @@ export const useCoursePlaylist = (slug: string) => {
     queryKey: ['coursePlaylist', slug],
     queryFn: async () => {
       const { data } = await axiosInstance.get(`/course-playlist/course/slug/${slug}/videos`);
-      console.log('course-playlist ', data);
+      // console.log('course-playlist ', data);
 
       return data;
     },
