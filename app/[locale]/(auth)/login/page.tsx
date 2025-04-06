@@ -9,8 +9,8 @@ import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import bannerMob from '@/public/images/login-banner-mob.svg';
-import bannerWeb from '@/public/images/login-banner-web.svg';
+import bannerMob from '@/public/images/login-banner-mob-new.svg';
+import bannerWeb from '@/public/images/login-banner-web-new.svg';
 import mtnLogo from '@/public/images/mtn-logo.svg';
 // import googleIcon from "@/public/icons/google-icon.svg";
 import { Button } from '@/components/ui/button';
@@ -137,7 +137,7 @@ export default function LoginPage() {
 
   return (
     <div dir={`${locale === 'en' ? 'ltr' : 'rtl'}`} className="w-full h-full bg-white">
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full lg:h-screen flex justify-center items-center">
         {/* Banner web */}
         <div className="w-full h-full hidden lg:block bg-gray-400 overflow-hidden">
           <Image src={bannerWeb} alt="banner web" className="w-full h-full object-cover" />

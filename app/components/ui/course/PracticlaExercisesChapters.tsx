@@ -48,9 +48,8 @@ const PracticalExercisesChapters = ({ courseDetails }: IProps) => {
   }
 
   if (error) {
-    console.log('error', error);
-
-    return <div className="p-8 text-center text-gray-500">Error</div>;
+    console.log('error in fetching practice', error);
+    return <div className="p-8 text-center text-gray-500">No practical exercises available for this course, Error</div>;
   }
 
   // if (error || !chapters || chapters.length === 0) {
