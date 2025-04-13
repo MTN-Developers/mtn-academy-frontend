@@ -99,7 +99,7 @@ export const VideoPlayer = ({
           key={videoKey} // Key forces re-render when changed
           src={url}
           allowFullScreen
-          allow="autoplay; fullscreen; picture-in-picture pip"
+          allow="autoplay; fullscreen; picture-in-picture; pip;"
           className="absolute top-0 left-0 w-full h-full border-0 rounded-3xl"
           title="Video player"
           onLoad={() => {
