@@ -23,10 +23,10 @@ export default function Page() {
 
   // cred
 
-  console.log('NEXT_PUBLIC_ZOOM_MEETING_NUMBER', process.env.NEXT_PUBLIC_ZOOM_MEETING_NUMBER);
-  console.log('NEXT_PUBLIC_ZOOM_MEETING_PASSWORD', process.env.NEXT_PUBLIC_ZOOM_MEETING_PASSWORD);
-  console.log('ZOOM_SDK_KEY', process.env.ZOOM_SDK_KEY);
-  console.log('ZOOM_SDK_SECRET', process.env.ZOOM_SDK_SECRET);
+  // console.log('NEXT_PUBLIC_ZOOM_MEETING_NUMBER', process.env.NEXT_PUBLIC_ZOOM_MEETING_NUMBER);
+  // // console.log('NEXT_PUBLIC_ZOOM_MEETING_PASSWORD', process.env.NEXT_PUBLIC_ZOOM_MEETING_PASSWORD);
+  // console.log('ZOOM_SDK_KEY', process.env.ZOOM_SDK_KEY);
+  // console.log('ZOOM_SDK_SECRET', process.env.ZOOM_SDK_SECRET);
 
   return (
     <>
