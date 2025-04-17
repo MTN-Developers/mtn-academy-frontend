@@ -22,6 +22,7 @@
         "@stripe/react-stripe-js": "^3.3.0",
         "@stripe/stripe-js": "^5.8.0",
         "@tanstack/react-query": "^5.64.2",
+        "@types/jquery": "^3.5.32",
         "@types/rtl-detect": "^1.0.3",
         "@zoom/meetingsdk": "^3.12.0",
         "@zoomus/websdk": "^2.18.3",
@@ -443,6 +444,8 @@
 
     "@types/hoist-non-react-statics": ["@types/hoist-non-react-statics@3.3.6", "", { "dependencies": { "@types/react": "*", "hoist-non-react-statics": "^3.3.0" } }, "sha512-lPByRJUer/iN/xa4qpyL0qmL11DqNW81iU/IG1S3uvRUq4oKagz8VCxZjiWkumgt66YT3vOdDgZ0o32sGKtCEw=="],
 
+    "@types/jquery": ["@types/jquery@3.5.32", "", { "dependencies": { "@types/sizzle": "*" } }, "sha512-b9Xbf4CkMqS02YH8zACqN1xzdxc3cO735Qe5AbSUFmyOiaWAbcpqh9Wna+Uk0vgACvoQHpWDg2rGdHkYPLmCiQ=="],
+
     "@types/js-cookie": ["@types/js-cookie@3.0.6", "", {}, ""],
 
     "@types/json-schema": ["@types/json-schema@7.0.15", "", {}, ""],
@@ -458,6 +461,8 @@
     "@types/react-redux": ["@types/react-redux@7.1.34", "", { "dependencies": { "@types/hoist-non-react-statics": "^3.3.0", "@types/react": "*", "hoist-non-react-statics": "^3.3.0", "redux": "^4.0.0" } }, "sha512-GdFaVjEbYv4Fthm2ZLvj1VSCedV7TqE5y1kNwnjSdBOTXuRSgowux6J8TAct15T3CKBr63UMk+2CO7ilRhyrAQ=="],
 
     "@types/rtl-detect": ["@types/rtl-detect@1.0.3", "", {}, "sha512-qpstuHivwg/HoXxRrBo5/r/OVx5M2SkqJpVu2haasdLctt+jMGHWjqdbI0LL7Rk2wRmN/UHdHK4JZg9RUMcvKA=="],
+
+    "@types/sizzle": ["@types/sizzle@2.3.9", "", {}, "sha512-xzLEyKB50yqCUPUJkIsrVvoWNfFUbIZI+RspLWt8u+tIW/BetMBZtgV2LY/2o+tYH8dRvQ+eoPf3NdhQCcLE2w=="],
 
     "@types/statuses": ["@types/statuses@2.0.5", "", {}, "sha512-jmIUGWrAiwu3dZpxntxieC+1n/5c3mjrImkmOSQ2NC5uP6cYO4aAZDdSmRcI5C1oiTmqlZGHC+/NmJrKogbP5A=="],
 
