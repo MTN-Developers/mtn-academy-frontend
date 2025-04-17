@@ -1,6 +1,13 @@
 // app/[locale]/course/[slug]/page.tsx
 'use client';
+import Script from 'next/script';
 
+declare global {
+  interface Window {
+    ATL_JQ_PAGE_PROPS: any;
+    $: any;
+  }
+}
 import Image from 'next/image';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { LockKeyhole } from 'lucide-react';
@@ -23,6 +30,9 @@ import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
 import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExercisesChapters';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/lib/redux/store';
+import complaintsIcon from '@/public/icons/complaints.svg';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -30,6 +40,7 @@ const CoursePage = () => {
   const [_goToPayment, setGoToPayment] = useState(false);
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const {
     data: semesterDetails,
@@ -82,52 +93,91 @@ const CoursePage = () => {
   const discount = ((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0);
 
   return (
-    <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
-      <BreadcrumbFragment
-        semesterName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
-        semesterId={semesterDetails.id}
-        courseName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
+    <>
+      {/* Add jQuery and Atlassian Collector Scripts */}
+      <Script src="https://code.jquery.com/jquery-3.6.0.min.js" strategy="beforeInteractive" crossOrigin="anonymous" />
+      <Script
+        src="https://managethenow.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/xghl7j/b/3/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=ar-eg&collectorId=98474ad5"
+        strategy="afterInteractive"
+        onLoad={() => {
+          window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
+            triggerFunction: function (showCollectorDialog) {
+              jQuery('#myCustomTrigger').click(function (e) {
+                e.preventDefault();
+                window.ATL_JQ_PAGE_PROPS.fieldValues.email = user?.email;
+                window.ATL_JQ_PAGE_PROPS.fieldValues.fullname = user?.name;
+                window.ATL_JQ_PAGE_PROPS.fieldValues.description = 'description';
+                window.ATL_JQ_PAGE_PROPS.fieldValues.summary = 'summary';
+                showCollectorDialog();
+              });
+            },
+            fieldValues: function () {
+              return {
+                email: user?.email,
+                recordWebInfo: '1',
+                recordWebInfoConsent: ['1'],
+              };
+            },
+          });
+        }}
       />
 
-      <div className="w-full p-4 px-4 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Left Content */}
-          <div className="md:col-span-2">
-            <div className="flex my-2 items-center w-full justify-between">
-              <div className="flex items-center gap-4">
-                <Image
-                  src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
-                  alt={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
-                  width={64}
-                  height={64}
-                  className="rounded-lg"
-                />
-                <div>
-                  <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
-                    {isRTL ? courseDetails.name_ar : courseDetails.name_en}
-                  </h1>
-                  <p className="text-gray-600 text-sm">
-                    {tCourse('by')} <span className="font-semibold">{'By Ahmed Eldmallawy'}</span>
-                  </p>
+      {/* Hidden email input - replace value with dynamic user email */}
+      <input type="hidden" id="email" value="user@example.com" />
+      <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
+        <BreadcrumbFragment
+          semesterName={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+          semesterId={semesterDetails.id}
+          courseName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
+        />
+
+        <div className="w-full p-4 px-4 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Left Content */}
+            <div className="md:col-span-2">
+              <div className="flex my-2 items-center w-full justify-between">
+                <div className="flex items-center gap-4">
+                  <Image
+                    src={isRTL ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
+                    alt={isRTL ? semesterDetails.name_ar : semesterDetails.name_en}
+                    width={64}
+                    height={64}
+                    className="rounded-lg"
+                  />
+                  <div>
+                    <h1 className="text-xl md:text-2xl font-bold text-[#10458c] break-words">
+                      {isRTL ? courseDetails.name_ar : courseDetails.name_en}
+                    </h1>
+                    <p className="text-gray-600 text-sm">
+                      {tCourse('by')} <span className="font-semibold">{'By Ahmed Eldmallawy'}</span>
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  {/* here should go the complaints and suggestions icon */}
+                  {/* Updated complaints icon with trigger */}
+                  <a href="#" id="myCustomTrigger" className="cursor-pointer">
+                    <Image className="w-[25px]" src={complaintsIcon} alt="complaints icon" />
+                  </a>
+
+                  <ShareButton
+                    title="Share this semester"
+                    customShareText={`Hi, I am taking this amazing semester: ${
+                      isRTL ? semesterDetails.name_ar : semesterDetails.name_en
+                    }`}
+                  />
                 </div>
               </div>
-              <ShareButton
-                title="Share this semester"
-                customShareText={`Hi, I am taking this amazing semester: ${
-                  isRTL ? courseDetails.name_ar : courseDetails.name_en
-                }`}
-              />
-            </div>
 
-            {/* Video Preview */}
-            <div className="relative aspect-video overflow-hidden bg-gray-900 rounded-lg mb-8 w-full">
-              <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
-                {/* {tCourse('noVideoAvailable')}
-                 */}
-                <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+              {/* Video Preview */}
+              <div className="relative aspect-video overflow-hidden bg-gray-900 rounded-lg mb-8 w-full">
+                <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
+                  {/* {tCourse('noVideoAvailable')}
+                   */}
+                  <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+                </div>
               </div>
-            </div>
-            {/* {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
+              {/* {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
               <div className="relative aspect-video bg-gray-900 rounded-lg mb-3 w-full">
                 <iframe
                   style={{
@@ -148,79 +198,84 @@ const CoursePage = () => {
               </div>
             )} */}
 
-            {courseDetails.is_locked === false ? (
-              <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
-            ) : null}
-
-            {/* Tabs */}
-            <div className="w-full  lg:overflow-x-auto">
-              <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
-                <div className="overflow-x-auto">
-                  <TabsList className="w-auto lg:w-full flex-nowrap bg-white ">
-                    <TabsTrigger value="information" className="tabs-trigger">
-                      {tTabs('information')}
-                    </TabsTrigger>
-                    <TabsTrigger value="playlist" className="tabs-trigger">
-                      {tTabs('playlist')}
-                    </TabsTrigger>
-                    <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
-                      {courseDetails.is_locked && <LockKeyhole size={15} />}
-                      {tTabs('materials')}
-                    </TabsTrigger>
-                    <TabsTrigger value="practicalExercises" disabled={courseDetails.is_locked} className="tabs-trigger">
-                      {courseDetails.is_locked && <LockKeyhole size={15} />}
-                      {tTabs('Practical exercises')}
-                    </TabsTrigger>
-                    <TabsTrigger value="discussions" disabled>
-                      <LockKeyhole size={15} />
-                      {tTabs('discussions')}
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-
-                <TabsContent value="information" className="mt-6">
-                  <div className="prose max-w-none">
-                    <p className="text-gray-700">
-                      {isRTL ? courseDetails.description_ar : courseDetails.description_en}
-                    </p>
-                    {/* Add more course details here */}
-                  </div>
-                </TabsContent>
-                <TabsContent value="playlist" className="mt-6">
-                  <ChaptersAccordion
-                    semester={semesterDetails}
-                    showDialog={showDialog}
-                    courseDetails={courseDetails}
-                    innerBackground="bg-[#F7F7F7CF]"
-                  />
-                </TabsContent>
-                <TabsContent value="materials" className="mt-6">
-                  <MaterialsComp courseDetails={courseDetails} />
-                </TabsContent>
-                <TabsContent value="practicalExercises" className="mt-6">
-                  {/* here should go the practicalExercises videos */}
-                  <PracticlaExercisesChapters courseDetails={courseDetails} />
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-
-          {semesterDetails.is_purchased === false ? (
-            <>
-              <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
-            </>
-          ) : (
-            <>
               {courseDetails.is_locked === false ? (
-                <>
-                  <ProgressSidebar semesterId={semesterDetails.id} />
-                </>
+                <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
               ) : null}
-            </>
-          )}
+
+              {/* Tabs */}
+              <div className="w-full  lg:overflow-x-auto">
+                <Tabs dir={`${locale === 'ar' ? 'rtl' : 'ltr'}`} defaultValue="information" className="mb-8">
+                  <div className="overflow-x-auto">
+                    <TabsList className="w-auto lg:w-full flex-nowrap bg-white ">
+                      <TabsTrigger value="information" className="tabs-trigger">
+                        {tTabs('information')}
+                      </TabsTrigger>
+                      <TabsTrigger value="playlist" className="tabs-trigger">
+                        {tTabs('playlist')}
+                      </TabsTrigger>
+                      <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
+                        {courseDetails.is_locked && <LockKeyhole size={15} />}
+                        {tTabs('materials')}
+                      </TabsTrigger>
+                      <TabsTrigger
+                        value="practicalExercises"
+                        disabled={courseDetails.is_locked}
+                        className="tabs-trigger"
+                      >
+                        {courseDetails.is_locked && <LockKeyhole size={15} />}
+                        {tTabs('Practical exercises')}
+                      </TabsTrigger>
+                      <TabsTrigger value="discussions" disabled>
+                        <LockKeyhole size={15} />
+                        {tTabs('discussions')}
+                      </TabsTrigger>
+                    </TabsList>
+                  </div>
+
+                  <TabsContent value="information" className="mt-6">
+                    <div className="prose max-w-none">
+                      <p className="text-gray-700">
+                        {isRTL ? courseDetails.description_ar : courseDetails.description_en}
+                      </p>
+                      {/* Add more course details here */}
+                    </div>
+                  </TabsContent>
+                  <TabsContent value="playlist" className="mt-6">
+                    <ChaptersAccordion
+                      semester={semesterDetails}
+                      showDialog={showDialog}
+                      courseDetails={courseDetails}
+                      innerBackground="bg-[#F7F7F7CF]"
+                    />
+                  </TabsContent>
+                  <TabsContent value="materials" className="mt-6">
+                    <MaterialsComp courseDetails={courseDetails} />
+                  </TabsContent>
+                  <TabsContent value="practicalExercises" className="mt-6">
+                    {/* here should go the practicalExercises videos */}
+                    <PracticlaExercisesChapters courseDetails={courseDetails} />
+                  </TabsContent>
+                </Tabs>
+              </div>
+            </div>
+
+            {semesterDetails.is_purchased === false ? (
+              <>
+                <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
+              </>
+            ) : (
+              <>
+                {courseDetails.is_locked === false ? (
+                  <>
+                    <ProgressSidebar semesterId={semesterDetails.id} />
+                  </>
+                ) : null}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
