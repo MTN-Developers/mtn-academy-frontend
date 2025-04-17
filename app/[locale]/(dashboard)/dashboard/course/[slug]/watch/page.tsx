@@ -1,6 +1,13 @@
 // app/[locale]/course/[slug]/watch/page.tsx
 'use client';
+import Script from 'next/script';
 
+declare global {
+  interface Window {
+    ATL_JQ_PAGE_PROPS: any;
+    $: any;
+  }
+}
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { VideoPlayer } from '@/app/components/ui/course/VideoPlayer';
@@ -18,6 +25,8 @@ import { useSelector } from 'react-redux';
 import { getLangDir } from 'rtl-detect';
 import useGetAssigmentWithAnswers from '@/app/hooks/useGetAssigmentWithAnswers';
 import { AssignmentView } from '@/app/components/ui/course/AssignmentView';
+import Image from 'next/image';
+import complaints2 from '@/public/icons/complaints2.svg';
 
 const findVideoInChapters = (chapters: Chapter[], videoId: string): { video: Video; chapter: Chapter } | null => {
   for (const chapter of chapters) {
@@ -44,6 +53,7 @@ export default function WatchPage() {
   const { data: assignmentQuestions } = useGetAssigmentWithAnswers({
     videoId: currentVideo?.id || '',
   });
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const hasAssignment = assignmentQuestions && assignmentQuestions.length > 0;
 
@@ -203,7 +213,7 @@ export default function WatchPage() {
           defaultValue={viewMode === 'assignment' ? 'assignment' : 'session'}
           className="mb-8 shadow-none rounded-none"
         >
-          <TabsList className="w-full flex-nowrap bg-[#F2F2F2] border-b border-[#DFDFDF] p-0 m-0 shadow-none rounded-none">
+          <TabsList className="w-full relative flex-nowrap bg-[#F2F2F2] border-b border-[#DFDFDF] p-0 m-0 shadow-none rounded-none">
             <TabsTrigger
               value="session"
               onClick={() => viewMode === 'assignment' && toggleViewMode('video')}
@@ -230,6 +240,11 @@ export default function WatchPage() {
                 {isRTL ? 'التطبيق' : 'Assignment'}
               </TabsTrigger>
             )} */}
+
+            {/* here should go the complaints icons */}
+            <a href="#" id="myCustomTrigger" className="absolute top-4 right-0">
+              <Image src={complaints2} className=" w-[35px]" alt="complaints icon" />
+            </a>
           </TabsList>
 
           <TabsContent value="session" className="mt-6 ml-4">
@@ -272,21 +287,54 @@ export default function WatchPage() {
   );
 
   return (
-    <div className="min-h-screen lg:px-20 bg-[#F2F2F2]">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
-        {/* Order sections based on RTL/LTR */}
-        {isRTL ? (
-          <>
-            {VideoSection}
-            {ChaptersSection}
-          </>
-        ) : (
-          <>
-            {VideoSection}
-            {ChaptersSection}
-          </>
-        )}
+    <>
+      {/* Add jQuery and Atlassian Collector Scripts */}
+      <Script src="https://code.jquery.com/jquery-3.6.0.min.js" strategy="beforeInteractive" crossOrigin="anonymous" />
+      <Script
+        src="https://managethenow.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/xghl7j/b/3/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=ar-eg&collectorId=98474ad5"
+        strategy="afterInteractive"
+        onLoad={() => {
+          window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
+            triggerFunction: function (showCollectorDialog) {
+              jQuery('#myCustomTrigger').click(function (e) {
+                e.preventDefault();
+                window.ATL_JQ_PAGE_PROPS.fieldValues.email = user?.email;
+                window.ATL_JQ_PAGE_PROPS.fieldValues.fullname = user?.name;
+                // window.ATL_JQ_PAGE_PROPS.fieldValues.description = 'description';
+                // window.ATL_JQ_PAGE_PROPS.fieldValues.summary = 'summary';
+                showCollectorDialog();
+              });
+            },
+            fieldValues: function () {
+              return {
+                email: user?.email,
+                recordWebInfo: '1',
+                recordWebInfoConsent: ['1'],
+              };
+            },
+          });
+        }}
+      />
+
+      {/* Hidden email input - replace value with dynamic user email */}
+      <input type="hidden" id="email" value="user@example.com" />
+
+      <div className="min-h-screen lg:px-20 bg-[#F2F2F2]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
+          {/* Order sections based on RTL/LTR */}
+          {isRTL ? (
+            <>
+              {VideoSection}
+              {ChaptersSection}
+            </>
+          ) : (
+            <>
+              {VideoSection}
+              {ChaptersSection}
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

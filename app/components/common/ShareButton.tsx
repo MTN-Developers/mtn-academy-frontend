@@ -70,7 +70,7 @@ export const ShareButton = ({
     <>
       <div className={className} onClick={() => setIsShareModalOpen(true)}>
         <Share size={iconSize} />
-        {showText && <span>share</span>}
+        {showText && <span className="lg:block hidden ">share</span>}
       </div>
 
       {/* Share Modal */}
