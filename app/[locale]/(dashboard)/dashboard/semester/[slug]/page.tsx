@@ -77,8 +77,8 @@ const SemesterPage = () => {
                 e.preventDefault();
                 window.ATL_JQ_PAGE_PROPS.fieldValues.email = user?.email;
                 window.ATL_JQ_PAGE_PROPS.fieldValues.fullname = user?.name;
-                window.ATL_JQ_PAGE_PROPS.fieldValues.description = 'description';
-                window.ATL_JQ_PAGE_PROPS.fieldValues.summary = 'summary';
+                // window.ATL_JQ_PAGE_PROPS.fieldValues.description = 'description';
+                // window.ATL_JQ_PAGE_PROPS.fieldValues.summary = 'summary';
                 showCollectorDialog();
               });
             },
