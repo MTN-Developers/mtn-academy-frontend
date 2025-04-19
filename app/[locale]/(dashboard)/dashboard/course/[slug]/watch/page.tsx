@@ -2,12 +2,6 @@
 'use client';
 import Script from 'next/script';
 
-declare global {
-  interface Window {
-    ATL_JQ_PAGE_PROPS: any;
-    $: any;
-  }
-}
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { VideoPlayer } from '@/app/components/ui/course/VideoPlayer';
@@ -25,8 +19,8 @@ import { useSelector } from 'react-redux';
 import { getLangDir } from 'rtl-detect';
 import useGetAssigmentWithAnswers from '@/app/hooks/useGetAssigmentWithAnswers';
 import { AssignmentView } from '@/app/components/ui/course/AssignmentView';
-import Image from 'next/image';
-import complaints2 from '@/public/icons/complaints2.svg';
+
+import FeedbackCollector from '@/app/components/FeedbackCollector';
 
 const findVideoInChapters = (chapters: Chapter[], videoId: string): { video: Video; chapter: Chapter } | null => {
   for (const chapter of chapters) {
@@ -242,9 +236,9 @@ export default function WatchPage() {
             )} */}
 
             {/* here should go the complaints icons */}
-            <a href="#" id="myCustomTrigger" className="absolute top-4 right-0">
-              <Image src={complaints2} className=" w-[35px]" alt="complaints icon" />
-            </a>
+            <div className="absolute right-0 top-4 flex items-center gap-4 mr-4">
+              <FeedbackCollector pathname={window.location.pathname} />
+            </div>
           </TabsList>
 
           <TabsContent value="session" className="mt-6 ml-4">
