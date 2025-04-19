@@ -20,6 +20,7 @@ import useGetAssigmentWithAnswers from '@/app/hooks/useGetAssigmentWithAnswers';
 import { AssignmentView } from '@/app/components/ui/course/AssignmentView';
 
 import FeedbackCollector from '@/app/components/FeedbackCollector';
+import Coachmark from '@/app/components/Coachmark';
 
 const findVideoInChapters = (chapters: Chapter[], videoId: string): { video: Video; chapter: Chapter } | null => {
   for (const chapter of chapters) {
@@ -194,6 +195,7 @@ export default function WatchPage() {
   // Define content elements to be ordered based on direction
   const VideoSection = (
     <div className="lg:col-span-2">
+      <Coachmark targetId="feedback-trigger" />
       {viewMode === 'video' ? (
         <VideoPlayer chapterVideoId={currentChapter?.id} video={currentVideo} url={currentVideo?.video_url} />
       ) : (
