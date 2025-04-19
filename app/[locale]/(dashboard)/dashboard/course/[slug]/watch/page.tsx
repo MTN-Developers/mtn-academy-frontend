@@ -1,6 +1,5 @@
 // app/[locale]/course/[slug]/watch/page.tsx
 'use client';
-import Script from 'next/script';
 
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
@@ -13,7 +12,7 @@ import { Chapter, Video } from '@/app/types/video';
 import { Comments } from '@/app/components/ui/comments/Comments';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTranslations } from 'next-intl';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getLangDir } from 'rtl-detect';
@@ -42,12 +41,12 @@ export default function WatchPage() {
   const [currentChapter, setCurrentChapter] = useState<Chapter | null>(null);
   const isRTL = getLangDir(locale as string) === 'rtl';
   const tTabs = useTranslations('tabs');
+  const pathname = usePathname();
 
   const [viewMode, setViewMode] = useState<'video' | 'assignment'>('video');
   const { data: assignmentQuestions } = useGetAssigmentWithAnswers({
     videoId: currentVideo?.id || '',
   });
-  const { user } = useSelector((state: RootState) => state.auth);
 
   const hasAssignment = assignmentQuestions && assignmentQuestions.length > 0;
 
@@ -237,7 +236,7 @@ export default function WatchPage() {
 
             {/* here should go the complaints icons */}
             <div className="absolute right-0 top-4 flex items-center gap-4 mr-4">
-              <FeedbackCollector pathname={window.location.pathname} />
+              <FeedbackCollector pathname={pathname} />
             </div>
           </TabsList>
 
@@ -282,37 +281,6 @@ export default function WatchPage() {
 
   return (
     <>
-      {/* Add jQuery and Atlassian Collector Scripts */}
-      <Script src="https://code.jquery.com/jquery-3.6.0.min.js" strategy="beforeInteractive" crossOrigin="anonymous" />
-      <Script
-        src="https://managethenow.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/xghl7j/b/3/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=ar-eg&collectorId=98474ad5"
-        strategy="afterInteractive"
-        onLoad={() => {
-          window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
-            triggerFunction: function (showCollectorDialog) {
-              jQuery('#myCustomTrigger').click(function (e) {
-                e.preventDefault();
-                window.ATL_JQ_PAGE_PROPS.fieldValues.email = user?.email;
-                window.ATL_JQ_PAGE_PROPS.fieldValues.fullname = user?.name;
-                // window.ATL_JQ_PAGE_PROPS.fieldValues.description = 'description';
-                // window.ATL_JQ_PAGE_PROPS.fieldValues.summary = 'summary';
-                showCollectorDialog();
-              });
-            },
-            fieldValues: function () {
-              return {
-                email: user?.email,
-                recordWebInfo: '1',
-                recordWebInfoConsent: ['1'],
-              };
-            },
-          });
-        }}
-      />
-
-      {/* Hidden email input - replace value with dynamic user email */}
-      <input type="hidden" id="email" value="user@example.com" />
-
       <div className="min-h-screen lg:px-20 bg-[#F2F2F2]">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 p-4">
           {/* Order sections based on RTL/LTR */}
