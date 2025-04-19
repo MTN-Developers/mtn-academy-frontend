@@ -2,12 +2,6 @@
 'use client';
 import Script from 'next/script';
 
-declare global {
-  interface Window {
-    ATL_JQ_PAGE_PROPS: any;
-    $: any;
-  }
-}
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { VideoPlayer } from '@/app/components/ui/course/VideoPlayer';
