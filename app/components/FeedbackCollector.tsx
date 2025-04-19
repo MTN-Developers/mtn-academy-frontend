@@ -36,8 +36,8 @@ export default function FeedbackCollector({ pathname }: { pathname: string }) {
       fieldValues: () => ({
         email: user?.email, // <-- use the email from Redux state
         fullname: `${user?.name}`,
-        description: 'description',
-        summary: 'summary',
+        // description: 'description',
+        // summary: 'summary',
         recordWebInfo: '1',
         recordWebInfoConsent: ['1'],
       }),
@@ -48,11 +48,6 @@ export default function FeedbackCollector({ pathname }: { pathname: string }) {
   const handleOpenCollector = () => {
     console.log('clicked');
 
-    if (collectorDialog.current) {
-      collectorDialog.current();
-    } else {
-      console.warn('Issue‑collector script not ready yet.');
-    }
     const dialog = collectorDialog.current ?? window.__ATL_SHOW_COLLECTOR__;
     if (dialog) dialog();
     else console.warn('Issue‑collector script not ready yet.');
@@ -69,7 +64,7 @@ export default function FeedbackCollector({ pathname }: { pathname: string }) {
       />
 
       {/* --- your form controls --- */}
-      <button aria-braillelabel="open issue collector dialog" onClick={handleOpenCollector}>
+      <button title="Submit Feedback" onClick={handleOpenCollector}>
         <Image className="w-[25px]" src={complaintsIcon} alt="complaints icon" />
       </button>
     </>
