@@ -1,18 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import Script from 'next/script';
-
-declare global {
-  interface Window {
-    ATL_JQ_PAGE_PROPS: any;
-    $: any;
-  }
-}
+// import Script from 'next/script';
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 // import { LockKeyhole } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { getLangDir } from 'rtl-detect';
 import { PathDetailsSkeleton } from '@/app/components/ui/home/PathDetailsSkeleton';
@@ -25,17 +18,19 @@ import basicAr from '@/public/images/basicAr.png';
 import basicEn from '@/public/images/basicEn.png';
 import SidebarSemester from '@/app/components/common/SidebarSemester';
 import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
-import complaintsIcon from '@/public/icons/complaints.svg';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 import CalendarComp from '@/app/components/ui/calendar/CalendarComp';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/lib/redux/store';
+import FeedbackCollector from '@/app/components/FeedbackCollector';
+// import { useSelector } from 'react-redux';
+// import { RootState } from '@/app/lib/redux/store';
 
 const SemesterPage = () => {
   const { slug } = useParams();
   const { data, isLoading, error } = useSemesterDetails(slug as string);
   const semesterDetails = data;
-  const { user } = useSelector((state: RootState) => state.auth);
+  const pathname = usePathname();
+
+  // const { user } = useSelector((state: RootState) => state.auth);
 
   // console.log('ffffff', semesterDetails);
 
@@ -56,46 +51,8 @@ const SemesterPage = () => {
   }
   const discount = semesterDetails && ((semesterDetails.price - semesterDetails.price_after_discount) / 100).toFixed(0);
 
-  function jQuery(selector: string) {
-    if (typeof window !== 'undefined' && window.$) {
-      return window.$(selector);
-    }
-    return null;
-  }
-
   return (
     <>
-      {/* Add jQuery and Atlassian Collector Scripts */}
-      <Script src="https://code.jquery.com/jquery-3.6.0.min.js" strategy="beforeInteractive" crossOrigin="anonymous" />
-      <Script
-        src="https://managethenow.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/xghl7j/b/3/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=ar-eg&collectorId=98474ad5"
-        strategy="afterInteractive"
-        onLoad={() => {
-          window.ATL_JQ_PAGE_PROPS = $.extend(window.ATL_JQ_PAGE_PROPS, {
-            triggerFunction: function (showCollectorDialog) {
-              jQuery('#myCustomTrigger').click(function (e) {
-                e.preventDefault();
-                window.ATL_JQ_PAGE_PROPS.fieldValues.email = user?.email;
-                window.ATL_JQ_PAGE_PROPS.fieldValues.fullname = user?.name;
-                // window.ATL_JQ_PAGE_PROPS.fieldValues.description = 'description';
-                // window.ATL_JQ_PAGE_PROPS.fieldValues.summary = 'summary';
-                showCollectorDialog();
-              });
-            },
-            fieldValues: function () {
-              return {
-                email: user?.email,
-                recordWebInfo: '1',
-                recordWebInfoConsent: ['1'],
-              };
-            },
-          });
-        }}
-      />
-
-      {/* Hidden email input - replace value with dynamic user email */}
-      <input type="hidden" id="email" value="user@example.com" />
-
       {semesterDetails && (
         <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
           <BreadcrumbFragment
@@ -129,9 +86,7 @@ const SemesterPage = () => {
                     <div className="flex items-center gap-4">
                       {/* here should go the complaints and suggestions icon */}
                       {/* Updated complaints icon with trigger */}
-                      <a href="#" id="myCustomTrigger" className="cursor-pointer">
-                        <Image className="w-[25px]" src={complaintsIcon} alt="complaints icon" />
-                      </a>
+                      <FeedbackCollector pathname={pathname} />
 
                       <ShareButton
                         title="Share this semester"
