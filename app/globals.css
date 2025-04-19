@@ -254,3 +254,60 @@
 .zoom-container {
   padding-top: 10rem !important;
 }
+
+@keyframes ping-slow {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+.coachmask {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: rgba(0, 0, 0, 0.6);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  /* ↓ transparent circular hole */
+  --r: 120px; /* fallback if JS vars fail */
+  -webkit-mask: radial-gradient(
+    circle var(--r) at var(--cx) var(--cy),
+    transparent 0,
+    transparent calc(var(--r) - 1px),
+    black calc(var(--r) + 1px)
+  );
+  mask: radial-gradient(
+    circle var(--r) at var(--cx) var(--cy),
+    transparent 0,
+    transparent calc(var(--r) - 1px),
+    black calc(var(--r) + 1px)
+  );
+}
+
+/* globals.css (or tailwind.css) */
+@keyframes ping-slow {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.8;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+.animate-ping-slow {
+  animation: ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+}

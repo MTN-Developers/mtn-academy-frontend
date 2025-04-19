@@ -64,7 +64,12 @@ export default function FeedbackCollector({ pathname }: { pathname: string }) {
       />
 
       {/* --- your form controls --- */}
-      <button title="Submit Feedback" onClick={handleOpenCollector}>
+      <button
+        id="feedback-trigger"
+        className="relative z-[10000] bg-white p-[8px] shadow-sm rounded-lg " // ⬅️ add this (or any value > 9999)
+        title="Submit Feedback"
+        onClick={handleOpenCollector}
+      >
         <Image className="w-[25px]" src={complaintsIcon} alt="complaints icon" />
       </button>
     </>
