@@ -27,6 +27,7 @@ import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExer
 // import { useSelector } from 'react-redux';
 // import { RootState } from '@/app/lib/redux/store';
 import FeedbackCollector from '@/app/components/FeedbackCollector';
+// import Coachmark from '@/app/components/Coachmark';
 
 const CoursePage = () => {
   const { slug } = useParams();
@@ -94,6 +95,8 @@ const CoursePage = () => {
           semesterId={semesterDetails.id}
           courseName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
         />
+
+        {/* <Coachmark targetId="feedback-trigger" /> */}
 
         <div className="w-full p-4 px-4 max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
