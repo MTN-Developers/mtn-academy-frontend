@@ -44,6 +44,8 @@ export default async function RootLayout({ children }: RootLayoutProps) {
 
   return (
     <html lang={locale} dir={direction}>
+      {/* Atlassian Issue‑Collector (depends on jQuery internally) */}
+
       <body className={`${poppins.variable} ${cairo.variable}`}>
         <Providers locale={locale}>{children}</Providers>
       </body>
