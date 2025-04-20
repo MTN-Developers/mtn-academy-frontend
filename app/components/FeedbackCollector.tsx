@@ -1,75 +1,83 @@
-/* app/components/FeedbackCollector.tsx (or anywhere in your project) */
+/* app/components/FeedbackCollector.tsx */
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Script from 'next/script';
 import { useSelector } from 'react-redux';
 import { RootState } from '../lib/redux/store';
 import Image from 'next/image';
 import complaintsIcon from '@/public/icons/complaints.svg';
 
-/* ──────────────────────────────────────────────────────────
-   Extend the Window type so TypeScript knows about the
-   globals Atlassian injects                                          */
+const STORAGE_KEY = 'feedback-coachmark-dismissed'; // shared with Coachmark
 
 export default function FeedbackCollector({ pathname }: { pathname: string }) {
-  /* local state for the email field */
-  /** will hold Atlassian’s “open the dialog” callback */
   const collectorDialog = useRef<(() => void) | null>(null);
-  const { user } = useSelector((state: RootState) => state.auth); // Assuming you have a Redux store set up
+  const { user } = useSelector((s: RootState) => s.auth);
 
-  /* ----------------------------------------------------------
-     1.  Build ATL_JQ_PAGE_PROPS *before* the collector loads
-         (runs once on mount, then updates when `email` changes)
-     2.  Every time React re‑renders we overwrite fieldValues
-         so the latest email always reaches Jira              */
+  /* ───────────────────────────────────────
+     Tooltip visible only if the flag not set */
+  const [showTip, setShowTip] = useState(false);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (!localStorage.getItem(STORAGE_KEY)) setShowTip(true);
+  }, []);
+
+  /* ───────────────────────────────────────
+     Build Atlassian props */
   useEffect(() => {
     window.ATL_JQ_PAGE_PROPS = {
-      /* this is called BY Atlassian right after it loads
-         – they hand us their showCollectorDialog function     */
       triggerFunction(showDialog) {
-        window.__ATL_SHOW_COLLECTOR__ = showDialog; // persist across pages
+        window.__ATL_SHOW_COLLECTOR__ = showDialog;
         collectorDialog.current = showDialog;
       },
-      /* default values Jira should pre‑fill when the dialog
-         actually opens                                         */
       fieldValues: () => ({
-        email: user?.email, // <-- use the email from Redux state
+        email: user?.email,
         fullname: `${user?.name}`,
-        // description: 'description',
-        // summary: 'summary',
         recordWebInfo: '1',
         recordWebInfoConsent: ['1'],
       }),
     };
-  }, [user?.name, user?.email, pathname]); // <-- add `pathname` to the dependency array
+  }, [user?.name, user?.email, pathname]);
 
-  /* -------------------------------------------------- */
+  /* ───────────────────────────────────────
+     Open collector + hide tooltip */
   const handleOpenCollector = () => {
-    console.log('clicked');
+    // hide tooltip forever
+    localStorage.setItem(STORAGE_KEY, '1');
+    setShowTip(false);
 
     const dialog = collectorDialog.current ?? window.__ATL_SHOW_COLLECTOR__;
-    if (dialog) dialog();
-    else console.warn('Issue‑collector script not ready yet.');
+    dialog?.();
   };
 
-  /*                      UI                           */
+  /* ─────────────────────────────────────── */
   return (
     <>
-      {/* Atlassian Issue‑Collector (depends on jQuery internally) */}
+      {/* Atlassian Issue‑Collector deps */}
       <Script src="https://code.jquery.com/jquery-3.6.0.min.js" strategy="beforeInteractive" />
       <Script
         src="https://managethenow.atlassian.net/s/d41d8cd98f00b204e9800998ecf8427e-T/xghl7j/b/3/c95134bc67d3a521bb3f4331beb9b804/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?locale=ar-eg&collectorId=98474ad5"
         strategy="afterInteractive"
       />
 
-      {/* --- your form controls --- */}
+      {/* Button + one‑time tooltip */}
       <button
         id="feedback-trigger"
-        className="relative z-[10000] bg-white p-[8px] shadow-sm rounded-lg " // ⬅️ add this (or any value > 9999)
-        title="Submit Feedback"
         onClick={handleOpenCollector}
+        className="relative z-[10000] bg-white p-2 shadow-sm rounded-lg"
+        title="Submit Feedback"
       >
+        {/* tooltip */}
+        {showTip && (
+          <span
+            className="absolute top-2  right-[116px] translate-x-1/2 whitespace-nowrap
+                       bg-white text-black text-sm rounded py-1 px-2
+                       shadow-lg animate-fade "
+          >
+            للمقترحات و الشكاوي
+          </span>
+        )}
+
         <Image className="w-[25px]" src={complaintsIcon} alt="complaints icon" />
       </button>
     </>
