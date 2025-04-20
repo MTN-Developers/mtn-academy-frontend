@@ -1,0 +1,13 @@
+{
+  "name": "MTN Institute",
+  "short_name": "MTN",
+  "description": "MTN Institute is a platform for learning and sharing knowledge about the MTN ecosystem.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#f2f2f2",
+  "background_color": "#07519c",
+  "icons": [
+    { "src": "/images/mtn-logo.svg", "sizes": "192x192", "type": "image/svg" },
+    { "src": "/images/mtn-logo.svg", "sizes": "512x512", "type": "image/svg" }
+  ]
+}
