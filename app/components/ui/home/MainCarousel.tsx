@@ -9,28 +9,32 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 // import saleImg from "@/public/images/sale-slide.svg";
 import { cn } from '@/lib/utils';
-import tamahy from '@/public/images/tamahy.png';
-import tamahyMob from '@/public/images/TamahiMob.png';
+import tamahy from '@/public/images/tamahy2.png';
+import tamahyMob from '@/public/images/tamahyMob2.png';
 import lucher from '@/public/images/LuscherOffer.png';
 import lucherMob from '@/public/images/luscherMob.png';
 import epm from '@/public/images/EBMOffer.png';
 import epmMob from '@/public/images/EBMMob.png';
+import Link from 'next/link';
 
 const slides = [
   {
     id: 1,
     image: tamahy,
     imageMob: tamahyMob,
+    link: 'https://managethenow.com/main-identification/',
   },
   {
     id: 2,
     image: lucher,
     imageMob: lucherMob,
+    link: '#',
   },
   {
     id: 3,
     image: epm,
     imageMob: epmMob,
+    link: '#',
   },
 ];
 
@@ -65,20 +69,22 @@ export function MainCarousel({ direction }: { direction: 'ltr' | 'rtl' }) {
         {slides.map(slide => (
           <SwiperSlide key={slide.id}>
             <div className="relative  w-full h-[400px] md:h-[300px] rounded-lg overflow-hidden">
-              <Image
-                src={slide.image}
-                alt="carousel background"
-                fill
-                className="hidden md:block object-contain w-full"
-                priority
-              />
-              <Image
-                src={slide.imageMob}
-                alt="carousel background"
-                fill
-                className="md:hidden block object-contain w-full"
-                priority
-              />
+              <Link href={slide.link} target="_blank">
+                <Image
+                  src={slide.image}
+                  alt="carousel background"
+                  fill
+                  className="hidden md:block object-contain w-full"
+                  priority
+                />
+                <Image
+                  src={slide.imageMob}
+                  alt="carousel background"
+                  fill
+                  className="md:hidden block object-contain w-full"
+                  priority
+                />
+              </Link>
             </div>
           </SwiperSlide>
         ))}
