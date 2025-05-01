@@ -6,7 +6,7 @@ import { Separator } from '@/components/ui/separator';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { format } from 'date-fns';
-import { DownloadIcon } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import doc from '@/public/icons/Doc.png';
 
 interface IProps {
@@ -34,15 +34,15 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
     return <div>Error</div>;
   }
 
-  const handleDownloadAll = () => {
-    if (!materials || materials.data.length === 0) return;
+  // const handleDownloadAll = () => {
+  //   if (!materials || materials.data.length === 0) return;
 
-    materials.data.forEach(material => {
-      const fileUrl = locale === 'en' ? material.file_en : material.file_ar;
-      const fileName = locale === 'en' ? material.title_en : material.title_ar;
-      downloadFile(fileUrl, fileName);
-    });
-  };
+  //   materials.data.forEach(material => {
+  //     const fileUrl = locale === 'en' ? material.file_en : material.file_ar;
+  //     const fileName = locale === 'en' ? material.title_en : material.title_ar;
+  //     downloadFile(fileUrl, fileName);
+  //   });
+  // };
 
   const handleDownloadSingle = material => {
     const fileUrl = locale === 'en' ? material.file_en : material.file_ar;
@@ -53,6 +53,7 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
   const downloadFile = (url: string, fileName: string) => {
     const link = document.createElement('a');
     link.href = url;
+    link.target = '_blank';
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
@@ -76,9 +77,6 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
                   {locale === 'en' ? courseDetails.name_en : courseDetails.name_ar}
                 </h2>
               </div>
-              <Button onClick={handleDownloadAll} className="bg-blue-600  hover:bg-blue-700">
-                {locale === 'en' ? 'Download All' : 'تنزيل الكل'} <DownloadIcon className="ml-2 h-4 w-4" />
-              </Button>
             </div>
 
             <div className="space-y-1">
@@ -98,7 +96,7 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
                       className="text-blue-600 text-sm lg:text-lg hover:text-blue-700 hover:bg-blue-50"
                       onClick={() => handleDownloadSingle(material)}
                     >
-                      {locale === 'en' ? 'Download' : 'تنزيل'} <DownloadIcon className="ml-2 h-8 w-8" />
+                      {locale === 'en' ? 'View' : 'عرض'} <Eye className="ml-2 h-8 w-8" />
                     </Button>
                   </div>
                   {index < materials.data.length - 1 && <Separator className="my-1" />}
