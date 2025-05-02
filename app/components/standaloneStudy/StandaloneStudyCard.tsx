@@ -13,10 +13,7 @@ const StandaloneStudyCard = ({ study }: Props) => {
   const param = useParams();
   const locale = param.locale as string;
   return (
-    <div
-      key={study.id}
-      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
-    >
+    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
       {study.banner_ar && study.banner_en && (
         <a href="#">
           <Image className="rounded-t-lg" src={locale === 'ar' ? study.banner_ar : study.banner_en} alt="" />
