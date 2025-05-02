@@ -1,0 +1,34 @@
+'use client';
+
+import { useCallback } from 'react';
+import axiosInstance from '../lib/axios/instance';
+import { FreeStudiesResponse } from '../types/freeStudy';
+import { useQuery } from '@tanstack/react-query';
+
+type Props = {
+  slug?: string;
+  limit?: number;
+  page?: number;
+};
+
+const useGetAllFreeStudies = ({ slug, limit = 2, page = 1 }: Props) => {
+  const fetchAllFreeStudies = useCallback(async () => {
+    const baseUrl = '/free-study';
+    const params = new URLSearchParams({
+      limit: limit.toString(),
+      page: page.toString(),
+    });
+
+    if (slug) params.append('slug', slug);
+
+    const response = await axiosInstance.get(`${baseUrl}?${params.toString()}`);
+    return response.data as FreeStudiesResponse;
+  }, [slug, limit, page]);
+
+  return useQuery({
+    queryKey: ['free-studies', slug, limit, page],
+    queryFn: fetchAllFreeStudies,
+  });
+};
+
+export default useGetAllFreeStudies;
