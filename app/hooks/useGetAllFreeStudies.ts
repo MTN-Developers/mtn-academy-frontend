@@ -19,9 +19,7 @@ const useGetAllFreeStudies = ({ slug, limit = 2, page = 1 }: Props) => {
       page: page.toString(),
     });
 
-    if (slug) params.append('slug', slug);
-
-    const response = await axiosInstance.get(`${baseUrl}?${params.toString()}`);
+    const response = await axiosInstance.get(`${baseUrl}${slug ? `/slug/${slug}` : `?${params.toString()}`}`);
     return response.data as FreeStudiesResponse;
   }, [slug, limit, page]);
 
