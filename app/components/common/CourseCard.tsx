@@ -1,9 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
-// import { ICourseCard } from "../ui/home/FreeStudiesComp";
 import { TruncatedText } from './TruncatedText';
-// import { Heart, User } from 'lucide-react';
-// import { Course } from '@/app/types/course';
+
 import { SemesterDetails } from '@/app/types/semester';
 import Link from 'next/link';
 interface SemesterCardProps {
@@ -12,11 +10,6 @@ interface SemesterCardProps {
 }
 
 const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
-  // const discountedPrice = course.pricing.discountPercentage
-  //   ? course.pricing.originalPrice *
-  //     (1 - course.pricing.discountPercentage / 100)
-  //   : course.pricing.originalPrice;
-
   const routingLink =
     semester.id === '20d67b1a-0d30-4d77-9cfe-efbbd3c8c611' ? `dashboard/semester/${semester.id}` : '#';
 
