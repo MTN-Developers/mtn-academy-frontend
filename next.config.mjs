@@ -48,6 +48,7 @@ const nextConfig = {
       's3.amazonaws.com', // S3 domain
       'res.cloudinary.com',
       'via.placeholder.com', // placeholder domain
+      'images.therapygym.online',
     ],
     remotePatterns: [
       {
