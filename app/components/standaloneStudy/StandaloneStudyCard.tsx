@@ -16,12 +16,18 @@ const StandaloneStudyCard = ({ study }: Props) => {
   return (
     <Link
       href={`/dashboard/free-study/${study.slug}`}
-      className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700"
+      className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
     >
       {study.banner_ar && study.banner_en && (
-        <Link href={`${locale}/dashboard/free-study/${study.slug}`}>
-          <Image className="rounded-t-lg" src={locale === 'ar' ? study.banner_ar : study.banner_en} alt="" />
-        </Link>
+        <div className="relative h-48">
+          <Image
+            className="rounded-t-lg"
+            src={locale === 'ar' ? study.banner_ar : study.banner_en}
+            alt=""
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       )}
       <div className="p-5">
         <a href="#">
