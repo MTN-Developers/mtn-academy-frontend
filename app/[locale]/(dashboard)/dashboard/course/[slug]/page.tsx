@@ -226,7 +226,12 @@ const CoursePage = () => {
 
             {semesterDetails.is_purchased === false ? (
               <>
-                <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
+                <SidebarSemester
+                  paymentLink={`/dashboard/semester/${semesterDetails.id}/payment`}
+                  discount={discount}
+                  semesterDetails={semesterDetails}
+                  tCourse={tCourse}
+                />
               </>
             ) : (
               <>

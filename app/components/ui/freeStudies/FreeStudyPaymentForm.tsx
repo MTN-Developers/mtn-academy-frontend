@@ -14,10 +14,9 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { paymentSchema } from '@/lib/validations';
 import axiosInstance from '@/app/lib/axios/instance';
-import { SemesterDetails } from '@/app/types/semester';
 import { FreeStudyCourse } from '@/app/types/freeStudy';
 
-const SemesterPaymentForm = ({ semester }: { type?: string; semester: SemesterDetails | FreeStudyCourse }) => {
+const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => {
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
@@ -37,8 +36,8 @@ const SemesterPaymentForm = ({ semester }: { type?: string; semester: SemesterDe
 
     try {
       const { data: CreateIntent } = await axiosInstance.post('/transaction', {
-        item_id: semester.id,
-        type: 'semester',
+        item_id: freeStudy.id,
+        type: 'course',
       });
 
       const { error } = await stripe.confirmCardPayment(CreateIntent?.data?.clientSecret, {
@@ -56,7 +55,7 @@ const SemesterPaymentForm = ({ semester }: { type?: string; semester: SemesterDe
       } else {
         setLoading(false);
         toast.success('تم الدفع بنجاح');
-        router.push(`/dashboard/semester/${semester.id}`);
+        router.push(`/dashboard/free-study/${freeStudy.slug}`);
       }
     } catch (error) {
       console.log(error);
@@ -151,4 +150,4 @@ const SemesterPaymentForm = ({ semester }: { type?: string; semester: SemesterDe
   );
 };
 
-export default SemesterPaymentForm;
+export default FreeStudyPaymentForm;

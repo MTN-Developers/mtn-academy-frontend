@@ -67,6 +67,7 @@ export type FreeStudiesData = {
 };
 
 export type FreeStudiesResponse = ApiEnvelope<FreeStudiesData>;
+export type FreeStudyResponse = ApiEnvelope<{ data: FreeStudyCourse }>;
 
 /* ---------------------------------------------------------- */
 /* Example usage                                              */
