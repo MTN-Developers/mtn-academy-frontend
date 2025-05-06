@@ -244,7 +244,7 @@ export default function LoginPage() {
             </div>
 
             {/* Terms and Conditions */}
-            <div>
+            <div className="w-full  text-center flex items-center justify-center">
               <div className="flex items-center gap-2">
                 {/* If you need a real checkbox, uncomment and adjust your schema */}
                 {/* <input
