@@ -63,7 +63,7 @@ export const ChaptersFreeStudyAccordion = ({
       if (onVideoSelect) {
         onVideoSelect(video, chapter);
       }
-      router.push(`/dashboard/course/${courseDetails?.slug}/watch`);
+      router.push(`/dashboard/free-study/${courseDetails?.slug}/watch`);
     }
   };
 
@@ -185,6 +185,7 @@ export const ChaptersFreeStudyAccordion = ({
                         isRTL={isRTL}
                         currentVideoId={currentVideoId}
                         courseDetails={courseDetails}
+                        type={'free-study'}
                       />
                     ))}
                   </div>

@@ -28,6 +28,7 @@ export function middleware(req: NextRequest) {
     'request-reset-password',
     'policy',
     'dashboard/free-study/public',
+    'dashboard/free-study/public/payment',
   ];
 
   // Check if current route is public
