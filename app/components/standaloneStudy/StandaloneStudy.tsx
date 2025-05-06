@@ -46,7 +46,7 @@ const StandaloneStudy = ({ isPublic }: props) => {
 
   if (isError) {
     console.log(error);
-    return <>Error...</>;
+    // return <>Error...</>;
   }
 
   const hasMore = currentPage < totalPages;

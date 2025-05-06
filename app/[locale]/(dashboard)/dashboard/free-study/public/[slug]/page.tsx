@@ -14,7 +14,7 @@ import { ErrorState } from '@/app/components/common/ErrorState';
 // import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 // import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
 // import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { ShareButton } from '@/app/components/common/ShareButton';
 // import basicAr from '@/public/images/basicAr.png';
 // import basicEn from '@/public/images/basicEn.png';
@@ -26,14 +26,14 @@ import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 // import { RootState } from '@/app/lib/redux/store';
 import FeedbackCollector from '@/app/components/FeedbackCollector';
 import SidebarFreeStudy from '@/app/components/ui/freeStudies/SidebarFreeStudy';
-import { ChaptersFreeStudyAccordion } from '@/app/components/ui/freeStudies/ChaptersFreeStudyAccordion';
+// import { ChaptersFreeStudyAccordion } from '@/app/components/ui/freeStudies/ChaptersFreeStudyAccordion';
 import UseGetFreeStudy from '@/app/hooks/UseGetFreeStudy';
 // import Coachmark from '@/app/components/Coachmark';
 
 const FreeStudyPage = () => {
   const { slug } = useParams();
-  const [showDialog, setShowDialog] = useState(false);
-  const [_goToPayment, setGoToPayment] = useState(false);
+  // const [showDialog, setShowDialog] = useState(false);
+  // const [_goToPayment, setGoToPayment] = useState(false);
   // const { data, isLoading, error, isError } = useCourseDetails(slug as string);
   const { data, isLoading, error, isError } = UseGetFreeStudy({ slug: slug as string, isPublic: true });
 
@@ -64,15 +64,15 @@ const FreeStudyPage = () => {
   const isRTL = direction === 'rtl';
 
   // Move the dialog logic to useEffect so it only runs when dependencies change
-  useEffect(() => {
-    if (courseDetails?.is_locked === true) {
-      setGoToPayment(true);
-      setShowDialog(false);
-      // console.log('gotopayment', goToPayment);
-    } else {
-      setShowDialog(false);
-    }
-  }, [courseDetails?.is_locked]);
+  // useEffect(() => {
+  //   if (courseDetails?.is_locked === true) {
+  //     setGoToPayment(true);
+  //     setShowDialog(false);
+  //     // console.log('gotopayment', goToPayment);
+  //   } else {
+  //     setShowDialog(false);
+  //   }
+  // }, [courseDetails?.is_locked]);
 
   if (isLoading) {
     return <PathDetailsSkeleton />;
@@ -191,7 +191,9 @@ const FreeStudyPage = () => {
                       <TabsTrigger value="information" className="tabs-trigger">
                         {tTabs('information')}
                       </TabsTrigger>
-                      <TabsTrigger value="playlist" className="tabs-trigger">
+                      <TabsTrigger value="playlist" className="tabs-trigger" disabled={true}>
+                        {courseDetails.is_locked && <LockKeyhole size={15} />}
+
                         {tTabs('playlist')}
                       </TabsTrigger>
                       <TabsTrigger value="materials" disabled={courseDetails.is_locked} className="tabs-trigger">
@@ -221,14 +223,14 @@ const FreeStudyPage = () => {
                       {/* Add more course details here */}
                     </div>
                   </TabsContent>
-                  <TabsContent value="playlist" className="mt-6">
+                  {/* <TabsContent value="playlist" className="mt-6">
                     <ChaptersFreeStudyAccordion
                       showDialog={showDialog}
                       courseDetails={courseDetails}
                       innerBackground="bg-[#F7F7F7CF]"
                       isPublic={true}
                     />
-                  </TabsContent>
+                  </TabsContent> */}
                   {/* <TabsContent value="materials" className="mt-6">
                     <MaterialsComp courseDetails={courseDetails} />
                   </TabsContent> */}
@@ -253,7 +255,7 @@ const FreeStudyPage = () => {
 
                 {courseDetails.price_after_discount && (
                   <SidebarFreeStudy
-                    paymentLink={`/dashboard/free-study/${courseDetails.slug}/payment`}
+                    paymentLink={`/dashboard/free-study/public/payment/${courseDetails.slug}`}
                     discount={discount}
                     freeStudyDetail={courseDetails}
                     tCourse={tCourse}

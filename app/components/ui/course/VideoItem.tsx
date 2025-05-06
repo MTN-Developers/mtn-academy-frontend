@@ -18,6 +18,7 @@ interface IProps {
   isRTL: boolean;
   currentVideoId: string | undefined;
   courseDetails: CourseDetailsResponse['data'] | FreeStudyCourse;
+  type?: string;
 }
 
 const VideoItem = ({ video, courseDetails, chapter, currentVideoId, isRTL, formatDuration, handleRouting }: IProps) => {

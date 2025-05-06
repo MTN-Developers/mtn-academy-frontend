@@ -15,12 +15,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { paymentSchema } from '@/lib/validations';
 import axiosInstance from '@/app/lib/axios/instance';
 import { FreeStudyCourse } from '@/app/types/freeStudy';
+import { useQueryClient } from '@tanstack/react-query';
 
 const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => {
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   // const isFreeStudy = type === 'free-study';
   // const isSemester = type === 'semester';
@@ -54,6 +56,11 @@ const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
         });
       } else {
         setLoading(false);
+
+        queryClient.invalidateQueries({
+          queryKey: ['free-study', freeStudy.slug],
+        });
+
         toast.success('تم الدفع بنجاح');
         router.push(`/dashboard/free-study/${freeStudy.slug}`);
       }

@@ -18,7 +18,7 @@ const FreeStudyPaymentInfo = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
       style={{
         background: 'rgb(245 248 251 / 59%)',
       }}
-      className="w-full m-auto rounded-2xl   h-full lg:w-[432px] max-w-full p-10 shrink-0"
+      className="w-full m-auto rounded-2xl   h-fit lg:w-[432px] max-w-full p-10 shrink-0"
     >
       <Card className="mb-6 min-h-[108px] h-fit">
         <CardContent className="flex items-center gap-[13px] p-[10px]">
