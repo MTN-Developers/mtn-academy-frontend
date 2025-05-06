@@ -18,11 +18,11 @@ const StandaloneStudyCard = ({ study }: Props) => {
       href={`/dashboard/free-study/${study.slug}`}
       className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
     >
-      {study.banner_ar && study.banner_en && (
+      {study.logo_ar && study.logo_en && (
         <div className="relative h-48">
           <Image
             className="rounded-t-lg"
-            src={locale === 'ar' ? study.banner_ar : study.banner_en}
+            src={locale === 'ar' ? study.logo_ar : study.logo_en}
             alt=""
             layout="fill"
             objectFit="cover"

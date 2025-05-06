@@ -11,13 +11,13 @@ import { getLangDir } from 'rtl-detect';
 import { PathDetailsSkeleton } from '@/app/components/ui/home/PathDetailsSkeleton';
 import { NotFoundState } from '@/app/components/common/NotFoundState';
 import { ErrorState } from '@/app/components/common/ErrorState';
-import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
+// import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { useCourseDetails } from '@/app/hooks/useCourseDetails'; // We'll create this
-import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
+// import { ChaptersAccordion } from '@/app/components/ui/course/ChaptersAccordion';
 import { useEffect, useState } from 'react';
 import { ShareButton } from '@/app/components/common/ShareButton';
-import basicAr from '@/public/images/basicAr.png';
-import basicEn from '@/public/images/basicEn.png';
+// import basicAr from '@/public/images/basicAr.png';
+// import basicEn from '@/public/images/basicEn.png';
 // import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
 import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
@@ -26,6 +26,7 @@ import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExer
 // import { RootState } from '@/app/lib/redux/store';
 import FeedbackCollector from '@/app/components/FeedbackCollector';
 import SidebarFreeStudy from '@/app/components/ui/freeStudies/SidebarFreeStudy';
+import { ChaptersFreeStudyAccordion } from '@/app/components/ui/freeStudies/ChaptersFreeStudyAccordion';
 // import Coachmark from '@/app/components/Coachmark';
 
 const FreeStudyPage = () => {
@@ -88,11 +89,11 @@ const FreeStudyPage = () => {
   return (
     <>
       <div dir={direction} className="overflow-x-hidden bg-[#f2f2f2]">
-        <BreadcrumbFragment
+        {/* <BreadcrumbFragment
           semesterName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
           semesterId={courseDetails.id}
           courseName={isRTL ? courseDetails.name_ar : courseDetails.name_en}
-        />
+        /> */}
 
         {/* <Coachmark targetId="feedback-trigger" /> */}
 
@@ -137,7 +138,13 @@ const FreeStudyPage = () => {
                 <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
                   {/* {tCourse('noVideoAvailable')}
                    */}
-                  <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+                  <Image
+                    src={locale === 'ar' ? courseDetails.logo_ar : courseDetails.logo_en}
+                    className="w-full"
+                    alt="temp img"
+                    width={400}
+                    height={300}
+                  />
                 </div>
               </div>
               {/* {courseDetails.promotion_video_url && courseDetails.promotion_video_url.length > 20 ? (
@@ -204,7 +211,7 @@ const FreeStudyPage = () => {
                     </div>
                   </TabsContent>
                   <TabsContent value="playlist" className="mt-6">
-                    <ChaptersAccordion
+                    <ChaptersFreeStudyAccordion
                       showDialog={showDialog}
                       courseDetails={courseDetails}
                       innerBackground="bg-[#F7F7F7CF]"
