@@ -151,7 +151,10 @@
     "aboutUs": "من نحن",
     "contactUs": "اتصل بنا",
     "homePage": "الصفحة الرئيسية",
-    "copyright": "© {year} معهد MTN. جميع الحقوق محفوظة."
+    "copyright": "© {year} معهد MTN. جميع الحقوق محفوظة.",
+    "By signing up you agree to mtn": "",
+    "terms & Conditions": "الشروط والأحكام",
+    "privacy policy": "سياسة الخصوصية"
   },
   "PasswordResetRequestPage": {
     "Heading": "إعادة تعيين كلمة المرور",

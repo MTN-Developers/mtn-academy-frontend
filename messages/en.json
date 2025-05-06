@@ -141,7 +141,10 @@
     "aboutUs": "About US",
     "contactUs": "Contact US",
     "homePage": "Home Page",
-    "copyright": "© {year} MTN Institute Inc. All rights reserved."
+    "copyright": "© {year} MTN Institute Inc. All rights reserved.",
+    "By signing up you agree to mtn": "",
+    "terms & Conditions": "terms & Conditions",
+    "privacy policy": "privacy policy"
   },
   "PasswordResetRequestPage": {
     "Heading": "Reset Your Password",
