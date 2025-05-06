@@ -10,10 +10,11 @@ import { PracticalChapter, PracticalVideo } from '@/app/types/practicalEx';
 import { getLangDir } from 'rtl-detect';
 import DisplayIcon from '@/components/icons/DisplayIcon';
 import Link from 'next/link';
+import { FreeStudyCourse } from '@/app/types/freeStudy';
 // import { Dot } from 'lucide-react';
 
 interface IProps {
-  courseDetails: Course;
+  courseDetails: Course | FreeStudyCourse;
 }
 
 const PracticalExercisesChapters = ({ courseDetails }: IProps) => {

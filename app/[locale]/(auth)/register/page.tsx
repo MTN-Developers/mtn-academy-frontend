@@ -337,11 +337,11 @@ export default function RegisterPage() {
                 /> */}
                 <Label htmlFor="terms" className="text-xs text-center text-gray-500">
                   {t('By signing up you agree to mtn')}{' '}
-                  <Link href="/terms" className="text-blue-600 hover:underline">
+                  <Link href={`/${locale}/policy`} className="text-blue-600 hover:underline">
                     {t('terms & Conditions')}
                   </Link>{' '}
                   &{' '}
-                  <Link href="#" className="text-blue-600 hover:underline">
+                  <Link href={`/${locale}/policy`} className="text-blue-600 hover:underline">
                     {t('privacy policy')}
                   </Link>
                 </Label>
