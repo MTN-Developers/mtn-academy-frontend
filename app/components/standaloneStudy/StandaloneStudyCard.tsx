@@ -8,16 +8,14 @@ import React from 'react';
 
 type Props = {
   study: FreeStudyCourse;
+  link: string;
 };
 
-const StandaloneStudyCard = ({ study }: Props) => {
+const StandaloneStudyCard = ({ study, link }: Props) => {
   const param = useParams();
   const locale = param.locale as string;
   return (
-    <Link
-      href={`/dashboard/free-study/${study.slug}`}
-      className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white"
-    >
+    <Link href={link} className="rounded-lg my-1  cursor-pointer hover:shadow-2xl overflow-hidden shadow-lg bg-white">
       {study.logo_ar && study.logo_en && (
         <div className="relative h-48">
           <Image

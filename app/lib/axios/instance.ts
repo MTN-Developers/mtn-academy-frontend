@@ -8,6 +8,11 @@ const axiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BASE_URL,
 });
 
+export const axiosPublic = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL, // same API origin
+  headers: { Accept: 'application/json' },
+});
+
 axiosInstance.interceptors.request.use(
   async function (config: InternalAxiosRequestConfig) {
     if (config.headers) config.headers['Authorization'] = `Bearer ${getCookie('access_token')}`;

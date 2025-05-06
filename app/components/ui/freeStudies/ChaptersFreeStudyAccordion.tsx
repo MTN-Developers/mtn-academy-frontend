@@ -3,7 +3,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { useParams, useRouter } from 'next/navigation';
 import { getLangDir } from 'rtl-detect';
 import { PlaylistSkeleton } from '../../common/PlaylistSkeleton';
-import { CourseDetailsResponse } from '@/app/hooks/useCourseDetails';
+// import { CourseDetailsResponse } from '@/app/hooks/useCourseDetails';
 import videoLibrary from '@/public/icons/video-library.svg';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -20,6 +20,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { SemesterDetails } from '@/app/types/semester';
 import VideoItem from '../course/VideoItem';
+import { FreeStudyCourse } from '@/app/types/freeStudy';
 
 export const ChaptersFreeStudyAccordion = ({
   courseDetails,
@@ -29,8 +30,9 @@ export const ChaptersFreeStudyAccordion = ({
   noBackground = false,
   innerBackground,
   showDialog,
+  isPublic,
 }: {
-  courseDetails?: CourseDetailsResponse['data'];
+  courseDetails?: FreeStudyCourse;
   onVideoSelect?: (video: Video, chapter: Chapter) => void;
   currentChapterId?: string;
   currentVideoId?: string;
@@ -38,6 +40,7 @@ export const ChaptersFreeStudyAccordion = ({
   noBackground?: boolean;
   showDialog: boolean;
   innerBackground: 'bg-[#E7E7E7]' | 'bg-[#F7F7F7CF]';
+  isPublic?: boolean;
 }) => {
   const { locale } = useParams();
   const direction = getLangDir(locale as string);
@@ -64,10 +67,16 @@ export const ChaptersFreeStudyAccordion = ({
     }
   };
 
+  const handleRoutingPublic = () => {
+    if (isPublic) {
+      router.push(`/${locale}/dashboard/free-study/payment/${courseDetails?.slug}`);
+    }
+  };
+
   // Find and auto-open the chapter containing the current video
   useEffect(() => {
     if (currentVideoId && courseDetails) {
-      const chapterWithCurrentVideo = courseDetails.chapters.find(chapter =>
+      const chapterWithCurrentVideo = courseDetails?.chapters?.find(chapter =>
         chapter.videos?.some(video => video.id === currentVideoId),
       );
 
@@ -88,7 +97,7 @@ export const ChaptersFreeStudyAccordion = ({
   }
 
   // Sort chapters by their index property in ascending order
-  const sortedChapters = [...courseDetails.chapters].sort((a, b) => a.index - b.index);
+  const sortedChapters = [...(courseDetails.chapters ?? [])].sort((a, b) => a.index - b.index);
 
   return (
     <div
@@ -122,10 +131,12 @@ export const ChaptersFreeStudyAccordion = ({
       </Dialog>
 
       <div className="flex items-center gap-4">
-        <img
-          src={isRTL ? courseDetails.logo_ar : courseDetails.logo_en}
+        <Image
+          src={isRTL ? courseDetails.logo_ar ?? '/default-logo.png' : courseDetails.logo_en ?? '/default-logo.png'}
           className="w-auto h-9 rounded-lg"
           alt="course logo"
+          width={36}
+          height={36}
         />
         <h3 className="text-2xl font-normal">{isRTL ? courseDetails.name_ar : courseDetails.name_en}</h3>
       </div>
@@ -135,6 +146,7 @@ export const ChaptersFreeStudyAccordion = ({
           className={`space-y-4 ${
             !currentChapterId ? innerBackground : currentChapterId === chapter.id ? innerBackground : 'bg-transparent'
           } p-1 pr-4 rounded-[14px] my-4 shadow-none`}
+          onClick={handleRoutingPublic}
         >
           <Accordion
             type="single"

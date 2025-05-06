@@ -20,8 +20,8 @@ import { ShareButton } from '@/app/components/common/ShareButton';
 // import basicEn from '@/public/images/basicEn.png';
 // import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
-import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
-import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExercisesChapters';
+// import MaterialsComp from '@/app/components/ui/materials/MaterialsComp';
+// import PracticlaExercisesChapters from '@/app/components/ui/course/PracticlaExercisesChapters';
 // import { useSelector } from 'react-redux';
 // import { RootState } from '@/app/lib/redux/store';
 import FeedbackCollector from '@/app/components/FeedbackCollector';
@@ -34,7 +34,9 @@ const FreeStudyPage = () => {
   const { slug } = useParams();
   const [showDialog, setShowDialog] = useState(false);
   const [_goToPayment, setGoToPayment] = useState(false);
-  const { data, isLoading, error, isError } = UseGetFreeStudy({ slug: slug as string });
+  // const { data, isLoading, error, isError } = useCourseDetails(slug as string);
+  const { data, isLoading, error, isError } = UseGetFreeStudy({ slug: slug as string, isPublic: true });
+
   const courseDetails = data;
   const price = courseDetails?.price;
 
@@ -145,7 +147,7 @@ const FreeStudyPage = () => {
                    */}
                   <Image
                     src={
-                      isRTL
+                      locale === 'ar'
                         ? courseDetails.logo_ar ?? '/default-logo.png'
                         : courseDetails.logo_en ?? '/default-logo.png'
                     }
@@ -224,15 +226,16 @@ const FreeStudyPage = () => {
                       showDialog={showDialog}
                       courseDetails={courseDetails}
                       innerBackground="bg-[#F7F7F7CF]"
+                      isPublic={true}
                     />
                   </TabsContent>
-                  <TabsContent value="materials" className="mt-6">
+                  {/* <TabsContent value="materials" className="mt-6">
                     <MaterialsComp courseDetails={courseDetails} />
-                  </TabsContent>
-                  <TabsContent value="practicalExercises" className="mt-6">
-                    {/* here should go the practicalExercises videos */}
-                    <PracticlaExercisesChapters courseDetails={courseDetails} />
-                  </TabsContent>
+                  </TabsContent> */}
+                  {/* <TabsContent value="practicalExercises" className="mt-6"> */}
+                  {/* here should go the practicalExercises videos */}
+                  {/* <PracticlaExercisesChapters courseDetails={courseDetails} />
+                  </TabsContent> */}
                 </Tabs>
               </div>
             </div>
@@ -245,7 +248,7 @@ const FreeStudyPage = () => {
                   semesterDetails={semesterDetails}
                   tCourse={tCourse}
                   price={courseDetails.price}
-                  priceAfterDiscount={courseDetails.price_after_discount}
+                  priceAfterDiscount={courseDetails.price_after_discount ?? undefined}
                 /> */}
 
                 {courseDetails.price_after_discount && (

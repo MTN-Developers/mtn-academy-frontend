@@ -14,6 +14,7 @@ import OurDiplomas from '../Sitecomponents/common/home/OurDiplomas';
 import Navbar from '../Sitecomponents/layout/Navbar';
 import { MainCarousel } from '@/app/components/ui/home/MainCarousel';
 import { getLangDir } from 'rtl-detect';
+import StandaloneStudy from '../components/standaloneStudy/StandaloneStudy';
 
 export default function Page() {
   const params = useParams();
@@ -37,6 +38,7 @@ export default function Page() {
 
         <HomeContent />
         <FreeStudySection />
+        <StandaloneStudy isPublic={true} />
         {/* <FreeStudiesComp semesters={semesters} direction="ltr" /> */}
         <HomeBanner />
         <OurDiplomas />
