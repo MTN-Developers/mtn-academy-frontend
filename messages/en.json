@@ -1,6 +1,9 @@
 {
   "login": {
     "Nice to see you again": "Nice to see you again",
+    "By signing up you agree to mtn": "By signing up you agree to mtn",
+    "terms & Conditions": "terms & Conditions",
+    "privacy policy": "privacy policy",
     "email": {
       "label": "Email",
       "placeholder": "Enter your email"

@@ -243,6 +243,29 @@ export default function LoginPage() {
               </p>
             </div>
 
+            {/* Terms and Conditions */}
+            <div>
+              <div className="flex items-center gap-2">
+                {/* If you need a real checkbox, uncomment and adjust your schema */}
+                {/* <input
+                  type="checkbox"
+                  {...register("agreeToTerms")}
+                  id="terms"
+                  className="rounded border-gray-300"
+                /> */}
+                <Label htmlFor="terms" className="text-xs text-center text-gray-500">
+                  {t('By signing up you agree to mtn')}{' '}
+                  <Link href={`/${locale}/policy`} className="text-blue-600 hover:underline">
+                    {t('terms & Conditions')}
+                  </Link>{' '}
+                  &{' '}
+                  <Link href={`/${locale}/policy`} className="text-blue-600 hover:underline">
+                    {t('privacy policy')}
+                  </Link>
+                </Label>
+              </div>
+            </div>
+
             {/* Language switcher */}
             <div className="mt-4 text-center">
               <Link

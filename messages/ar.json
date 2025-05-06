@@ -1,6 +1,9 @@
 {
   "login": {
     "Nice to see you again": "سعداء بعودتك مجدداً",
+    "By signing up you agree to mtn": "بالتسجيل أنت توافق على",
+    "terms & Conditions": "الشروط والأحكام",
+    "privacy policy": "سياسة الخصوصية",
     "email": {
       "label": "البريد الإلكتروني",
       "placeholder": "أدخل بريدك الإلكتروني"

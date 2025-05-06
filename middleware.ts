@@ -21,7 +21,7 @@ export function middleware(req: NextRequest) {
   const isLocaleValid = supportedLocales.includes(locale);
 
   // Step 2: Define Public Routes
-  const publicRoutes = ['login', 'register', 'reset-password', 'request-reset-password'];
+  const publicRoutes = ['login', 'register', 'reset-password', 'request-reset-password', 'policy'];
 
   // Check if current route is public
   const isPublicRoute = publicRoutes.some(route => pathname.includes(`/${route}`));
