@@ -8,9 +8,10 @@ import { useParams } from 'next/navigation';
 import { format } from 'date-fns';
 import { Eye } from 'lucide-react';
 import doc from '@/public/icons/Doc.png';
+import { FreeStudyCourse } from '@/app/types/freeStudy';
 
 interface IProps {
-  courseDetails: Course;
+  courseDetails: Course | FreeStudyCourse;
 }
 
 const MaterialsComp = ({ courseDetails }: IProps) => {
@@ -72,7 +73,13 @@ const MaterialsComp = ({ courseDetails }: IProps) => {
           <CardContent className="p-4">
             <div className="flex justify-between items-center mb-4">
               <div className="flex justify-start gap-4 items-center">
-                <Image src={courseDetails.logo_en} alt="logo" width={24} height={24} className="rounded-md" />
+                <Image
+                  src={courseDetails.logo_en || '/default-logo.png'}
+                  alt="logo"
+                  width={24}
+                  height={24}
+                  className="rounded-md"
+                />
                 <h2 className="text-sm lg:text-lg font-medium">
                   {locale === 'en' ? courseDetails.name_en : courseDetails.name_ar}
                 </h2>

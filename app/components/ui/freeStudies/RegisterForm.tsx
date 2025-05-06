@@ -2,15 +2,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import bannerMob from '@/public/images/login-banner-mob-new.svg';
-import bannerWeb from '@/public/images/login-banner-web-new.svg';
+// import bannerMob from '@/public/images/login-banner-mob-new.svg';
+// import bannerWeb from '@/public/images/login-banner-web-new.svg';
 import mtnLogo from '@/public/images/mtn-logo.svg';
 // import googleIcon from '@/public/icons/google-icon.svg';
 import { Button } from '@/components/ui/button';
@@ -24,6 +24,10 @@ import axiosInstance from '@/app/lib/axios/instance';
 import { endpoints } from '@/app/utils/endpoints';
 import { AxiosError } from 'axios';
 import { useCheckPhone } from '@/app/hooks/useCheckPhone';
+import { useDispatch } from 'react-redux';
+import { login } from '@/app/lib/redux/features/authActions';
+import { AppDispatch } from '@/app/lib/redux/store';
+import { setCookie } from 'cookies-next';
 
 // Form schema
 interface RegisterFormData {
@@ -48,8 +52,14 @@ const schema = yup.object({
   gender: yup.string().oneOf(['male', 'female'], 'Please select a gender').required('Gender is required'),
 });
 
-export default function RegisterPage() {
+type props = {
+  setIsRegistered: (isRegistered: boolean) => void;
+  handleAuthSuccess: () => void;
+};
+
+export default function RegisterForm({ handleAuthSuccess, setIsRegistered }: props) {
   const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
   const [phoneData, setPhoneData] = useState<{
     phone: string;
     country: string;
@@ -58,7 +68,6 @@ export default function RegisterPage() {
     country: '',
   });
 
-  const router = useRouter();
   const t = useTranslations('register');
   const params = useParams();
   const locale = params.locale as string;
@@ -141,6 +150,8 @@ export default function RegisterPage() {
       }
 
       const response = await axiosInstance.post(endpoints.register, formattedData);
+      console.log('res', response);
+
       if (response.data.message === 'Success' || response.data.status === 201) {
         // Show success message
         toast.success(t('registration.success'));
@@ -149,16 +160,43 @@ export default function RegisterPage() {
         if (response.data.token) {
           localStorage.setItem('token', response.data.token);
         }
+        const email = formattedData.email;
+        const pass = formattedData.password;
+
+        const resultAction = await dispatch(login({ email: email, password: pass }));
+
+        if (login.fulfilled.match(resultAction)) {
+          toast.success('Login successful');
+          // Set cookies with appropriate options
+          setCookie('access_token', resultAction.payload.access_token, {
+            path: '/',
+          });
+          setCookie('refresh_token', resultAction.payload.refresh_token, {
+            path: '/',
+          });
+          setCookie('user', resultAction.payload.user, { path: '/' });
+
+          // if (package_id) {
+          //   try {
+          //     const { data } = await axiosInstance.post(
+          //       "/user-compensation-request",
+          //       {
+          //         package_id: package_id,
+          //       }
+          //     );
+          //     console.log(data);
+          //   } catch (e) {
+          //     console.log(e);
+          //   }
+          // }
+          // router.push("/"); // Redirect to home page
+          // router.replace(redirect ? `/${locale}${decodeURIComponent(redirect)}` : `/${locale}/dashboard`);
+          handleAuthSuccess();
+        } else {
+          toast.error(resultAction.payload as string);
+        }
 
         resetFormStates();
-
-        // Use window.location for navigation or Next.js router
-        try {
-          router.push(`/${locale}/login`);
-        } catch (routingError) {
-          console.error('Next.js routing failed, trying alternative:', routingError);
-          window.location.href = `/${locale}/login`;
-        }
       } else {
         throw new Error(response.data.message || t('registration.error'));
       }
@@ -210,28 +248,11 @@ export default function RegisterPage() {
   // };
 
   return (
-    <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="w-full h-full bg-white">
-      <div className="w-full h-screen flex justify-center items-center">
-        {/* Banner web */}
-        <div className="w-full h-full hidden lg:block bg-gray-400 overflow-hidden">
-          <Image src={bannerWeb} alt="banner web" className="w-full h-full object-cover" />
-        </div>
-
+    <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="w-full rounded-2xl bg-[#f4f6f8]">
+      <div className="w-full h-fit flex justify-center items-center">
         <div>
-          {/* Banner mob */}
-          <div className="block overflow-hidden relative lg:hidden w-full h-[360px]">
-            <Image src={bannerMob} alt="banner-mob" className="object-cover w-full" />
-            <div className="absolute bottom-4 p-4">
-              <Image src={mtnLogo} alt="mtn logo" />
-              <h2 className="font-bold mt-6">{t('Welcome onboard')}</h2>
-            </div>
-          </div>
-
           {/* Form body */}
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="lg:w-[456px]  max-h-screen overflow-y-scroll scrollbar-none  w-full p-4  lg:px-[48px]"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="lg:w-[456px]     w-full p-4  lg:px-[48px]">
             <div className="hidden lg:block">
               <Image src={mtnLogo} alt="mtn logo" />
               <h2 className="font-bold my-6">{t('Welcome onboard')}</h2>
@@ -373,9 +394,9 @@ export default function RegisterPage() {
             {/* Login link */}
             <p className="text-center text-sm">
               {t('Already have an account?')}{' '}
-              <Link href={`/${locale}/login`} className="text-blue-600 hover:underline">
+              <span onClick={() => setIsRegistered(true)} className="text-blue-600 cursor-pointer hover:underline">
                 {t('Login now')}
-              </Link>
+              </span>
             </p>
 
             {/* Language switcher */}

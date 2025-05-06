@@ -1,5 +1,7 @@
 // types/freeStudies.ts
 
+import { Chapter } from './video';
+
 /* ────────────────────────────────────────────────────────── */
 /* 1.  Elementary pieces                                     */
 /* ────────────────────────────────────────────────────────── */
@@ -45,6 +47,8 @@ export interface FreeStudyCourse {
   index: number;
   is_locked: boolean;
   is_completed: boolean;
+  chapters?: Chapter[];
+  type: 'course';
 }
 
 /* ────────────────────────────────────────────────────────── */
@@ -67,6 +71,7 @@ export type FreeStudiesData = {
 };
 
 export type FreeStudiesResponse = ApiEnvelope<FreeStudiesData>;
+export type FreeStudyResponse = ApiEnvelope<{ data: FreeStudyCourse }>;
 
 /* ---------------------------------------------------------- */
 /* Example usage                                              */

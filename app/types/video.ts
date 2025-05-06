@@ -50,4 +50,6 @@ export interface Course {
   semester_id: string;
   is_locked: boolean;
   is_completed: boolean;
+  price_after_discount?: number;
+  price?: number;
 }

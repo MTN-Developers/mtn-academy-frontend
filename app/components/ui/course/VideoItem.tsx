@@ -8,6 +8,7 @@ import { CheckCircle2, FileText } from 'lucide-react';
 import useGetAssigmentWithAnswers from '@/app/hooks/useGetAssigmentWithAnswers';
 import { CourseDetailsResponse } from '@/app/hooks/useCourseDetails';
 import { useParams, useRouter } from 'next/navigation';
+import { FreeStudyCourse } from '@/app/types/freeStudy';
 
 interface IProps {
   video: Video;
@@ -16,7 +17,8 @@ interface IProps {
   formatDuration: (duration: number) => string;
   isRTL: boolean;
   currentVideoId: string | undefined;
-  courseDetails: CourseDetailsResponse['data'];
+  courseDetails: CourseDetailsResponse['data'] | FreeStudyCourse;
+  type?: string;
 }
 
 const VideoItem = ({ video, courseDetails, chapter, currentVideoId, isRTL, formatDuration, handleRouting }: IProps) => {

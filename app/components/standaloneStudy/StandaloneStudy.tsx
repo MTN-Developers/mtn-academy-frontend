@@ -6,7 +6,11 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import StandaloneStudyCard from './StandaloneStudyCard';
 
-const StandaloneStudy = () => {
+type props = {
+  isPublic?: boolean;
+};
+
+const StandaloneStudy = ({ isPublic }: props) => {
   const param = useParams();
   const locale = param.locale as string;
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,6 +20,7 @@ const StandaloneStudy = () => {
   const { data, error, isError, isLoading, isFetching } = useGetAllFreeStudies({
     limit: 4,
     page: currentPage,
+    isPublic: isPublic,
   });
 
   useEffect(() => {
@@ -25,10 +30,15 @@ const StandaloneStudy = () => {
   }, [data?.data.meta]);
 
   useEffect(() => {
-    if (data?.data.data) {
-      setAllStudies(prev => [...prev, ...data.data.data]);
-    }
-  }, [data?.data.data]);
+    if (!data?.data.data) return;
+
+    setAllStudies(
+      prev =>
+        currentPage === 1
+          ? data.data.data // first page → replace
+          : [...prev, ...data.data.data], // other pages → append
+    );
+  }, [data?.data.data, currentPage]);
 
   if (isLoading && currentPage === 1) {
     return <div>Loading...</div>;
@@ -36,7 +46,7 @@ const StandaloneStudy = () => {
 
   if (isError) {
     console.log(error);
-    return <>Error...</>;
+    // return <>Error...</>;
   }
 
   const hasMore = currentPage < totalPages;
@@ -50,7 +60,15 @@ const StandaloneStudy = () => {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
             {allStudies.map(study => (
-              <StandaloneStudyCard key={study.id} study={study} />
+              <StandaloneStudyCard
+                key={study.id}
+                link={
+                  isPublic
+                    ? `/${locale}/dashboard/free-study/public/${study.slug}`
+                    : `/${locale}/dashboard/free-study/${study.slug}`
+                }
+                study={study}
+              />
             ))}
           </div>
 

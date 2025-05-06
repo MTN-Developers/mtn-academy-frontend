@@ -9,8 +9,8 @@ import Image from 'next/image';
 import { Controller, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import bannerMob from '@/public/images/login-banner-mob-new.svg';
-import bannerWeb from '@/public/images/login-banner-web-new.svg';
+// import bannerMob from '@/public/images/login-banner-mob-new.svg';
+// import bannerWeb from '@/public/images/login-banner-web-new.svg';
 import mtnLogo from '@/public/images/mtn-logo.svg';
 // import googleIcon from "@/public/icons/google-icon.svg";
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,7 @@ import { Eye, EyeOff } from 'lucide-react';
 import { Switch } from '@/components/ui/switch';
 import { toast } from 'sonner'; // Add toast notifications
 import { setCookie } from 'cookies-next';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { login } from '@/app/lib/redux/features/authActions';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '@/app/lib/redux/store';
@@ -45,17 +45,19 @@ const schema = yup.object({
   rememberMe: yup.boolean().required().default(false),
 });
 
-export default function LoginPage() {
+type props = {
+  setIsRegistered: (isRegistered: boolean) => void;
+  handleAuthSuccess: () => void;
+};
+
+export default function LoginForm({ setIsRegistered, handleAuthSuccess }: props) {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   // const { loginFn, loading } = useAuth();
-  const router = useRouter();
   // const pathArr = path.split('/');
   // const locale = pathArr[1];
   const params = useParams();
   const locale = params.locale as string;
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get('redirect');
   const [loading, setLoading] = useState(false);
   // const { loading } = useSelector((state: RootState) => state.auth);
   // Add this at the top of your component
@@ -113,7 +115,8 @@ export default function LoginPage() {
         //   }
         // }
         // router.push("/"); // Redirect to home page
-        router.replace(redirect ? `/${locale}${decodeURIComponent(redirect)}` : `/${locale}/dashboard`);
+        // router.replace(redirect ? `/${locale}${decodeURIComponent(redirect)}` : `/${locale}/dashboard`);
+        handleAuthSuccess();
       } else {
         toast.error(resultAction.payload as string);
       }
@@ -136,22 +139,9 @@ export default function LoginPage() {
   // };
 
   return (
-    <div dir={`${locale === 'en' ? 'ltr' : 'rtl'}`} className="w-full h-full bg-white">
-      <div className="w-full lg:h-screen flex justify-center items-center">
-        {/* Banner web */}
-        <div className="w-full h-full hidden lg:block bg-gray-400 overflow-hidden">
-          <Image src={bannerWeb} alt="banner web" className="w-full h-full object-cover" />
-        </div>
+    <div dir={`${locale === 'en' ? 'ltr' : 'rtl'}`} className="w-full rounded-2xl  bg-[#f4f6f8]">
+      <div className="w-full lg:h-fit rounded-2xl flex justify-center items-center">
         <div>
-          {/* Banner mob */}
-          <div className="block overflow-hidden relative lg:hidden w-full h-[360px]">
-            <Image src={bannerMob} alt="banner-mob" className="object-cover w-full" />
-            <div className={`absolute bottom-4 p-4`}>
-              <Image src={mtnLogo} alt="mtn logo" />
-              <h2 className="font-bold mt-6">{t('Nice to see you again')}</h2>
-            </div>
-          </div>
-
           {/* Form body */}
           <form autoComplete="off" onSubmit={handleSubmit(onSubmit)} className="lg:w-[456px] w-full p-4 lg:p-[48px]">
             <div className={`hidden lg:block`}>
@@ -237,9 +227,9 @@ export default function LoginPage() {
 
               <p className="text-center text-sm">
                 {t('button.dontHaveAccount')}{' '}
-                <Link href={`/${locale}/register`} className="cursor-pointer text-blue-500 underline">
+                <span onClick={() => setIsRegistered(false)} className="text-blue-600 cursor-pointer hover:underline">
                   {t('button.createAccount')}
-                </Link>
+                </span>
               </p>
             </div>
 
