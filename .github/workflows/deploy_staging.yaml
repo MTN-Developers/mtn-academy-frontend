@@ -20,6 +20,7 @@ jobs:
       - name: Overwrite .env.production file
         run: |
           echo "NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}" >> .env.production
+          echo "NEXT_PUBLIC_STRIPE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}" >> .env.production
           echo "NEXT_PUBLIC_ZOOM_MEETING_NUMBER=${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_NUMBER }}" >> .env.production
           echo "NEXT_PUBLIC_ZOOM_MEETING_PASSWORD=${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_PASSWORD }}" >> .env.production
           echo "ZOOM_SDK_KEY=${{ secrets.ZOOM_SDK_KEY }}" >> .env.production
@@ -48,6 +49,7 @@ jobs:
           VM_IP: ${{ secrets.VM_IP }}
           PORT: ${{ secrets.STAGING_PORT }}
           NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          NEXT_PUBLIC_STRIPE_PUBLIC_KEY: ${{ secrets.NEXT_PUBLIC_STRIPE_PUBLIC_KEY }}
           NEXT_PUBLIC_ZOOM_MEETING_NUMBER: ${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_NUMBER }}
           NEXT_PUBLIC_ZOOM_MEETING_PASSWORD: ${{ secrets.NEXT_PUBLIC_ZOOM_MEETING_PASSWORD }}
           ZOOM_SDK_KEY: ${{ secrets.ZOOM_SDK_KEY }}
@@ -79,6 +81,7 @@ jobs:
             docker run -d --restart unless-stopped -p "$PORT:$PORT" --name mtn_academy_frontend_staging \
               -e PORT="$PORT" \
               -e NEXT_PUBLIC_BASE_URL="$NEXT_PUBLIC_BASE_URL" \
+              -e NEXT_PUBLIC_STRIPE_PUBLIC_KEY="$NEXT_PUBLIC_STRIPE_PUBLIC_KEY" \
               -e NEXT_PUBLIC_ZOOM_MEETING_NUMBER="$NEXT_PUBLIC_ZOOM_MEETING_NUMBER" \
               -e NEXT_PUBLIC_ZOOM_MEETING_PASSWORD="$NEXT_PUBLIC_ZOOM_MEETING_PASSWORD" \
               -e ZOOM_SDK_KEY="$ZOOM_SDK_KEY" \
