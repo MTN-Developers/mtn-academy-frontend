@@ -43,7 +43,7 @@ const NavWebFragment = ({ locale, t, menuItems, handleLanguageChange, handleNavi
           <div className="flex justify-between items-center gap-4">
             {/* Logo */}
             <div className="flex-shrink-0">
-              <Link href={`/${locale}/dashboard`}>
+              <Link href={`/${locale}`}>
                 <Image src={mtnLogo} width={45} height={45} alt="mtn logo" className="w-auto h-auto" />
               </Link>
             </div>
