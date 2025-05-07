@@ -83,7 +83,7 @@ const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
   });
 
   return (
-    <form suppressHydrationWarning onSubmit={handleSubmit(onSubmit)} className="h-full w-full">
+    <form suppressHydrationWarning onSubmit={handleSubmit(onSubmit)} className="h-full  lg:w-[80%] w-full  mx-auto">
       <div className="flex flex-col lg:flex-row lg:justify-between mt-10 gap-x-[75px] gap-y-16">
         <div className="w-full">
           <h2 className="self-stretch mb-7 text-foreground font-sans text-2xl font-semibold leading-[normal]">
