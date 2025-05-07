@@ -5,6 +5,7 @@ import { FreeStudyCourse } from '@/app/types/freeStudy';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import StandaloneStudyCard from './StandaloneStudyCard';
+import StudyCard from '@/app/Sitecomponents/common/home/StudyCard';
 
 type props = {
   isPublic?: boolean;
@@ -52,8 +53,37 @@ const StandaloneStudy = ({ isPublic }: props) => {
   const hasMore = currentPage < totalPages;
 
   return (
-    <>
-      {allStudies.length > 0 && (
+    <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+      {isPublic && allStudies.length > 0 ? (
+        <div className="container md:w-[80%] mx-auto mt-20">
+          <h2 className="text-[#353535] lg:text-[40px] my-4 font-semibold leading-[45px]">
+            {locale === 'ar' ? 'برامج حرة' : 'Free Studies'}
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 mt-5 gap-5">
+            {allStudies.map(study => (
+              <StudyCard
+                key={study.id}
+                description_ar={study.description_ar as string}
+                description_en={study.description_en as string}
+                image_url_en={study.logo_en as string}
+                name_ar={study.name_ar}
+                name_en={study.name_en}
+                routingUrl={`/${locale}/dashboard/free-study/public/${study.slug}`}
+              />
+            ))}
+          </div>
+
+          {hasMore && (
+            <button
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              disabled={isFetching}
+              className="mt-4 text-blue-600 hover:text-blue-800 disabled:opacity-50"
+            >
+              {isFetching ? 'Loading...' : 'See More'}
+            </button>
+          )}
+        </div>
+      ) : (
         <div className="lg:my-10 my-4 p-4">
           <h2 className="text-[#353535] lg:text-[40px] my-4 font-semibold leading-[45px]">
             {locale === 'ar' ? 'برامج متخصصة' : 'Free Studies'}
@@ -83,7 +113,7 @@ const StandaloneStudy = ({ isPublic }: props) => {
           )}
         </div>
       )}
-    </>
+    </div>
   );
 };
 

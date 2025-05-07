@@ -14,6 +14,7 @@ import { getLangDir } from 'rtl-detect';
 import useGetAllSemesters from '@/app/hooks/useGetAllSemesters';
 import HomeSkeleton from '@/app/components/common/HomeSkeleton';
 import StandaloneStudy from '@/app/components/standaloneStudy/StandaloneStudy';
+// import StandaloneStudy from '@/app/components/standaloneStudy/StandaloneStudy';
 // import { DiplomaCarousel } from '@/app/components/ui/home/DiplomaCarousel';
 
 const Page = () => {
