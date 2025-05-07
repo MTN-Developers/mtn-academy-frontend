@@ -39,7 +39,7 @@ export default function StepperAuth({ freeStudy }: Props) {
 
   /* ───────────────── UI ───────────────── */
   return (
-    <Box sx={{ width: '100%', direction: 'ltr' }}>
+    <Box sx={{ width: '80%', direction: 'ltr', marginInline: 'auto' }}>
       {/* top stepper */}
       <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map(label => (
