@@ -34,7 +34,7 @@ const Navbar = () => {
   };
 
   const menuItems = [
-    { label: t('menu.home'), href: `/${locale}/dashboard` },
+    { label: t('menu.home'), href: `/${locale}` },
     { label: t('menu.freeStudy'), href: `#` },
     // { label: t("menu.academy"), href: `/${locale}/academy` },
   ];
