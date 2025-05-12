@@ -15,6 +15,7 @@ import Navbar from '../Sitecomponents/layout/Navbar';
 import { MainCarousel } from '@/app/components/ui/home/MainCarousel';
 import { getLangDir } from 'rtl-detect';
 import StandaloneStudy from '../components/standaloneStudy/StandaloneStudy';
+import ContactUsComp from '../components/contactus/ContactUsComp';
 
 export default function Page() {
   const params = useParams();
@@ -43,6 +44,7 @@ export default function Page() {
         <HomeBanner />
         <OurDiplomas />
         <FeedbackCarousel />
+        <ContactUsComp />
         <Footer />
       </div>
     </>

@@ -184,5 +184,23 @@
     "PasswordSpecial": "Password must contain at least one special character",
     "ConfirmPasswordRequired": "Confirm password is required",
     "PasswordsMustMatch": "Passwords must match"
+  },
+  "contactUs": {
+    "contactUs": "Contact Us",
+    "contactUsDescription": "Have a technical issue or want to share your feedback? Let us know.",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "phone": "Phone number",
+    "phonePlaceholder": "Enter your phone number",
+    "message": "Message",
+    "messagePlaceholder": "Enter your message",
+    "Adderess": "Adderess",
+    "AdderessPlaceholder": "Enter your adderss",
+    "send": "Send",
+    "sending": "Sending...",
+    "success": "Message sent successfully",
+    "error": "An error occurred while sending the message"
   }
 }

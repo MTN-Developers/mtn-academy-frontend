@@ -19,11 +19,59 @@ const policyHtml = String.raw`
 `;
 
 const PrivacyPolicy: React.FC = () => (
-  <div
-    /* give the outer wrapper a className if you need extra styling/layout control */
-    className="privacy-policy-wrapper"
-    dangerouslySetInnerHTML={{ __html: policyHtml }}
-  />
+  <>
+    <div
+      /* give the outer wrapper a className if you need extra styling/layout control */
+      className="privacy-policy-wrapper"
+      dangerouslySetInnerHTML={{ __html: policyHtml }}
+    />
+    <div className="mt-4">
+      <h2 className="text-xl font-[600]">17. REFUND POLICY</h2>
+
+      <p className="text-[14px]">There is no Refund</p>
+    </div>
+
+    <div>
+      <div className="py-6 md:py-10  text-gray-800">
+        <h2 className="text-2xl md:text-3xl font-bold mb-6">Contact us</h2>
+
+        <div className="mb-10">
+          <h3 className="text-xl font-semibold mb-2">UAE</h3>
+          <p className="mb-1">MTN LLC</p>
+          <p className="mb-1">
+            <strong>Phone :</strong> +971502151131
+          </p>
+          <p className="mb-1">
+            <strong>Address :</strong> p2-0189, 4D Street, Rega Al Buteen,, Dubai
+          </p>
+          <p className="mb-1">
+            <strong>Email :</strong>
+            <a href="mailto:laila.waheed@managethenow.com" className="text-blue-600 hover:underline">
+              laila.waheed@managethenow.com
+            </a>
+          </p>
+        </div>
+
+        <div>
+          <h3 className="text-xl font-semibold mb-2">Egypt</h3>
+          <p className="mb-1">MTN LLC</p>
+          <p className="mb-1">
+            41 Mohammed Tawfik Diab, Al Mintaqah as Sādisah, Nasr City, Cairo Governorate 4450340, Egypt Cairo
+          </p>
+          <p className="mb-1">Governorate 4450340 Egypt</p>
+          <p className="mb-1">
+            <strong>Phone:</strong> (+20)1062448904
+          </p>
+          <p className="mb-1">
+            <strong>Email :</strong>
+            <a href="mailto:laila.waheed@managethenow.com" className="text-blue-600 hover:underline">
+              laila.waheed@managethenow.com
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </>
 );
 
 export default PrivacyPolicy;
