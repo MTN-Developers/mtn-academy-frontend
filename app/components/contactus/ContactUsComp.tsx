@@ -48,12 +48,19 @@ const ContactUsComp = () => {
         name,
         email,
         phone: phoneData.phone,
-        country: phoneData.country,
         address,
         message,
       });
       if (res.status === 200 || res.status === 201) {
         toast.success('Message sent successfully');
+        setName('');
+        setEmail('');
+        setPhoneData({
+          phone: '',
+          country: '',
+        });
+        setAddress('');
+        setMessage('');
       } else {
         toast.error('Something went wrong');
       }
@@ -64,14 +71,7 @@ const ContactUsComp = () => {
   };
 
   return (
-    <form
-      onSubmit={e => {
-        e.preventDefault();
-        handleSubmit();
-      }}
-      className="bg-white dark:bg-gray-900"
-      dir={locale === 'ar' ? 'rtl' : 'ltr'}
-    >
+    <div className="bg-white dark:bg-gray-900" dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
         <h2 className="mb-4 text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
           {t('contactUs')}
@@ -79,7 +79,13 @@ const ContactUsComp = () => {
         <p className="mb-8 lg:mb-16 font-light text-center text-gray-500 dark:text-gray-400 sm:text-xl">
           {t('contactUsDescription')}
         </p>
-        <form action="#" className="space-y-8">
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            handleSubmit();
+          }}
+          className="space-y-8"
+        >
           <div>
             <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               {t('name')}
@@ -111,7 +117,7 @@ const ContactUsComp = () => {
 
           {/* Phone number field with country code */}
           <div className="grid w-full mb-6 items-center gap-1.5">
-            <Label htmlFor="phone">{t('Phone number')}</Label>
+            <Label htmlFor="phone">{t('phone')}</Label>
             <div dir="ltr">
               <PhoneInput
                 country={'eg'} // Default country
@@ -138,7 +144,7 @@ const ContactUsComp = () => {
               type="text"
               id="address"
               className="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-              placeholder={t('addressPlaceholder')}
+              placeholder={t('AdderessPlaceholder')}
               required
               value={address}
               onChange={e => setAddress(e.target.value)}
@@ -166,7 +172,7 @@ const ContactUsComp = () => {
           </button>
         </form>
       </div>
-    </form>
+    </div>
   );
 };
 
