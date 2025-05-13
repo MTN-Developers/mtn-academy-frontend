@@ -27,6 +27,7 @@ export function middleware(req: NextRequest) {
     'reset-password',
     'request-reset-password',
     'policy',
+    'contact-us',
     'dashboard/free-study/public',
     'dashboard/free-study/public/payment',
   ];
