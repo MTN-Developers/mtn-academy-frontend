@@ -36,11 +36,14 @@ const Navbar = () => {
   const menuItems = [
     { label: t('menu.home'), href: `/${locale}` },
     { label: t('menu.freeStudy'), href: `#` },
+    { label: t('menu.contact'), href: `/dashboard/contact-us` },
     // { label: t("menu.academy"), href: `/${locale}/academy` },
   ];
 
   const handleNavigation = (href: string) => {
+    // console.log(href);
     router.push(href);
+
     setIsOpen(false);
   };
 
