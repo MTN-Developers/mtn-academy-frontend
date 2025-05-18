@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from '@/components/ui/carousel';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoIosArrowForward } from 'react-icons/io';
-import img from '@/public/images/ellipse.svg';
+import img from '@/public/images/avatar.svg';
 import { useParams } from 'next/navigation';
 
 const slides = [
@@ -91,7 +91,7 @@ export function FeedbackCarousel() {
   }, [api]);
 
   return (
-    <div className="relative w-full">
+    <div className="relative w-full ">
       <Carousel
         opts={{
           align: 'center',
@@ -99,16 +99,16 @@ export function FeedbackCarousel() {
         }}
         setApi={setApi}
       >
-        <CarouselContent className="mx-2 my-5">
+        <CarouselContent className="mx-2 my-5 ">
           {slides.map(slide => (
             <CarouselItem key={slide.id} className="pl-0 mx-10 md:basis-2/5">
-              <div className="relative bg-white shadow-lg rounded-lg p-8 mt-16">
+              <div className="relative min-h-[300px] bg-white shadow-lg rounded-lg p-8 mt-16">
                 {/* Image Container */}
-                <div className="absolute -top-16 left-1/2 transform -translate-x-1/2">
+                <div className="absolute  -top-16 left-1/2 transform -translate-x-1/2">
                   <Image
                     src={slide.image}
                     alt={slide.name || 'User profile'}
-                    className="w-32 h-32 rounded-full border-2 border-white shadow-md"
+                    className="w-20 h-20 rounded-full border-2 border-white shadow-md"
                   />
                 </div>
 
