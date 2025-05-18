@@ -226,7 +226,12 @@ const CoursePage = () => {
 
             {semesterDetails.is_purchased === false ? (
               <>
-                <SidebarSemester discount={discount} semesterDetails={semesterDetails} tCourse={tCourse} />
+                <SidebarSemester
+                  courseDetails={courseDetails}
+                  discount={discount}
+                  semesterDetails={semesterDetails}
+                  tCourse={tCourse}
+                />
               </>
             ) : (
               <>
