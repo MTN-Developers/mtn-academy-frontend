@@ -106,7 +106,8 @@
     "enjoyTheCourse": "Enjoy the course",
     "courseRequest": "Request the course",
     "requestSentSuccessfully": "Request Sent Successfully",
-    "requestFailed": "Something went wrong"
+    "requestFailed": "Something went wrong",
+    "requestAlreadyExists": "You have already sent a request for this course."
   },
   "tabs": {
     "information": "Information",

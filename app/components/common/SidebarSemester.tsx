@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCourseRequest } from '@/app/hooks/useCourseRequest';
 import { Button } from '@/components/ui/button';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import React from 'react';
 import { toast } from 'sonner';
@@ -23,7 +24,15 @@ const SidebarSemester = ({
       console.log({ courseDetails });
       sendCourseRequest(courseDetails.id, {
         onSuccess: () => toast.success(tCourse('requestSentSuccessfully')),
-        onError: () => toast.error(tCourse('requestFailed')),
+        onError: error => {
+          const axiosError = error as AxiosError;
+
+          if (axiosError.response?.status === 409) {
+            toast.error(tCourse('requestAlreadyExists'));
+          } else {
+            toast.error(tCourse('requestFailed'));
+          }
+        },
       });
     }
   };

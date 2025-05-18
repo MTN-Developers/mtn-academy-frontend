@@ -1,5 +1,6 @@
 import { useCourseRequest } from '@/app/hooks/useCourseRequest';
 import { Button } from '@/components/ui/button';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import React from 'react';
 import { toast } from 'sonner';
@@ -10,7 +11,15 @@ const SidebarFreeStudy = ({ tCourse, freeStudyDetail, paymentLink, discount, pri
   const handleCourseRequest = () => {
     sendCourseRequest(freeStudyDetail.id, {
       onSuccess: () => toast.success(tCourse('requestSentSuccessfully')),
-      onError: () => toast.error(tCourse('requestFailed')),
+      onError: error => {
+        const axiosError = error as AxiosError;
+
+        if (axiosError.response?.status === 409) {
+          toast.error(tCourse('requestAlreadyExists'));
+        } else {
+          toast.error(tCourse('requestFailed'));
+        }
+      },
     });
   };
 
