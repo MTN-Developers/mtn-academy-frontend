@@ -103,7 +103,11 @@
     "semesterOrder": "Semester {order}",
     "startLearning": "Start Learning",
     "noCourses": "No courses available",
-    "enjoyTheCourse": "Enjoy the course"
+    "enjoyTheCourse": "Enjoy the course",
+    "courseRequest": "Request the course",
+    "requestSentSuccessfully": "Request Sent Successfully",
+    "requestFailed": "Something went wrong",
+    "requestAlreadyExists": "You have already sent a request for this course."
   },
   "tabs": {
     "information": "Information",
