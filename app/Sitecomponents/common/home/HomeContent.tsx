@@ -18,7 +18,9 @@ export default function HomeContent() {
         <Image src={bg} alt="Background Image" className="hidden md:block md:absolute" />
         {/* Pseudo-element for the border */}
         <div className="absolute bottom-0 left-0 w-[25%] h-[1px] bg-[#4A1D1F] md:hidden"></div>
-        <h1 className="text-2xl  md:text-6xl py-5 font-bold text-primary-blue">Signup now for free</h1>
+        <h1 className="text-2xl  md:text-6xl py-5 font-bold text-primary-blue">
+          {locale === 'en' ? 'Signup now for free' : 'سجل الأن مجانا'}
+        </h1>
       </div>
 
       {/* Right Section */}
