@@ -85,9 +85,11 @@ const StandaloneStudy = ({ isPublic }: props) => {
         </div>
       ) : (
         <div className="lg:my-10 my-4 p-4">
-          <h2 className="text-[#353535] lg:text-[40px] my-4 font-semibold leading-[45px]">
-            {locale === 'ar' ? 'برامج متخصصة' : 'Free Studies'}
-          </h2>
+          {allStudies.length > 0 && (
+            <h2 className="text-[#353535] lg:text-[40px] my-4 font-semibold leading-[45px]">
+              {locale === 'ar' ? 'برامج حرة' : 'Free Studies'}
+            </h2>
+          )}
           <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
             {allStudies.map(study => (
               <StandaloneStudyCard

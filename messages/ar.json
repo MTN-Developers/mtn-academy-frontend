@@ -61,6 +61,7 @@
       "freeStudy": "دراسات",
       "academy": "الأكاديمية",
       "language": "العربية",
+      "contact": "تواصل معنا",
       "notifications": {
         "title": "الإشعارات",
         "empty": "لا توجد إشعارات",
@@ -112,7 +113,11 @@
     "audio": "صوت",
     "english": "الإنجليزية",
     "arabic": "العربية",
-    "unlimitedAccess": "وصول غير محدود"
+    "unlimitedAccess": "وصول غير محدود",
+    "courseRequest": "طلب الدورة",
+    "requestSentSuccessfully": "تم طلب الدورة بنجاح",
+    "requestFailed": "حدث خطأ ما",
+    "requestAlreadyExists": "لقد قمت بإرسال طلب لهذا الدورة من قبل."
   },
   "tabs": {
     "information": "المعلومات",
@@ -198,5 +203,23 @@
   "calendar": {
     "calendar": "أجندة البرنامج",
     "events": "الأحداث"
+  },
+  "contactUs": {
+    "contactUs": "اتصل بنا",
+    "contactUsDescription": "هل تواجه مشكلة تقنية أو ترغب في إرسال ملاحظات أو تحتاج تفاصيل عن خطة الأعمال؟ أخبرنا بذلك.",
+    "name": "الاسم",
+    "namePlaceholder": "أدخل اسمك",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "أدخل بريدك الإلكتروني",
+    "phone": "رقم الهاتف",
+    "phonePlaceholder": "أدخل رقم هاتفك",
+    "message": "رسالتك",
+    "messagePlaceholder": "أدخل رسالتك",
+    "Adderess": "العنوان",
+    "AdderessPlaceholder": "أدخل عنوانك",
+    "send": "إرسال",
+    "sending": "جارٍ الإرسال...",
+    "success": "تم إرسال رسالتك بنجاح",
+    "error": "حدث خطأ أثناء إرسال رسالتك"
   }
 }
