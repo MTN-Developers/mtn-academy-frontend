@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCourseRequest } from '@/app/hooks/useCourseRequest';
 import { Button } from '@/components/ui/button';
+import { useQueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import Link from 'next/link';
 import React from 'react';
@@ -18,12 +19,16 @@ const SidebarSemester = ({
   courseDetails?: any;
 }) => {
   const { mutate: sendCourseRequest, isPending } = useCourseRequest();
+  const queryClient = useQueryClient();
 
   const handleCourseRequest = () => {
     if (courseDetails) {
       console.log({ courseDetails });
       sendCourseRequest(courseDetails.id, {
-        onSuccess: () => toast.success(tCourse('requestSentSuccessfully')),
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['courseDetails', courseDetails.slug] });
+          toast.success(tCourse('requestSentSuccessfully'));
+        },
         onError: error => {
           const axiosError = error as AxiosError;
 
@@ -56,7 +61,7 @@ const SidebarSemester = ({
           </Link>
           {courseDetails && (
             <Button
-              disabled={isPending}
+              disabled={isPending || courseDetails.has_request}
               onClick={handleCourseRequest}
               className="w-full bg-[#07519C] font-cairo mb-4 text-lg h-14"
             >
@@ -87,7 +92,11 @@ const SidebarSemester = ({
             <Button className="w-full bg-[#07519C] text-lg h-14">{tCourse('enrollNow')}</Button>
           </Link>
           {courseDetails && (
-            <Button disabled={isPending} onClick={handleCourseRequest} className="w-full bg-[#07519C] text-lg h-14">
+            <Button
+              disabled={isPending || courseDetails.has_request}
+              onClick={handleCourseRequest}
+              className="w-full bg-[#07519C] text-lg h-14"
+            >
               {tCourse('courseRequest')}
             </Button>
           )}
