@@ -60,10 +60,12 @@ const CoursePage = () => {
   useEffect(() => {
     if (semesterDetails?.is_purchased === true && courseDetails?.is_locked === true) {
       setShowDialog(true);
-    } else if (semesterDetails?.is_purchased === false) {
-      setGoToPayment(true);
+    } else if (semesterDetails?.is_purchased === false && courseDetails?.is_locked === false) {
+      setGoToPayment(false);
       setShowDialog(false);
       // console.log('gotopayment', goToPayment);
+    }else if(semesterDetails?.is_purchased === false && courseDetails?.is_locked === true){
+      setGoToPayment(true);
     } else {
       setShowDialog(false);
     }
@@ -224,7 +226,7 @@ const CoursePage = () => {
               </div>
             </div>
 
-            {semesterDetails.is_purchased === false ? (
+            {semesterDetails.is_locked === false ? (
               <>
                 <SidebarSemester
                   courseDetails={courseDetails}

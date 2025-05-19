@@ -54,7 +54,7 @@ export const ChaptersAccordion = ({
     if (showDialog) {
       // If course is locked, show dialog instead of alert
       setDialogOpen(true);
-    } else if (semester?.is_purchased === false) {
+    } else if (semester?.is_locked === true) {
       router.push(`/dashboard/semester/${semester?.id}/payment`);
     } else {
       // If course is unlocked, allow navigation to watch page
