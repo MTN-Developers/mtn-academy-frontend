@@ -61,15 +61,18 @@ const PracticalExercisesChapters = ({ courseDetails }: IProps) => {
     <div className="w-full rounded-lg p-4 bg-white">
       <div className="flex flex-col lg:flex-row gap-2 items-start lg:items-center  lg:justify-between mx-2">
         <h2 className="text-xl font-semibold mb-1">{isRTL ? 'التدريبات العملية' : 'Practical Exercises'}</h2>
-        <Link
-          href={`/${locale}/dashboard/course/${courseDetails.slug}/live-session`}
-          className="flex items-center gap-2"
-        >
-          {/* <span>
+
+        {courseDetails.has_live && (
+          <Link
+            href={`/${locale}/dashboard/course/${courseDetails.slug}/live-session`}
+            className="flex items-center gap-2"
+          >
+            {/* <span>
             <Dot className="text-xl" color="#075985" />
           </span> */}
-          <p className="text-sky-800 text-base font-semibold animate-pulse">Live Session</p>
-        </Link>
+            <p className="text-sky-800 text-base font-semibold animate-pulse">Live Session</p>
+          </Link>
+        )}
       </div>
 
       <Accordion
