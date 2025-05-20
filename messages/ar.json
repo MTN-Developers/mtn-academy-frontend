@@ -113,7 +113,11 @@
     "audio": "صوت",
     "english": "الإنجليزية",
     "arabic": "العربية",
-    "unlimitedAccess": "وصول غير محدود"
+    "unlimitedAccess": "وصول غير محدود",
+    "courseRequest": "طلب الدورة",
+    "requestSentSuccessfully": "تم طلب الدورة بنجاح",
+    "requestFailed": "حدث خطأ ما",
+    "requestAlreadyExists": "لقد قمت بإرسال طلب لهذا الدورة من قبل."
   },
   "tabs": {
     "information": "المعلومات",

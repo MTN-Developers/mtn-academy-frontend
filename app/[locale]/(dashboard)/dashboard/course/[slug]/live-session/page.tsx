@@ -19,7 +19,7 @@ const Page = () => {
 
   const { data, isLoading, error } = useCourseDetails(slug as string);
   const courseDetails = data?.data;
-
+  // console.log({ courseDetails });
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -30,7 +30,7 @@ const Page = () => {
     return <div>Error...</div>;
   }
 
-  if (courseDetails?.is_locked) {
+  if (courseDetails?.is_locked || !courseDetails?.has_live) {
     router.push(`/${locale}/dashboard/course/${slug}`);
 
     return <div>Course is locked</div>;

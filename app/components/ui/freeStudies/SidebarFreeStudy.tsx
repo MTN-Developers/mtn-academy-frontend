@@ -1,8 +1,34 @@
+import { useCourseRequest } from '@/app/hooks/useCourseRequest';
 import { Button } from '@/components/ui/button';
+import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import React from 'react';
+import { toast } from 'sonner';
 
 const SidebarFreeStudy = ({ tCourse, freeStudyDetail, paymentLink, discount, price, priceAfterDiscount = 0 }) => {
+  console.log({ freeStudyDetail });
+  const queryClient = useQueryClient();
+  const { mutate: sendCourseRequest, isPending } = useCourseRequest();
+
+  const handleCourseRequest = () => {
+    sendCourseRequest(freeStudyDetail.id, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['free-study', freeStudyDetail.slug] });
+        toast.success(tCourse('requestSentSuccessfully'));
+      },
+      onError: error => {
+        const axiosError = error as AxiosError;
+
+        if (axiosError.response?.status === 409) {
+          toast.error(tCourse('requestAlreadyExists'));
+        } else {
+          toast.error(tCourse('requestFailed'));
+        }
+      },
+    });
+  };
+
   return (
     <>
       {/* Right Sidebar on web */}
@@ -20,6 +46,14 @@ const SidebarFreeStudy = ({ tCourse, freeStudyDetail, paymentLink, discount, pri
           <Link className="w-full" href={paymentLink}>
             <Button className="w-full bg-[#07519C] font-cairo mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
           </Link>
+
+          <Button
+            disabled={isPending || freeStudyDetail.has_request}
+            onClick={handleCourseRequest}
+            className="w-full bg-[#07519C] text-base h-14"
+          >
+            {tCourse('courseRequest')}
+          </Button>
         </div>
       </div>
 
@@ -44,6 +78,14 @@ const SidebarFreeStudy = ({ tCourse, freeStudyDetail, paymentLink, discount, pri
             <Button className="w-full bg-[#07519C] text-lg h-14">{tCourse('enrollNow')}</Button>
           </Link>
         </div>
+
+        <Button
+          disabled={isPending || freeStudyDetail.has_request}
+          onClick={handleCourseRequest}
+          className="w-full bg-[#07519C] text-base h-14"
+        >
+          {tCourse('courseRequest')}
+        </Button>
       </div>
     </>
   );

@@ -49,6 +49,7 @@ export interface FreeStudyCourse {
   is_completed: boolean;
   chapters?: Chapter[];
   type: 'course';
+  has_live: boolean;
 }
 
 /* ────────────────────────────────────────────────────────── */

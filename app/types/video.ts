@@ -52,4 +52,5 @@ export interface Course {
   is_completed: boolean;
   price_after_discount?: number;
   price?: number;
+  has_live: boolean;
 }

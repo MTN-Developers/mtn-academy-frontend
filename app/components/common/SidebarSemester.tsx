@@ -1,8 +1,47 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useCourseRequest } from '@/app/hooks/useCourseRequest';
 import { Button } from '@/components/ui/button';
+import { useQueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import Link from 'next/link';
 import React from 'react';
+import { toast } from 'sonner';
 
-const SidebarSemester = ({ tCourse, semesterDetails, discount }) => {
+const SidebarSemester = ({
+  tCourse,
+  semesterDetails,
+  discount,
+  courseDetails,
+}: {
+  tCourse: any;
+  semesterDetails: any;
+  discount: any;
+  courseDetails?: any;
+}) => {
+  const { mutate: sendCourseRequest, isPending } = useCourseRequest();
+  const queryClient = useQueryClient();
+
+  const handleCourseRequest = () => {
+    if (courseDetails) {
+      console.log({ courseDetails });
+      sendCourseRequest(courseDetails.id, {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: ['courseDetails', courseDetails.slug] });
+          toast.success(tCourse('requestSentSuccessfully'));
+        },
+        onError: error => {
+          const axiosError = error as AxiosError;
+
+          if (axiosError.response?.status === 409) {
+            toast.error(tCourse('requestAlreadyExists'));
+          } else {
+            toast.error(tCourse('requestFailed'));
+          }
+        },
+      });
+    }
+  };
+
   return (
     <>
       {/* Right Sidebar on web */}
@@ -20,6 +59,15 @@ const SidebarSemester = ({ tCourse, semesterDetails, discount }) => {
           <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
             <Button className="w-full bg-[#07519C] font-cairo mb-4 text-lg h-14">{tCourse('enrollNow')}</Button>
           </Link>
+          {courseDetails && (
+            <Button
+              disabled={isPending || courseDetails.has_request}
+              onClick={handleCourseRequest}
+              className="w-full bg-[#07519C] font-cairo mb-4 text-lg h-14"
+            >
+              {tCourse('courseRequest')}
+            </Button>
+          )}
         </div>
       </div>
 
@@ -43,6 +91,15 @@ const SidebarSemester = ({ tCourse, semesterDetails, discount }) => {
           <Link className="w-full" href={`/dashboard/semester/${semesterDetails.id}/payment`}>
             <Button className="w-full bg-[#07519C] text-lg h-14">{tCourse('enrollNow')}</Button>
           </Link>
+          {courseDetails && (
+            <Button
+              disabled={isPending || courseDetails.has_request}
+              onClick={handleCourseRequest}
+              className="w-full bg-[#07519C] text-lg h-14"
+            >
+              {tCourse('courseRequest')}
+            </Button>
+          )}
         </div>
       </div>
     </>
