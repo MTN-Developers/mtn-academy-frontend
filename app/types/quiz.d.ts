@@ -31,3 +31,14 @@ export interface QuizResponse {
   status: number;
   message: string;
 }
+
+interface Answer {
+  id: string;
+  title: string;
+}
+
+interface Question {
+  id: string;
+  title: string;
+  answers: Answer[];
+}

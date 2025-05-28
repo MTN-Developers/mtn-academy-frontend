@@ -5,9 +5,10 @@ import { TbSquareRoundedCheckFilled } from 'react-icons/tb';
 
 type Props = {
   quiz: Quiz;
+  setIsQuizStarted: (v: boolean) => void;
 };
 
-export const QuizIntroduction = ({ quiz }: Props) => {
+export const QuizIntroduction = ({ quiz, setIsQuizStarted }: Props) => {
   const coutions = [
     {
       id: 1,
@@ -57,7 +58,10 @@ export const QuizIntroduction = ({ quiz }: Props) => {
           <p className="text-slate-500 my-4 text-sm font-normal">Due Mar 14, 11:59 PM EET Attempts 1 every 24 hours</p>
         </div>
         <div>
-          <button className="bg-[#07519c] py-2 px-4 text-sm lg:text-xl text-nowrap  lg:py-4 lg:px-8 text-white rounded-lg">
+          <button
+            onClick={() => setIsQuizStarted(true)}
+            className="bg-[#07519c] py-2 px-4 text-sm lg:text-lg text-nowrap  lg:py-4 lg:px-8 text-white rounded-lg"
+          >
             Join Assignment
           </button>
         </div>
