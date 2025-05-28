@@ -63,15 +63,21 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
   const seconds = timeLeft % 60;
 
   return (
-    <div className="p-4 max-w-xl mx-auto">
-      {/* Timer */}
-      <div className="text-right text-lg font-medium mb-4">
-        Time left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
-      </div>
+    <div className="p-4 my-10 max-w-3xl mx-auto">
+      {/* header */}
 
-      {/* Progress */}
-      <div className="mb-2 text-sm text-gray-600">
-        Question {currentIndex + 1} / {dummyQuestions.length}
+      <div className="flex items-center justify-between">
+        <h1 className="text-sky-800 text-2xl font-medium">Chose the Correct answer</h1>
+        <div>
+          {/* Timer */}
+          <div className="text-right text-lg text-green-800 font-medium mb-1">
+            Time left: {minutes}:{seconds < 10 ? `0${seconds}` : seconds}
+          </div>
+          {/* Progress */}
+          <div className=" text-sm text-gray-600">
+            Question {currentIndex + 1} / {dummyQuestions.length}
+          </div>
+        </div>
       </div>
 
       {/* Question */}
@@ -97,7 +103,7 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
       </ul>
 
       {/* Prev / Next */}
-      <div className="flex justify-center gap-4">
+      <div className="flex w-full  justify-end gap-4">
         <button
           onClick={handlePrev}
           disabled={currentIndex === 0}
