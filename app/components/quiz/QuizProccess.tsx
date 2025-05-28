@@ -45,6 +45,12 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
     }
   };
 
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(i => i - 1);
+    }
+  };
+
   const handleSubmit = () => {
     // stop any running timer
     setTimeLeft(0);
@@ -90,14 +96,24 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
         ))}
       </ul>
 
-      {/* Next / Submit */}
-      <button
-        onClick={handleNext}
-        disabled={!selectedAnswers[question.id]}
-        className="bg-blue-600 text-white py-2 px-4 rounded disabled:opacity-50"
-      >
-        {currentIndex < dummyQuestions.length - 1 ? 'Next' : 'Submit'}
-      </button>
+      {/* Prev / Next */}
+      <div className="flex justify-center gap-4">
+        <button
+          onClick={handlePrev}
+          disabled={currentIndex === 0}
+          className="bg-gray-300 text-gray-700 py-2 px-4 rounded disabled:opacity-50"
+        >
+          Previous
+        </button>
+
+        <button
+          onClick={handleNext}
+          disabled={!selectedAnswers[question.id]}
+          className="bg-blue-600 text-white py-2 px-4 rounded disabled:opacity-50"
+        >
+          {currentIndex < dummyQuestions.length - 1 ? 'Next' : 'Submit'}
+        </button>
+      </div>
     </div>
   );
 };
