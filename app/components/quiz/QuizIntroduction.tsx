@@ -1,6 +1,7 @@
 import { Quiz } from '@/app/types/quiz';
+import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import React from 'react';
-import { GoDotFill } from 'react-icons/go';
 import { TbSquareRoundedCheckFilled } from 'react-icons/tb';
 
 type Props = {
@@ -9,71 +10,60 @@ type Props = {
 };
 
 export const QuizIntroduction = ({ quiz, setIsQuizStarted }: Props) => {
-  const coutions = [
-    {
-      id: 1,
-      title: 'This is a replicable Content ',
-      description:
-        'In this course, she gives you the tools you need to transform data into captivating illustrations using ',
-    },
-    {
-      id: 2,
-      title: 'This is a replicable Content ',
-      description:
-        'Cautious is a role that requires the participant to be careful and thoughtful in their approach to the task. They are expected to be aware of their surroundings and to take precautions to avoid harm.',
-    },
-  ];
+  const { locale } = useParams();
+  const t = useTranslations('quiz');
+
+  //handlers
+
+  const formatDate = (iso: string) => {
+    const d = new Date(iso);
+    const day = d.getDate(); // 1–31
+    const month = d.getMonth() + 1; // 0–11 → 1–12
+    const year = d.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
   return (
     <div className="w-full flex items-center p-4 lg:px-52 lg:py-10 justify-center flex-col gap-4">
-      <h1 className="text-neutral-900 text-3xl lg:text-4xl w-full text-start font-normal">{quiz.title}</h1>
-      <p className="w-full text-start text-neutral-700 text-xl lg:text-2xl ">Test description</p>
-      <p className="text-neutral-700 lg:text-xl ">
-        For many people, images are the most effective way to communicate information. Whether it be a social issue, a
-        personal story, or something you find joy in, any subject can inspire a visualization. Data illustrator Sonja
-        Kuijpers specializes in turning numbers and information into accessible works of art. She has worked with
-        clients including Philips, the Dutch government, and Frankfurter Allgemeine Zeitung.
+      <h1 className="text-neutral-900 text-3xl lg:text-4xl w-full text-start font-normal">
+        {locale === 'ar' ? quiz.title_ar : quiz.title_en}
+      </h1>
+      <p className="w-full text-start text-neutral-700 text-xl lg:text-2xl ">{t('Test description')}</p>
+      <p className="text-neutral-700 text-start w-full lg:text-xl">
+        {locale === 'ar' ? quiz.description_ar : quiz.description_en}
       </p>
-      <p className="w-full text-start text-neutral-700 text-xl lg:text-2xl ">Assignment Roles and Cautious </p>
-      <ul className="w-full flex flex-col items-start gap-4">
-        {coutions.map(coution => (
-          <li key={coution.id} className="max-w-[600px] text-sky-800 text-base font-semibold">
-            <div className="flex items-center gap-2">
-              <span>
-                <GoDotFill />
-              </span>
-              {coution.title}
-            </div>
-            <p className="text-neutral-700 text-base font-normal ">{coution.description}</p>
-          </li>
-        ))}
-      </ul>
+      <p className="w-full text-start text-neutral-700 text-xl lg:text-2xl ">{t('Assignment Roles and Cautious')} </p>
+      <p className="text-neutral-700 text-start w-full lg:text-xl">{locale === 'ar' ? quiz.roles_ar : quiz.roles_en}</p>
       <div className="w-full flex items-center justify-between">
         <div>
           <p className="flex my-4 items-center gap-2">
             <span className="text-gray-400 text-xl">
               <TbSquareRoundedCheckFilled />
             </span>
-            Not Submitted yet
+            {t('Not Submitted yet')}
           </p>
-          <p className="text-slate-500 my-4 text-sm font-normal">Due Mar 14, 11:59 PM EET Attempts 1 every 24 hours</p>
+          <p className="text-slate-500 my-4 text-sm font-normal">
+            {formatDate(quiz.start_date)} – {formatDate(quiz.end_date)}
+          </p>
         </div>
         <div>
           <button
             onClick={() => setIsQuizStarted(true)}
             className="bg-[#07519c] py-2 px-4 text-sm lg:text-lg text-nowrap  lg:py-4 lg:px-8 text-white rounded-lg"
           >
-            Join Assignment
+            {t('start quiz')}
           </button>
         </div>
       </div>
       <div className="w-full bg-gray-400 h-[1px]"></div>
       <div className="w-full flex items-center justify-between">
         <div>
-          <p className="flex my-4 items-center gap-2">Receive grade</p>
-          <p className="text-slate-500 my-4 text-sm font-normal">To Pass 80% or higher</p>
+          <p className="flex my-4 items-center gap-2">{t('Receive grade')}</p>
+          <p className="text-slate-500 my-4 text-sm font-normal">
+            {t('Success limit')}: {quiz.pass_grade}
+          </p>
         </div>
         <div className="flex items-center gap-4 flex-col">
-          <p className="font-bold">Your grade</p>
+          <p className="font-bold">{t('Your grade')}</p>
           <p className="font-bold">-</p>
         </div>
       </div>

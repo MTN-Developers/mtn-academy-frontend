@@ -9,7 +9,8 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const Page = () => {
-  const { quizId } = useParams();
+  const { locale, quizId } = useParams();
+
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -147,13 +148,13 @@ const Page = () => {
   if (!quiz) return <div>No quiz found</div>;
 
   return (
-    <>
+    <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
       {isQuizStarted ? (
         <QuizProccess dummyQuestions={dummyQuestions} />
       ) : (
         <QuizIntroduction quiz={quiz} setIsQuizStarted={setIsQuizStarted} />
       )}
-    </>
+    </div>
   );
 };
 

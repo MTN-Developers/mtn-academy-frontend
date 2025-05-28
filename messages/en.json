@@ -207,5 +207,14 @@
     "sending": "Sending...",
     "success": "Message sent successfully",
     "error": "An error occurred while sending the message"
+  },
+  "quiz": {
+    "Test description": "Test description",
+    "Assignment Roles and Cautious": "Assignment Roles and Cautious",
+    "Not Submitted yet": "Not Submitted yet",
+    "start quiz": "start quiz",
+    "Receive grade": "Receive grade",
+    "Success limit": "Success limit",
+    "Your grade": "Your grade"
   }
 }

@@ -21,9 +21,14 @@ export interface Quiz {
   pass_grade: number;
   created_at: string;
   updated_at: string;
-  quiz_config: QuizConfig[];
-  title: string;
+  configs: QuizConfig[];
   deleted_at: string | null;
+  title_ar: string;
+  title_en: string;
+  description_en: string;
+  description_ar: string;
+  roles_ar: string;
+  roles_en: string;
 }
 
 export interface QuizResponse {

@@ -221,5 +221,14 @@
     "sending": "جارٍ الإرسال...",
     "success": "تم إرسال رسالتك بنجاح",
     "error": "حدث خطأ أثناء إرسال رسالتك"
+  },
+  "quiz": {
+    "Test description": "وصف الاختبار",
+    "Assignment Roles and Cautious": "التحذيرات والتنبيهات",
+    "Not Submitted yet": "لم يتم البدء ",
+    "start quiz": "بدء الاختبار",
+    "Receive grade": "درجتك",
+    "Success limit": "الحد الادني للنجاح",
+    "Your grade": "درجتك"
   }
 }
