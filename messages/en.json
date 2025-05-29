@@ -215,6 +215,16 @@
     "start quiz": "start quiz",
     "Receive grade": "Receive grade",
     "Success limit": "Success limit",
-    "Your grade": "Your grade"
+    "Your grade": "Your grade",
+    "Next": "Next",
+    "Previous": "Previous",
+    "Submit": "Submit",
+    "Quiz Completed": "Quiz Completed",
+    "Ended at": "Ended at",
+    "Total Questions": "Total Questions",
+    "Correct Answers": "Correct Answers",
+    "Score": "Score",
+    "Passed!": "Passed!",
+    "Failed": "Failed"
   }
 }

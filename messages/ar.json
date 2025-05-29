@@ -229,6 +229,16 @@
     "start quiz": "بدء الاختبار",
     "Receive grade": "درجتك",
     "Success limit": "الحد الادني للنجاح",
-    "Your grade": "درجتك"
+    "Your grade": "درجتك",
+    "Next": "التالي",
+    "Previous": "السابق",
+    "Submit": "انهاء الاختبار",
+    "Quiz Completed": "تم إنهاء الاختبار",
+    "Ended at": "منتهي في",
+    "Total Questions": "عدد الأسئلة",
+    "Correct Answers": "الإجابات الصحيحة",
+    "Score": "الدرجة",
+    "Passed!": "تم النجاح!",
+    "Failed": "فشل الاختبار"
   }
 }

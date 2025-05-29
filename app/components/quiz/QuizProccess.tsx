@@ -3,6 +3,7 @@
 import axiosInstance from '@/app/lib/axios/instance';
 import { UIQuestion } from '@/app/types/quiz';
 import { EndQuizResponse } from '@/app/types/quizEnd';
+import { useTranslations } from 'next-intl';
 import React, { FC, useState, useEffect } from 'react';
 import { toast } from 'sonner';
 
@@ -18,6 +19,7 @@ const QuizProccess: FC<Props> = ({ questions, quizId, initialTime, userQuizId })
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
   const [timeLeft, setTimeLeft] = useState(initialTime); // seconds
   const [result, setResult] = useState<EndQuizResponse['data'] | null>(null);
+  const t = useTranslations('quiz');
 
   // start countdown
   useEffect(() => {
@@ -94,14 +96,22 @@ const QuizProccess: FC<Props> = ({ questions, quizId, initialTime, userQuizId })
   if (result) {
     return (
       <div className="p-6 max-w-md mx-auto text-center">
-        <h2 className="text-2xl font-bold mb-4">Quiz Completed</h2>
+        <h2 className="text-2xl font-bold mb-4">{t('Quiz Completed')}</h2>
         <p className="mb-2">{result.message}</p>
-        <p>Ended at: {new Date(result.ended_at).toLocaleString()}</p>
-        <p>Total Questions: {result.totalQuestions}</p>
-        <p>Correct Answers: {result.correctAnswers}</p>
-        <p>Score: {result.score}</p>
+        <p>
+          {t('Ended at')}: {new Date(result.ended_at).toLocaleString()}
+        </p>
+        <p>
+          {t('Total Questions')}: {result.totalQuestions}
+        </p>
+        <p>
+          {t('Correct Answers')}: {result.correctAnswers}
+        </p>
+        <p>
+          {t('Score')}: {result.score}
+        </p>
         <p className={result.isPassed ? 'text-green-600' : 'text-red-600'}>
-          {result.isPassed ? '🎉 Passed!' : '❌ Failed'}
+          {result.isPassed ? `🎉 ${t('Passed!')}` : `❌ ${t('Failed')}`}
         </p>
       </div>
     );
@@ -157,7 +167,7 @@ const QuizProccess: FC<Props> = ({ questions, quizId, initialTime, userQuizId })
           disabled={currentIndex === 0}
           className="bg-gray-300 text-gray-700 py-2 px-4 rounded disabled:opacity-50"
         >
-          Previous
+          {t('Next')}
         </button>
 
         <button
@@ -165,7 +175,7 @@ const QuizProccess: FC<Props> = ({ questions, quizId, initialTime, userQuizId })
           disabled={!selectedAnswers[question.id]}
           className="bg-blue-600 text-white py-2 px-4 rounded disabled:opacity-50"
         >
-          {currentIndex < questions.length - 1 ? 'Next' : 'Submit'}
+          {currentIndex < questions.length - 1 ? t('Next') : t('Submit')}
         </button>
       </div>
     </div>
