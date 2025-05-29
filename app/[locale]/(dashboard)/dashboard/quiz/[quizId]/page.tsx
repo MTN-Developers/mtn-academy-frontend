@@ -19,6 +19,9 @@ const Page = () => {
   const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [questions, setQuestions] = useState<UIQuestion[]>([]);
   const [userQuizId, setUserQuizId] = useState('');
+  const [quizDuration, setQuizDuration] = useState(0);
+
+  const initialSeconds = Number(quizDuration) * 60;
 
   //handlers
 
@@ -63,6 +66,7 @@ const Page = () => {
       try {
         const res = await axiosInstance.get<QuizResponse>(`/quiz/${quizId}`);
         setQuiz(res?.data?.data);
+        setQuizDuration(res?.data?.data.duration);
       } catch (error: any) {
         console.log(error);
         setError(error.message || 'Unknown error');
@@ -92,7 +96,12 @@ const Page = () => {
       ) : (
         <>
           {isQuizStarted ? (
-            <QuizProccess questions={questions} userQuizId={userQuizId} quizId={quizId.toString()} />
+            <QuizProccess
+              questions={questions}
+              userQuizId={userQuizId}
+              quizId={quizId.toString()}
+              initialTime={initialSeconds}
+            />
           ) : (
             <QuizIntroduction quiz={quiz} setIsQuizStarted={setIsQuizStarted} startQuiz={startQuiz} />
           )}
