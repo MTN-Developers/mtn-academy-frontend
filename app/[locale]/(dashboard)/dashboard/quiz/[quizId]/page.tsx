@@ -4,9 +4,11 @@ import LoadingSpinner from '@/app/components/common/LoadingSpinner';
 import { QuizIntroduction } from '@/app/components/quiz/QuizIntroduction';
 import QuizProccess from '@/app/components/quiz/QuizProccess';
 import axiosInstance from '@/app/lib/axios/instance';
-import { Question, Quiz, QuizResponse } from '@/app/types/quiz';
+import { Quiz, QuizResponse, UIQuestion } from '@/app/types/quiz';
+import { StartQuizResponse, UserQuestion } from '@/app/types/quizStart';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 
 const Page = () => {
   const { locale, quizId } = useParams();
@@ -15,109 +17,43 @@ const Page = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isQuizStarted, setIsQuizStarted] = useState(false);
+  const [questions, setQuestions] = useState<UIQuestion[]>([]);
+  const [userQuizId, setUserQuizId] = useState('');
 
-  const dummyQuestions: Question[] = [
-    {
-      id: '1',
-      title: 'Question 1',
-      answers: [
-        { id: '1a', title: 'Answer A' },
-        { id: '1b', title: 'Answer B' },
-        { id: '1c', title: 'Answer C' },
-        { id: '1d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '2',
-      title: 'Question 2',
-      answers: [
-        { id: '2a', title: 'Answer A' },
-        { id: '2b', title: 'Answer B' },
-        { id: '2c', title: 'Answer C' },
-        { id: '2d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '3',
-      title: 'Question 3',
-      answers: [
-        { id: '3a', title: 'Answer A' },
-        { id: '3b', title: 'Answer B' },
-        { id: '3c', title: 'Answer C' },
-        { id: '3d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '4',
-      title: 'Question 4',
-      answers: [
-        { id: '4a', title: 'Answer A' },
-        { id: '4b', title: 'Answer B' },
-        { id: '4c', title: 'Answer C' },
-        { id: '4d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '5',
-      title: 'Question 5',
-      answers: [
-        { id: '5a', title: 'Answer A' },
-        { id: '5b', title: 'Answer B' },
-        { id: '5c', title: 'Answer C' },
-        { id: '5d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '6',
-      title: 'Question 6',
-      answers: [
-        { id: '6a', title: 'Answer A' },
-        { id: '6b', title: 'Answer B' },
-        { id: '6c', title: 'Answer C' },
-        { id: '6d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '7',
-      title: 'Question 7',
-      answers: [
-        { id: '7a', title: 'Answer A' },
-        { id: '7b', title: 'Answer B' },
-        { id: '7c', title: 'Answer C' },
-        { id: '7d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '8',
-      title: 'Question 8',
-      answers: [
-        { id: '8a', title: 'Answer A' },
-        { id: '8b', title: 'Answer B' },
-        { id: '8c', title: 'Answer C' },
-        { id: '8d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '9',
-      title: 'Question 9',
-      answers: [
-        { id: '9a', title: 'Answer A' },
-        { id: '9b', title: 'Answer B' },
-        { id: '9c', title: 'Answer C' },
-        { id: '9d', title: 'Answer D' },
-      ],
-    },
-    {
-      id: '10',
-      title: 'Question 10',
-      answers: [
-        { id: '10a', title: 'Answer A' },
-        { id: '10b', title: 'Answer B' },
-        { id: '10c', title: 'Answer C' },
-        { id: '10d', title: 'Answer D' },
-      ],
-    },
-  ];
+  //handlers
+
+  // helper to pick locale‐correct text
+  function pickText(ar: string, en: string, locale: string) {
+    return locale === 'ar' ? ar : en;
+  }
+
+  function mapUserQuestionToUI(uq: UserQuestion, locale): UIQuestion {
+    return {
+      id: uq.question.id,
+      title: pickText(uq.question.question_ar, uq.question.question_en, locale),
+      answers: uq.question.answers.map(ans => ({
+        id: ans.id,
+        title: pickText(ans.answer_ar, ans.answer_en, locale),
+      })),
+    };
+  }
+
+  // start quiz
+  const startQuiz = async () => {
+    try {
+      const res = await axiosInstance.post<StartQuizResponse>(`/quiz/${quizId}/start`);
+      toast.success('Quiz started');
+      setUserQuizId(res.data.data.user_quiz_id);
+      setIsQuizStarted(true);
+
+      // map your UserQuestion[] → UIQuestion[]
+      const uiQs = res.data.data.user_questions.map((uq: UserQuestion) => mapUserQuestionToUI(uq, locale));
+      setQuestions(uiQs);
+    } catch (err: any) {
+      console.error(err);
+      toast.error('Failed to start quiz');
+    }
+  };
 
   //fetch quiz
   useEffect(() => {
@@ -149,10 +85,18 @@ const Page = () => {
 
   return (
     <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
-      {isQuizStarted ? (
-        <QuizProccess dummyQuestions={dummyQuestions} />
+      {quiz.has_attended === true ? (
+        <>
+          <div>Quiz has been attended</div>
+        </>
       ) : (
-        <QuizIntroduction quiz={quiz} setIsQuizStarted={setIsQuizStarted} />
+        <>
+          {isQuizStarted ? (
+            <QuizProccess questions={questions} userQuizId={userQuizId} quizId={quizId.toString()} />
+          ) : (
+            <QuizIntroduction quiz={quiz} setIsQuizStarted={setIsQuizStarted} startQuiz={startQuiz} />
+          )}
+        </>
       )}
     </div>
   );

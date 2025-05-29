@@ -29,6 +29,7 @@ export interface Quiz {
   description_ar: string;
   roles_ar: string;
   roles_en: string;
+  has_attended: boolean;
 }
 
 export interface QuizResponse {
@@ -37,13 +38,13 @@ export interface QuizResponse {
   message: string;
 }
 
-interface Answer {
+export interface UIAnswer {
   id: string;
   title: string;
 }
 
-interface Question {
+export interface UIQuestion {
   id: string;
   title: string;
-  answers: Answer[];
+  answers: UIAnswer[];
 }

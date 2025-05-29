@@ -1,16 +1,23 @@
 'use client';
 
+import axiosInstance from '@/app/lib/axios/instance';
+import { UIQuestion } from '@/app/types/quiz';
+import { EndQuizResponse } from '@/app/types/quizEnd';
 import React, { FC, useState, useEffect } from 'react';
-import { Question } from '@/app/types/quiz';
+import { toast } from 'sonner';
 
 interface Props {
-  dummyQuestions: Question[];
+  questions: UIQuestion[];
+  userQuizId: string;
+  quizId: string;
+  initialTime: number;
 }
 
-const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
+const QuizProccess: FC<Props> = ({ questions, quizId, initialTime, userQuizId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<string, string>>({});
-  const [timeLeft, setTimeLeft] = useState(120); // seconds
+  const [timeLeft, setTimeLeft] = useState(initialTime); // seconds
+  const [result, setResult] = useState<EndQuizResponse['data'] | null>(null);
 
   // start countdown
   useEffect(() => {
@@ -28,7 +35,7 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
     return () => clearInterval(timerId);
   }, []);
 
-  const question = dummyQuestions[currentIndex];
+  const question = questions[currentIndex];
 
   const handleAnswerSelect = (answerId: string) => {
     setSelectedAnswers(prev => ({
@@ -37,11 +44,32 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
     }));
   };
 
-  const handleNext = () => {
-    if (currentIndex < dummyQuestions.length - 1) {
-      setCurrentIndex(i => i + 1);
-    } else {
-      handleSubmit();
+  // PATCH a single answer
+  const submitAnswer = async () => {
+    const ansId = selectedAnswers[question.id];
+    return axiosInstance.patch(`/user-quiz/${userQuizId}/answer`, {
+      question_id: question.id,
+      selected_answer_id: ansId,
+    });
+  };
+
+  // on Next / Submit click
+  const handleNext = async () => {
+    if (!selectedAnswers[question.id]) return;
+
+    try {
+      await submitAnswer();
+      // if more questions remain → advance
+      if (currentIndex < questions.length - 1) {
+        setCurrentIndex(i => i + 1);
+      } else {
+        // last question → close out
+        await handleSubmit();
+        toast.success('Quiz completed');
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error('Failed to submit answer');
     }
   };
 
@@ -51,13 +79,33 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
     }
   };
 
-  const handleSubmit = () => {
-    // stop any running timer
-    setTimeLeft(0);
-
-    // here you’d POST selectedAnswers to your API…
-    alert('Quiz finished!\n' + JSON.stringify(selectedAnswers, null, 2));
+  // finalize quiz
+  const handleSubmit = async () => {
+    try {
+      const res = await axiosInstance.patch<EndQuizResponse>(`/quiz/${quizId}/end`);
+      setResult(res.data.data);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to end quiz');
+    }
   };
+
+  // if we already have a result → show summary UI
+  if (result) {
+    return (
+      <div className="p-6 max-w-md mx-auto text-center">
+        <h2 className="text-2xl font-bold mb-4">Quiz Completed</h2>
+        <p className="mb-2">{result.message}</p>
+        <p>Ended at: {new Date(result.ended_at).toLocaleString()}</p>
+        <p>Total Questions: {result.totalQuestions}</p>
+        <p>Correct Answers: {result.correctAnswers}</p>
+        <p>Score: {result.score}</p>
+        <p className={result.isPassed ? 'text-green-600' : 'text-red-600'}>
+          {result.isPassed ? '🎉 Passed!' : '❌ Failed'}
+        </p>
+      </div>
+    );
+  }
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -75,7 +123,7 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
           </div>
           {/* Progress */}
           <div className=" text-sm text-gray-600">
-            Question {currentIndex + 1} / {dummyQuestions.length}
+            Question {currentIndex + 1} / {questions.length}
           </div>
         </div>
       </div>
@@ -117,7 +165,7 @@ const QuizProccess: FC<Props> = ({ dummyQuestions }) => {
           disabled={!selectedAnswers[question.id]}
           className="bg-blue-600 text-white py-2 px-4 rounded disabled:opacity-50"
         >
-          {currentIndex < dummyQuestions.length - 1 ? 'Next' : 'Submit'}
+          {currentIndex < questions.length - 1 ? 'Next' : 'Submit'}
         </button>
       </div>
     </div>

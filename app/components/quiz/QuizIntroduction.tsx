@@ -7,9 +7,10 @@ import { TbSquareRoundedCheckFilled } from 'react-icons/tb';
 type Props = {
   quiz: Quiz;
   setIsQuizStarted: (v: boolean) => void;
+  startQuiz: () => void;
 };
 
-export const QuizIntroduction = ({ quiz, setIsQuizStarted }: Props) => {
+export const QuizIntroduction = ({ quiz, startQuiz }: Props) => {
   const { locale } = useParams();
   const t = useTranslations('quiz');
 
@@ -47,7 +48,9 @@ export const QuizIntroduction = ({ quiz, setIsQuizStarted }: Props) => {
         </div>
         <div>
           <button
-            onClick={() => setIsQuizStarted(true)}
+            onClick={() => {
+              startQuiz();
+            }}
             className="bg-[#07519c] py-2 px-4 text-sm lg:text-lg text-nowrap  lg:py-4 lg:px-8 text-white rounded-lg"
           >
             {t('start quiz')}
