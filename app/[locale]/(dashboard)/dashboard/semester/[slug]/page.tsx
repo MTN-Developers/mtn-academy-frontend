@@ -182,7 +182,7 @@ const SemesterPage = () => {
                 </>
               ) : (
                 <>
-                  <ProgressSidebar semesterId={semesterDetails.id} />
+                  <ProgressSidebar quizId={semesterDetails?.quizzes?.[0]?.id || ''} semesterId={semesterDetails.id} />
                 </>
               )}
             </div>

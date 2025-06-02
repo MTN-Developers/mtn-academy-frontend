@@ -30,6 +30,7 @@ export interface Quiz {
   roles_ar: string;
   roles_en: string;
   has_attended: boolean;
+  grade?: number;
 }
 
 export interface QuizResponse {

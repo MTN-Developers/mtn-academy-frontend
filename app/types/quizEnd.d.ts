@@ -6,6 +6,7 @@ export interface EndQuizData {
   correctAnswers: number;
   score: number;
   isPassed: boolean;
+  grade: number;
 }
 
 export interface EndQuizResponse {

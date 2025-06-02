@@ -6,6 +6,7 @@ import QuizProccess from '@/app/components/quiz/QuizProccess';
 import axiosInstance from '@/app/lib/axios/instance';
 import { Quiz, QuizResponse, UIQuestion } from '@/app/types/quiz';
 import { StartQuizResponse, UserQuestion } from '@/app/types/quizStart';
+import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
@@ -22,6 +23,7 @@ const Page = () => {
   const [quizDuration, setQuizDuration] = useState(0);
 
   const initialSeconds = Number(quizDuration) * 60;
+  const t = useTranslations('quiz');
 
   //handlers
 
@@ -88,10 +90,28 @@ const Page = () => {
   if (!quiz) return <div>No quiz found</div>;
 
   return (
-    <div dir={locale === 'ar' ? 'rtl' : 'ltr'}>
+    <div dir={locale === 'ar' ? 'rtl' : 'ltr'} className="min-h-[50vh] flex items-center justify-center">
       {quiz.has_attended === true ? (
         <>
-          <div>Quiz has been attended</div>
+          <div className="p-6 max-w-md mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-4">{t('Quiz Completed')}</h2>
+            {/* <p className="mb-2">{result.message}</p> */}
+            {/* <p>
+              {t('Ended at')}: {new Date(result.ended_at).toLocaleString()}
+            </p> */}
+            {/* <p>
+              {t('Total Questions')}: {quiz.grade}
+            </p> */}
+            {/* <p>
+              {t('Correct Answers')}: {result.correctAnswers}
+            </p> */}
+            <p>
+              {t('Score')}: {quiz.grade}
+            </p>
+            <p className={quiz?.grade && quiz?.grade >= quiz.pass_grade ? 'text-green-600' : 'text-red-600'}>
+              {quiz?.grade && quiz.grade >= quiz.pass_grade ? `🎉 ${t('Passed!')}` : `❌ ${t('Failed')}`}
+            </p>
+          </div>
         </>
       ) : (
         <>

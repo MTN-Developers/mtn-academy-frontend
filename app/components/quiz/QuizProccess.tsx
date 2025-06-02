@@ -108,7 +108,7 @@ const QuizProccess: FC<Props> = ({ questions, quizId, initialTime, userQuizId })
           {t('Correct Answers')}: {result.correctAnswers}
         </p>
         <p>
-          {t('Score')}: {result.score}
+          {t('Score')}: {result.grade}
         </p>
         <p className={result.isPassed ? 'text-green-600' : 'text-red-600'}>
           {result.isPassed ? `🎉 ${t('Passed!')}` : `❌ ${t('Failed')}`}
