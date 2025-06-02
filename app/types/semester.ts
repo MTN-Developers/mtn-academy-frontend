@@ -1,3 +1,5 @@
+import { Quiz } from './quiz';
+
 // types/semester.ts
 export interface Course {
   id: string;
@@ -47,6 +49,7 @@ export interface SemesterDetails {
   price_after_discount: number;
   promotion_video_url?: string | null;
   is_purchased: boolean;
+  quizzes?: Quiz[];
 }
 
 export interface ApiSemesterResponse {
@@ -91,4 +94,8 @@ export interface UserSemester {
   last_video_title_ar: string;
   last_video_title_en: string;
   last_video_course_slug: string;
+  image_url_ar: string;
+  name_en: string;
+  name_ar: string;
+  image_url_en: string;
 }
