@@ -1,11 +1,19 @@
 import useGetSemestersProgress from '@/app/hooks/useGetSemestersProgress';
-import { UserSemester } from '@/app/types/semester';
+import { FreeStudyCourse } from '@/app/types/freeStudy';
+import { SemesterDetails, UserSemester } from '@/app/types/semester';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const ContinueLearningMob = ({ semesterDetails, quizId, isRTL, locale }) => {
+type Props = {
+  semesterDetails: SemesterDetails | FreeStudyCourse;
+  quizId?: string;
+  isRTL: boolean;
+  locale: string;
+};
+
+const ContinueLearningMob = ({ semesterDetails, quizId, isRTL, locale }: Props) => {
   const { semesters, error, isLoading } = useGetSemestersProgress();
 
   const relatedSemester: UserSemester | undefined = semesters?.find(

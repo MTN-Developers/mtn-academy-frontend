@@ -50,6 +50,8 @@ export interface FreeStudyCourse {
   chapters?: Chapter[];
   type: 'course';
   has_live: boolean;
+  image_url_en: string;
+  image_url_ar: string;
 }
 
 /* ────────────────────────────────────────────────────────── */
