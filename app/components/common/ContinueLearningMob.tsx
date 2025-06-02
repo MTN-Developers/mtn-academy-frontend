@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
-const ContinueLearningMob = ({ semesterDetails, isRTL, locale }) => {
+const ContinueLearningMob = ({ semesterDetails, quizId, isRTL, locale }) => {
   const { semesters, error, isLoading } = useGetSemestersProgress();
 
   const relatedSemester: UserSemester | undefined = semesters?.find(
@@ -44,6 +44,11 @@ const ContinueLearningMob = ({ semesterDetails, isRTL, locale }) => {
           <Link className="w-full" href={`/${locale}/dashboard/course/${relatedSemester.last_video_course_slug}/watch`}>
             <Button className="w-full my-2 bg-[#07519C] text-lg h-14">
               {locale === 'en' ? 'Continue Learning' : 'تابع التعلم'}
+            </Button>
+          </Link>
+          <Link className="w-full" href={`/${locale}/dashboard/quiz/${quizId}`}>
+            <Button className="w-full my-2 bg-[#07519C] text-lg h-14">
+              {locale === 'en' ? 'Start Quiz' : 'ابدأ الإختبار'}
             </Button>
           </Link>
         </div>

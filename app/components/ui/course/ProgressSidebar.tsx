@@ -9,9 +9,10 @@ import Link from 'next/link';
 
 interface IProps {
   semesterId: string;
+  quizId?: string;
 }
 
-const ProgressSidebar = ({ semesterId }: IProps) => {
+const ProgressSidebar = ({ semesterId, quizId }: IProps) => {
   const params = useParams();
   const locale = params.locale as string;
 
@@ -85,6 +86,13 @@ const ProgressSidebar = ({ semesterId }: IProps) => {
                 {locale === 'en' ? 'Continue Learning' : 'تابع التعلم'}
               </Button>
             </Link>
+            {quizId && (
+              <Link href={`/${locale}/dashboard/quiz/${quizId}`} className="!my-2 block">
+                <Button className="w-full bg-[#07519c] hover:bg-[#07529cc3] h-12 text-lg text-white" variant="default">
+                  {locale === 'en' ? 'Start Quiz' : 'ابدأ الإختبار'}
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
       )}
