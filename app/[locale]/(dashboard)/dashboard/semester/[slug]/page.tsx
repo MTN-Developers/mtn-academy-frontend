@@ -136,7 +136,12 @@ const SemesterPage = () => {
                   </div> */}
                 </div>
 
-                <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
+                <ContinueLearningMob
+                  quizId={semesterDetails?.quizzes?.[0]?.id || ''}
+                  isRTL={isRTL}
+                  locale={locale}
+                  semesterDetails={semesterDetails}
+                />
 
                 {/* Tabs */}
                 <div className="w-full overflow-x-auto">
