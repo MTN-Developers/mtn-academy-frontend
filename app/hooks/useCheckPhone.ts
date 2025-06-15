@@ -5,11 +5,12 @@ export const useCheckPhone = () => {
   let check_phone_status = '';
 
   const handleCheckPhoneNumber = async ({ phoneNumber }: { phoneNumber: string }) => {
-    const apiKey = process.env.NEXT_PUBLIC_CHECK_PHONE_API_KEY;
+    // const apiKey = process.env.NEXT_PUBLIC_CHECK_PHONE_API_KEY;
     try {
       const { data, status } = await axios.get(`https://api.api-ninjas.com/v1/validatephone?number=${phoneNumber}`, {
         headers: {
-          'X-Api-Key': apiKey,
+          'X-Api-Key': 'shYtnLoN5R3msDDUlAYmrA==n49UbXC0qsEbWOYt',
+          // 'X-Api-Key': apiKey,
         },
       });
 
