@@ -5,11 +5,12 @@ export const useCheckPhone = () => {
   let check_phone_status = '';
 
   const handleCheckPhoneNumber = async ({ phoneNumber }: { phoneNumber: string }) => {
-    const apiKey = process.env.NEXT_PUBLIC_CHECK_PHONE_API_KEY;
+    // const apiKey = process.env.NEXT_PUBLIC_CHECK_PHONE_API_KEY;
     try {
       const { data, status } = await axios.get(`https://api.api-ninjas.com/v1/validatephone?number=${phoneNumber}`, {
         headers: {
-          'X-Api-Key': apiKey,
+          'X-Api-Key': 'shYtnLoN5R3msDDUlAYmrA==n49UbXC0qsEbWOYt',
+          // 'X-Api-Key': apiKey,
         },
       });
 
@@ -29,11 +30,17 @@ export const useCheckPhone = () => {
     let isMessageSent;
 
     try {
-      const sendWhatsapp = await axios.post('https://managethenow.com/api/api/whatsapp/' as string, data);
+      // const sendWhatsapp = await axios.post('https://managethenow.com/api/api/whatsapp/' as string, data);
+
+      const sendWhatsapp = await axios.get(`https://api.api-ninjas.com/v1/validatephone?number=${data.phone}`, {
+        headers: {
+          'X-Api-Key': 'shYtnLoN5R3msDDUlAYmrA==n49UbXC0qsEbWOYt',
+        },
+      });
 
       if (sendWhatsapp.status == 200) {
         console.log('send whatsapp response', sendWhatsapp.data);
-        if (sendWhatsapp.data.message == 'not_exists') {
+        if (sendWhatsapp.data.is_valid === false) {
           isMessageSent = false;
         } else {
           isMessageSent = true;
