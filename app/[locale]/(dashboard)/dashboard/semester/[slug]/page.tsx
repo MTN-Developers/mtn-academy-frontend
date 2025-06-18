@@ -14,8 +14,8 @@ import { BreadcrumbFragment } from '@/app/components/common/BreadcrumbFragment';
 import { CoursesGrid } from '@/app/components/common/CoursesGrid';
 import { ErrorState } from '@/app/components/common/ErrorState';
 import { ShareButton } from '@/app/components/common/ShareButton';
-import basicAr from '@/public/images/basicAr.png';
-import basicEn from '@/public/images/basicEn.png';
+// import basicAr from '@/public/images/basicAr.png';
+// import basicEn from '@/public/images/basicEn.png';
 import SidebarSemester from '@/app/components/common/SidebarSemester';
 import ProgressSidebar from '@/app/components/ui/course/ProgressSidebar';
 import ContinueLearningMob from '@/app/components/common/ContinueLearningMob';
@@ -102,7 +102,14 @@ const SemesterPage = () => {
                     <div className="absolute inset-0 flex  overflow-hidden items-center justify-center text-white">
                       {/* {tCourse('noVideoAvailable')}
                        */}
-                      <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" />
+                      {/* <Image src={locale === 'ar' ? basicAr : basicEn} className="w-full" alt="temp img" /> */}
+                      <Image
+                        src={locale === 'ar' ? semesterDetails.image_url_ar : semesterDetails.image_url_en}
+                        className="w-full"
+                        alt="temp img"
+                        width={1280}
+                        height={720}
+                      />
                     </div>
                   </div>
                   {/* {semesterDetails.promotion_video_url ? (
@@ -136,7 +143,12 @@ const SemesterPage = () => {
                   </div> */}
                 </div>
 
-                <ContinueLearningMob isRTL={isRTL} locale={locale} semesterDetails={semesterDetails} />
+                <ContinueLearningMob
+                  quizId={semesterDetails?.quizzes?.[0]?.id || ''}
+                  isRTL={isRTL}
+                  locale={locale}
+                  semesterDetails={semesterDetails}
+                />
 
                 {/* Tabs */}
                 <div className="w-full overflow-x-auto">
@@ -182,7 +194,7 @@ const SemesterPage = () => {
                 </>
               ) : (
                 <>
-                  <ProgressSidebar semesterId={semesterDetails.id} />
+                  <ProgressSidebar quizId={semesterDetails?.quizzes?.[0]?.id || ''} semesterId={semesterDetails.id} />
                 </>
               )}
             </div>
