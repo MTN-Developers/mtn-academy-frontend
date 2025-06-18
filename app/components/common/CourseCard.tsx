@@ -14,10 +14,9 @@ const SemesterCard = ({ semester, direction }: SemesterCardProps) => {
     semester.id === '20d67b1a-0d30-4d77-9cfe-efbbd3c8c611' || semester.id === '8494e37c-2304-4c19-9a31-c9eaf07bbef4'
       ? `dashboard/semester/${semester.id}`
       : '#';
-  // const routingLink =
-  //   semester.id === '20d67b1a-0d30-4d77-9cfe-efbbd3c8c611' ? `dashboard/semester/${semester.id}` : '#';
+  //
 
-  const routingLink = `dashboard/semester/${semester.id}`;
+  // const routingLink = `dashboard/semester/${semester.id}`;
 
   return (
     <Link
