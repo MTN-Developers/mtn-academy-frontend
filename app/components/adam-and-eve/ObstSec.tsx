@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import contentSecImg from '@/public/images/adam-and-eve/content-sec-img.svg';
+import contentSecImg from '@/public/images/adam-and-eve/obst-img.svg';
 
 const ObstSec = () => {
   return (

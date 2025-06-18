@@ -226,5 +226,46 @@
     "Score": "Score",
     "Passed!": "Passed!",
     "Failed": "Failed"
+  },
+  "docAhmed": {
+    "name": "Dr. Ahmed Al-Demlawy",
+
+    "tabs": {
+      "achievements": "His most important intellectual achievements",
+      "academic": "His studies and academic background",
+      "scientific": "Scientific background"
+    },
+    "achievements": {
+      "points": [
+        "In 2019, Dr. Ahmed Al-Demlawy introduced the foundations of Classificatory Emotional Medicine:",
+        "He defined a precise correspondence between tissue functionality and emotional meaning (anatomical mimicry).",
+        "Established a tissue color code to explain disturbed emotional patterns (new shock cycle).",
+        "Adopted the Luscher color diagnostic test and introduced 'instinct' as a measure of balance and disturbance.",
+        "Introduced energy weight of color as a meaningful metric and implemented it in CPC program.",
+        "Teaches these techniques globally through the diploma of classificatory medicine.",
+        "Introduced Therapy Gym self-healing groups for conditions difficult to treat with conventional medicine.",
+        "Applied osteopathy science for emotional diagnostics as a novel contribution.",
+        "Developed a gender identity model to define and measure innate emotional traits.",
+        "Offers marriage and intimacy counseling with over 40 years of experience."
+      ]
+    },
+    "academic": {
+      "points": [
+        "Studied under elite professors like:",
+        "Professor Max Luscher, founder of the emotion-logic color theory.",
+        "Dr. Ryke Geerd Hamer, who linked organic symptoms to emotional shocks visible in brain CT scans.",
+        "Learned from Stephen Porges' Polyvagal Theory.",
+        "Used his medical education and scientific foundations to develop emotional diagnostic tools for healing."
+      ]
+    },
+    "scientific": {
+      "points": [
+        "Dr. Ahmed Abdel-Meguid Al-Demlawy was born in Alexandria, Egypt in 1959.",
+        "Graduated from Ain Shams University Medical School in 1983.",
+        "Studied biomedical engineering at the University of Washington until 1990.",
+        "Holds an MBA from ESLSCA Business School in France.",
+        "Former Vice President of IMMA and a global MetaHealth trainer and professor."
+      ]
+    }
   }
 }
