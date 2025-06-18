@@ -5,7 +5,7 @@ import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Controller, useForm } from 'react-hook-form';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { StripeCardElement } from '@stripe/stripe-js';
 import { toast } from 'sonner';
 import ErrorMsg from '../../common/ErrorMsg';
@@ -23,6 +23,10 @@ const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const queryClient = useQueryClient();
+  const path = usePathname();
+  const isFromFreeStudy = path.includes('free-study');
+
+  console.log('isFreeStudy', isFromFreeStudy);
 
   // const isFreeStudy = type === 'free-study';
   // const isSemester = type === 'semester';
@@ -40,6 +44,7 @@ const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
       const { data: CreateIntent } = await axiosInstance.post('/transaction', {
         item_id: freeStudy.id,
         type: 'course',
+        course_type: isFromFreeStudy ? 'free_study' : 'academic_study',
       });
 
       const { error } = await stripe.confirmCardPayment(CreateIntent?.data?.clientSecret, {
