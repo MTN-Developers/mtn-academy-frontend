@@ -35,10 +35,10 @@ const SidebarFreeStudy = ({ tCourse, freeStudyDetail, paymentLink, discount, pri
       <div className="md:col-span-1  hidden md:block lg:relative w-[90%] mx-4 fixed bottom-4 left-0 font-poppins">
         <div className="bg-white p-4 md:p-6 rounded-lg my-4 shadow-sm md:sticky md:top-4 flex flex-col gap-3 justify-start items-center">
           <p className="text-2xl font-cairo font-normal text-[#353535]">{tCourse('enrollNow')}</p>
-          <div className="text-[64px] font-bold mb-2">${price}</div>
+          <div className="text-[64px] font-bold mb-2">${priceAfterDiscount}</div>
           {Number(discount) > 0 && (
             <p className="text-center text-sm font-normal  text-red-400 ">
-              <span className="line-through">${priceAfterDiscount || 0}</span>
+              <span className="line-through">${price - priceAfterDiscount || 0}</span>
               <span className="text-red-400 inline mx-2 text-lg">%{discount} Discount</span>
             </p>
           )}
