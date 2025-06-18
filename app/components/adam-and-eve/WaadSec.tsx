@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
-import contentSecImg from '@/public/images/adam-and-eve/content-sec-img.svg';
+import contentSecImg from '@/public/images/adam-and-eve/waad-img.svg';
 
-const WaadSec = () => {
+const WaadSec = ({ handleBuy }: { handleBuy: () => void }) => {
   return (
     <div className="my-10 lg:my-40 lg:px-40 flex lg:flex-row  flex-col-reverse  items-center p-4 gap-6 justify-between flex-wrap">
       <div className="lg:flex-1">
@@ -24,7 +24,9 @@ const WaadSec = () => {
             </p>
           </li>
         </ul>
-        <button className="bg-[#902c86] py-[8px] lg:px-[44px] text-white rounded-md">أشترك الان</button>
+        <button onClick={() => handleBuy()} className="bg-[#902c86] py-[8px] px-4 lg:px-[44px] text-white rounded-md">
+          أشترك الان
+        </button>
       </div>
     </div>
   );

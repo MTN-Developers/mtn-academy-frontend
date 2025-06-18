@@ -5,7 +5,7 @@ import logo from '@/public/images/adam-and-eve/logo-only.svg';
 import Text from '@/public/images/adam-and-eve/text-only.svg';
 import Image from 'next/image';
 
-const HeroSec = () => {
+const HeroSec = ({ handleBuy }: { handleBuy: () => void }) => {
   const webFragment = (
     <div className="hidden lg:block lg:relative  w-full lg:h-[750px] bg-[#f7f7f7] ">
       <Image src={heroBanner} alt="eve banner" className=" object-contain   " />
@@ -20,7 +20,9 @@ const HeroSec = () => {
           في هذا البرنامج الاستثنائي، سنأخذك في رحلة مختلفة تمامًا لفهم من هو الذكر ومن هي الأنثى من منظور فطري وإنساني،
           من خلال علم نفس الألوان وتحليل المشاعر العميق.
         </p>
-        <button className="bg-[#902c86] py-[8px] lg:px-[44px] text-white rounded-md">أشترك الان</button>
+        <button onClick={() => handleBuy()} className="bg-[#902c86] py-[8px] lg:px-[44px] text-white rounded-md">
+          أشترك الان
+        </button>
       </div>
     </div>
   );
