@@ -87,7 +87,12 @@ const FreeStudyPage = () => {
     return <NotFoundState />;
   }
 
-  const discount = ((courseDetails?.price ?? 0) - (courseDetails?.price_after_discount ?? 0) / 100).toFixed(0);
+  // const discount = ((courseDetails?.price ?? 0) - (courseDetails?.price_after_discount ?? 0) / 100).toFixed(0);
+
+  const discount = (
+    (((courseDetails?.price ?? 0) - (courseDetails?.price_after_discount ?? 0)) / (courseDetails?.price ?? 1)) *
+    100
+  ).toFixed(0);
 
   return (
     <>
