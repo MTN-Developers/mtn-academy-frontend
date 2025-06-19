@@ -3,6 +3,7 @@ import AboutDr from '@/app/components/adam-and-eve/AboutDr';
 import BuySec from '@/app/components/adam-and-eve/BuySec';
 import ClientSec from '@/app/components/adam-and-eve/ClientSec';
 import ContentSec from '@/app/components/adam-and-eve/ContentSec';
+import Countdown from '@/app/components/adam-and-eve/Countdown';
 import ElhahSec from '@/app/components/adam-and-eve/ElhahSec';
 import HeroSec from '@/app/components/adam-and-eve/HeroSec';
 import Navbar from '@/app/components/adam-and-eve/Navbar';
@@ -23,7 +24,13 @@ const Page = () => {
 
   return (
     <div>
-      <Navbar handleBuy={handleBuy} />
+      <div className="sticky top-0 z-50 bg-white shadow-sm">
+        <Navbar handleBuy={handleBuy} />
+        <div className="border-t border-muted">
+          <Countdown targetDate="2025-07-17T23:59:59" />
+        </div>
+      </div>
+
       <HeroSec handleBuy={handleBuy} />
       <ContentSec />
       <WaadSec handleBuy={handleBuy} />
