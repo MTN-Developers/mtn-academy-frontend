@@ -140,7 +140,7 @@ const PromoCodeForm = ({
         </div>
 
         <Button
-          className="absolute right-[10px] top-1/2 transform -translate-y-1/2 px-4 py-2 text-white bg-primary hover:bg-primary/90"
+          className="absolute right-[10px] top-1/2 transform -translate-y-1/2 px-4 py-2 text-white !bg-[#1976D2] hover:bg-primary/90"
           onClick={handleSubmit(onSubmit)}
           disabled={loading}
         >
