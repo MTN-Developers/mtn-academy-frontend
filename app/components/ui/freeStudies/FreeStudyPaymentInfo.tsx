@@ -10,7 +10,7 @@ import PromoCodeForm from './PromoCodeForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/lib/redux/store';
 import { IoMdClose } from 'react-icons/io';
-import { Tooltip } from '@/components/ui/tooltip';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { useTranslations } from 'next-intl';
 
 type IProps = {
@@ -141,14 +141,19 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
                   <span className="text-sm font-normal leading-[normal] text-green-600">
                     -{formatCurrency(discount)}
                   </span>
-                  <Tooltip>
-                    <IoMdClose
-                      onClick={() => {
-                        handleRemovePromoCode(activePromoCode, 0);
-                      }}
-                      className="cursor-pointer"
-                    />
-                  </Tooltip>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <IoMdClose
+                          onClick={() => handleRemovePromoCode(activePromoCode, 0)}
+                          className="cursor-pointer"
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Remove promo code</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
               </div>
               <div className="flex justify-between items-center mb-3">
