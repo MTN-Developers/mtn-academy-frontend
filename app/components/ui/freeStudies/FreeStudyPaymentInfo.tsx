@@ -174,9 +174,7 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
           <Separator className="my-4" />
           <div className="flex-row flex-wrap w-full flex justify-between items-start lg:items-center">
             <p className="text-muted-foreground font-sans text-base font-semibold">الاجمالي</p>
-            <div className="text-foreground font-bold font-sans text-base">
-              ${(stripeAmount + calculatedGatewayFees).toFixed(2)}
-            </div>
+            <div className="text-foreground font-bold font-sans text-base">${total.toFixed(2)}</div>
           </div>
         </CardContent>
       </Card>
