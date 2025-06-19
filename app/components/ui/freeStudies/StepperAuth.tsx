@@ -12,14 +12,16 @@ import { RootState } from '@/app/lib/redux/store';
 import { FreeStudyCourse } from '@/app/types/freeStudy';
 import FreeStudyPaymentForm from './FreeStudyPaymentForm';
 import LoginRegisterTabs from './LoginRegisterTabs';
+import { PromoCode } from '@/app/[locale]/(dashboard)/dashboard/free-study/[slug]/payment/page';
 
 const steps = ['تسجيل الدخول / إنشاء حساب', 'إتمام الدفع'];
 
 type Props = {
   freeStudy: FreeStudyCourse; // pass the group so the payment form works
+  promoCodeList: PromoCode[];
 };
 
-export default function StepperAuth({ freeStudy }: Props) {
+export default function StepperAuth({ freeStudy, promoCodeList }: Props) {
   //   const { isAuthenticated } = useAuth();
   const { user } = useSelector((state: RootState) => state.auth);
   const isAuthenticated = user?.email;
@@ -52,7 +54,7 @@ export default function StepperAuth({ freeStudy }: Props) {
       {/* step content */}
       {activeStep === 0 && <LoginRegisterTabs handleAuthSuccess={handleAuthSuccess} />}
 
-      {activeStep === 1 && <FreeStudyPaymentForm freeStudy={freeStudy} />}
+      {activeStep === 1 && <FreeStudyPaymentForm promoCodeList={promoCodeList} freeStudy={freeStudy} />}
     </Box>
   );
 }

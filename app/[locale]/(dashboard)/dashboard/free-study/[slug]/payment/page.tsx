@@ -74,7 +74,7 @@ const Page = () => {
           </div>
 
           {/* <SemesterPaymentForm semester={semester} /> */}
-          <FreeStudyPaymentForm freeStudy={freeStudy} />
+          <FreeStudyPaymentForm promoCodeList={promoCodeList} freeStudy={freeStudy} />
         </div>
       </div>
     </div>

@@ -32,7 +32,9 @@ const Page = () => {
 
   return (
     <div className="w-full  flex  flex-col-reverse lg:flex-row   gap-4 flex-wrap mb-10  justify-center ">
-      <div className=" flex-1   ">{freeStudy && <StepperAuth freeStudy={freeStudy} />}</div>
+      <div className=" flex-1   ">
+        {freeStudy && <StepperAuth promoCodeList={promoCodeList} freeStudy={freeStudy} />}
+      </div>
       <div className="w-full lg:pt-20 lg:w-[40%]">
         {freeStudy && (
           <FreeStudyPaymentInfo
