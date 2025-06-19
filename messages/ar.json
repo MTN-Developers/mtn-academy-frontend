@@ -280,5 +280,16 @@
         "أستاذ ومدرب علم الميتاهيلث ونائب رئيس الجمعية العالمية للميتاهيلث IMMA سابقًا."
       ]
     }
+  },
+  "PaymentInvoice": {
+    "PaymentDetails": "تفاصيل الدفع",
+    "SubscriptionPrice": "السعر الأساسي",
+    "Discount": "الخصم",
+    "PriceAfterDiscount": "السعر بعد الخصم",
+    "GatewayFees": "رسوم بوابة الدفع",
+    "Total": "الاجمالي",
+    "SubTotal": "المبلغ الإجمالي",
+    "AdditionallDiscount": "خصم إضافي",
+    "PromoCodeIsRequired": "كود الخصم مطلوب"
   }
 }
