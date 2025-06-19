@@ -16,8 +16,15 @@ import { paymentSchema } from '@/lib/validations';
 import axiosInstance from '@/app/lib/axios/instance';
 import { FreeStudyCourse } from '@/app/types/freeStudy';
 import { useQueryClient } from '@tanstack/react-query';
+import { PromoCode } from '@/app/[locale]/(dashboard)/dashboard/free-study/[slug]/payment/page';
 
-const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => {
+const FreeStudyPaymentForm = ({
+  freeStudy,
+  promoCodeList,
+}: {
+  freeStudy: FreeStudyCourse;
+  promoCodeList: PromoCode[];
+}) => {
   const router = useRouter();
   const stripe = useStripe();
   const elements = useElements();
@@ -45,6 +52,7 @@ const FreeStudyPaymentForm = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
         item_id: freeStudy.id,
         type: 'course',
         course_type: isFromFreeStudy ? 'free_study' : 'academic_study',
+        ...(promoCodeList.length > 0 ? { promo_code: promoCodeList[0].code } : {}),
       });
 
       const { error } = await stripe.confirmCardPayment(CreateIntent?.data?.clientSecret, {
