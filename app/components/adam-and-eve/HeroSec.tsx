@@ -13,12 +13,12 @@ const HeroSec = ({ handleBuy }: { handleBuy: () => void }) => {
         <Image src={logo} width={77} height={66} alt="logo" className="mb-4" />
         <Image src={Text} width={234} height={74} alt="logo" className="mb-4" />
         <h1 className="opacity-80 lg:mb-4 text-right justify-start text-slate-900 text-xl font-semibold">
-          رحلة استكشاف الجمال الفطري في العلاقة بين الذكر والأنثى
+          هل تشعر أنك فقدت البوصلة؟ استعد فطرتك، أطلق قوتك، وعِش علاقاتك بحرية وتمكين لا مثيل له!{' '}
         </h1>
         <p className="max-w-[649px] mb-6 text-right justify-start text-neutral-600 text-xl font-normal">
           {' '}
-          في هذا البرنامج الاستثنائي، سنأخذك في رحلة مختلفة تمامًا لفهم من هو الذكر ومن هي الأنثى من منظور فطري وإنساني،
-          من خلال علم نفس الألوان وتحليل المشاعر العميق.
+          هل تتوق إلى حياة مليئة بالقوة، التوازن، والحرية الحقيقية في كل علاقاتك؟  هل تشعر أن شيئاً ما ينقصك، أو أنك لست
+          على اتصال كامل بذاتك الأصيلة؟  حان الوقت لتكتشف طريق العودة إلى فطرتك المتزنة وتعيش الحياة التي خُلقت لأجلها.
         </p>
         <button onClick={() => handleBuy()} className="bg-[#902c86] py-[8px] lg:px-[44px] text-white rounded-md">
           أشترك الان
@@ -40,11 +40,11 @@ const HeroSec = ({ handleBuy }: { handleBuy: () => void }) => {
         <Image src={logo} width={77} height={66} alt="logo" className="mb-6" />
         <Image src={Text} width={234} height={74} alt="logo" className="mb-6" />
         <h1 className="opacity-80 mb-6 lg:mb-4 text-center text-slate-900 text-xl font-semibold">
-          رحلة استكشاف الجمال الفطري في العلاقة بين الذكر والأنثى
+          هل تشعر أنك فقدت البوصلة؟ استعد فطرتك، أطلق قوتك، وعِش علاقاتك بحرية وتمكين لا مثيل له!{' '}
         </h1>
         <p className="max-w-[649px] mb-6 text-center text-neutral-600 text-xl font-normal">
-          في هذا البرنامج الاستثنائي، سنأخذك في رحلة مختلفة تمامًا لفهم من هو الذكر ومن هي الأنثى من منظور فطري وإنساني،
-          من خلال علم نفس الألوان وتحليل المشاعر العميق.
+          هل تتوق إلى حياة مليئة بالقوة، التوازن، والحرية الحقيقية في كل علاقاتك؟  هل تشعر أن شيئاً ما ينقصك، أو أنك لست
+          على اتصال كامل بذاتك الأصيلة؟  حان الوقت لتكتشف طريق العودة إلى فطرتك المتزنة وتعيش الحياة التي خُلقت لأجلها.{' '}
         </p>
         {/* <button className="bg-[#902c86] py-[8px] lg:px-[44px] text-white rounded-md">أشترك الان</button> */}
       </div>

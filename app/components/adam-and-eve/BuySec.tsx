@@ -15,7 +15,7 @@ export default function BuySec({ handleBuy }: { handleBuy: () => void }) {
         <div className="relative z-10 bg-white p-8 rounded-3xl shadow-lg border border-gray-200">
           <p className="text-gray-800 font-semibold text-2xl mb-1">اسرع بالاشتراك الان</p>
           <p className="text-gray-500 mb-4">سعر الاشتراك</p>
-          <p className="text-3xl font-bold text-[#902c86] mb-2">$400</p>
+          <p className="text-6xl font-bold text-[#902c86] mb-2">$400</p>
           {/* <p className="text-sm text-gray-600 mb-6"> لقاء مع دكتور أحمد الدملاوي</p> */}
 
           <button
