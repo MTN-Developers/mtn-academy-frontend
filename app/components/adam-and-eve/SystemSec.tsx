@@ -9,26 +9,27 @@ const SystemSec = ({ handleBuy }: { handleBuy: () => void }) => {
         <h1 className="self-stretch mb-4 text-right justify-start text-slate-900 text-2xl lg:text-6xl font-extrabold ">
           السيستم{' '}
         </h1>
-        <ul className="list-disc p-4 flex flex-col gap-4">
+        <ul className=" p-4 flex flex-col gap-4">
           <li>
             <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
-              بنستخدم تقنيات / تكنولوجيا متقدمة جدا فى قياس وتحليل المشاعر ونوصل بدقة متناهية لعمق الشعور الشعور المضطرب
-              المسبب للإضطراب فى المنظومة الشعورية للذكر والأنثى {' '}
+              اكتشف معنا سيستم &quot;مركزية الحياة&quot; للعودة إلى التوازن والقوة!{' '}
             </p>
           </li>
           <li>
             <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
-              نساعد المشترك للوصول لعلاج نقطة الضعف المؤثرة سلبا على حياتهم {' '}
+              لسنوات طويلة، ربما كنت تعتقد أن هذا هو قدرك.{' '}
             </p>
           </li>
           <li>
             <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
-              والوصول لنتائج غير مسبوقة لم يصلوا لها من قبل{' '}
+              لكن الحقيقة هي أن هناك نظاماً فطرياً يمكنك استعادته وتفعيله في حياتك اليومية. في هذا الكورس، لن نقدم لك
+              مجرد معلومات، بل سنرشدك خطوة بخطوة لـتطبيق الفطرة في كل جوانب حياتك لترى الفرق بنفسك.{' '}
             </p>
           </li>
           <li>
             <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
-              نسبة الأنوثة والذكورة & إختبار لوشر G+F ) {' '}
+              سنعلمك كيف تدير حياتك وكيف تكون أنت مركزها في كل المواقف الحياتية المختلفة، بدءاً من أدق التفاصيل وصولاً
+              إلى أكبر القرارات.{' '}
             </p>
           </li>
         </ul>

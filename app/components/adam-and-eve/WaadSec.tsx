@@ -10,21 +10,59 @@ const WaadSec = ({ handleBuy }: { handleBuy: () => void }) => {
       </div>
       <div className="lg:flex-1">
         <h1 className="self-stretch mb-4 text-right justify-start text-slate-900 text-2xl lg:text-6xl font-extrabold ">
-          الوعد
+          محتوى البرنامج للنساء
         </h1>
-        <ul className="list-disc p-4">
+        <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+          اكتشفي أنوثتك المتوازنة وعيشي دورك الريادي الفطري!{' '}
+        </p>
+        <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+          وكذلك النساء، يواجهن تحديات فريدة في رحلة اكتشاف الذات
+        </p>
+        <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+          هل تشعرين بأنك:
+        </p>
+        <ul className="list-disc my-4 lg:px-10">
           <li>
             <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
-              ان كل ذكر وأنثى سيرى نفسه والطرف الآخر من منظور مختلف تماما عما كان يعرف به نفسه والجنس الآخر 
+              لا تعرفين كيف تكونين الأنثى الحقيقية وكيف تعبّرين عن أنوثتك ودورك الريادي؟{' '}
             </p>
           </li>
           <li>
             <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
-              وبالتالى سيحدث نقلة شعورية وادراكية فى علاقاته وتفاعلاته اليومية مع نفسه والآخرين 
+              تخلطين بين القسوة والطموح، أو بين التضحية أو نبذ الذات و الحنية ؟{' '}
+            </p>
+          </li>
+          <li>
+            <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+              لـديك رغبة ملحة في الاستقلال والتمرد، ولكنك في الوقت نفسه تخافين من الوحدة والمستقبل؟{' '}
+            </p>
+          </li>
+          <li>
+            <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+              تنكرين حاجتك الفطرية للرجل، وفي نفس الوقت ترفضين دوره البديل في حياتك، في صراع داخلي يجعلك تشعرين
+              &quot;أنا راجل وست في بعض&quot;؟{' '}
+            </p>
+          </li>
+          <li>
+            <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+              تملكين حاجة عميقة للأمان والدلال والرعاية، وتخافين بشدة من الفقدان (مكانة، ممتلكات، أو علاقة أو حب)؟{' '}
+            </p>
+          </li>
+          <li>
+            <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+              ترغبين في أن تُشاهدي&quot; شعور إنك تكوني متشافة &quot; وتُحبي، وتخافين من عدم رؤية الآخرين لجمالك وقيمتك
+              ومدى تأثيرك فى حياتهم ؟{' '}
             </p>
           </li>
         </ul>
-        <button onClick={() => handleBuy()} className="bg-[#902c86] py-[8px] px-4 lg:px-[44px] text-white rounded-md">
+        <p className="self-stretch text-right justify-start text-slate-900 text-base lg:text-xl font-normal">
+          الألم الحقيقي: هذا التناقض الداخلي والخوف المستمر من الفقدان، مع الرغبة الملحة في الأمان والتدليل، يجعلك
+          تشعرين بالضياع وعدم القدرة على عيش ذاتك الأنثوية الحقيقية.
+        </p>
+        <button
+          onClick={() => handleBuy()}
+          className="bg-[#902c86] py-[8px] my-4 px-4 lg:px-[44px] text-white rounded-md"
+        >
           أشترك الان
         </button>
       </div>
