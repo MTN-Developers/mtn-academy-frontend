@@ -66,6 +66,7 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
           total={total}
           setGatewayFees={setGatewayFees}
           gatewayFees={calculatedGatewayFees}
+          freeStudy={freeStudy}
         />
       )}
 
