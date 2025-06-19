@@ -267,5 +267,16 @@
         "Former Vice President of IMMA and a global MetaHealth trainer and professor."
       ]
     }
+  },
+  "PaymentInvoice": {
+    "PaymentDetails": "Payment Details",
+    "SubscriptionPrice": "Original Price",
+    "Discount": "Discount",
+    "PriceAfterDiscount": "Price After Discount",
+    "GatewayFees": "Gateway Fees",
+    "Total": "Total",
+    "SubTotal": "Sub Total",
+    "AdditionallDiscount": "Additional Discount",
+    "PromoCodeIsRequired": "Promo code is required"
   }
 }

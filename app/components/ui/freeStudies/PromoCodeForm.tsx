@@ -6,11 +6,12 @@ import { Input } from '@/components/ui/input';
 import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { useParams } from 'next/navigation';
+// import { useParams } from 'next/navigation';
 import axiosInstance from '@/app/lib/axios/instance';
 import { endpoints } from '@/app/services/endpoints';
 import ErrorMsg from '../../common/ErrorMsg';
 import { toast } from 'sonner';
+import { FreeStudyCourse } from '@/app/types/freeStudy';
 
 type PromoCodeFormData = yup.InferType<typeof promoCodesSchema>;
 
@@ -31,6 +32,7 @@ const PromoCodeForm = ({
   setGatewayFees,
   total,
   //   clientPhone,
+  freeStudy,
   gatewayFees,
 }: {
   setTotal: React.Dispatch<React.SetStateAction<number>>;
@@ -39,6 +41,7 @@ const PromoCodeForm = ({
   setPromoCodeList: any;
   setGatewayFees: any;
   total: number;
+  freeStudy: FreeStudyCourse;
   clientPhone: string;
   gatewayFees: number;
 }) => {
@@ -51,7 +54,7 @@ const PromoCodeForm = ({
     resolver: yupResolver(promoCodesSchema),
   });
 
-  const urlParams = useParams();
+  //   const urlParams = useParams();
   const [loading, setLoading] = React.useState(false);
 
   const onSubmit = async (data: PromoCodeFormData) => {
@@ -79,7 +82,7 @@ const PromoCodeForm = ({
       const { data: response, status } = await axiosInstance.get(
         endpoints.checkPromoCode({
           code: promoCode,
-          course_id: urlParams.slug,
+          course_id: freeStudy.id,
         }),
       );
 
@@ -137,7 +140,7 @@ const PromoCodeForm = ({
         </div>
 
         <Button
-          className="absolute right-[10px] top-1/2 transform -translate-y-1/2 px-4 py-2 text-white bg-primary hover:bg-primary/90"
+          className="absolute right-[10px] top-1/2 transform -translate-y-1/2 px-4 py-2 text-white !bg-[#1976D2] hover:bg-primary/90"
           onClick={handleSubmit(onSubmit)}
           disabled={loading}
         >

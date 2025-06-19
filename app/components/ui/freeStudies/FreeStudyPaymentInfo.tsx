@@ -9,6 +9,9 @@ import { PromoCode } from '@/app/[locale]/(dashboard)/dashboard/free-study/[slug
 import PromoCodeForm from './PromoCodeForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/lib/redux/store';
+import { IoMdClose } from 'react-icons/io';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { useTranslations } from 'next-intl';
 
 type IProps = {
   freeStudy: FreeStudyCourse;
@@ -21,14 +24,45 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
 
   // console.log('user is', user);
 
+  const handleRemovePromoCode = (promo: PromoCode, index: number) => {
+    // Remove promo code from list
+    setPromoCodeList(prev => prev.filter((_, i) => i !== index));
+
+    // Reset to original values
+    const basePrice =
+      Number(freeStudy?.price_after_discount) === 0
+        ? Number(freeStudy?.price)
+        : Number(freeStudy?.price_after_discount);
+
+    const newGatewayFees = basePrice * 0.05;
+    setGatewayFees(newGatewayFees);
+    setTotal(basePrice + newGatewayFees);
+  };
+
+  const activePromoCode = promoCodeList[0];
+
   const stripeAmount =
     Number(freeStudy?.price_after_discount) === 0 ? Number(freeStudy?.price) : Number(freeStudy?.price_after_discount);
 
+  const discountAmount = activePromoCode
+    ? (Number(freeStudy?.price_after_discount) === 0
+        ? Number(freeStudy?.price)
+        : Number(freeStudy?.price_after_discount) * activePromoCode.discount_percentage) / 100
+    : 0;
   const [calculatedGatewayFees, setGatewayFees] = React.useState(stripeAmount * 0.05);
   const discount = Number(freeStudy?.price) - Number(freeStudy?.price_after_discount);
   const [total, setTotal] = React.useState(stripeAmount + calculatedGatewayFees);
 
   const [_subtotal, setSubTotal] = React.useState(total - calculatedGatewayFees);
+
+  const t = useTranslations('PaymentInvoice');
+
+  const formatCurrency = (amount: number): string => {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(amount);
+  };
 
   return (
     <div
@@ -66,6 +100,7 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
           total={total}
           setGatewayFees={setGatewayFees}
           gatewayFees={calculatedGatewayFees}
+          freeStudy={freeStudy}
         />
       )}
 
@@ -95,12 +130,51 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
               </div>
             </div>
           </div>
+          {activePromoCode && (
+            <>
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-sm font-normal leading-[normal] text-[#696969]">
+                  {t('AdditionallDiscount')} ({activePromoCode.discount_percentage}
+                  %)
+                </span>
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-normal leading-[normal] text-green-600">
+                    -{formatCurrency(discount)}
+                  </span>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <IoMdClose
+                          onClick={() => handleRemovePromoCode(activePromoCode, 0)}
+                          className="cursor-pointer"
+                        />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Remove promo code</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
+                </div>
+              </div>
+              <div className="flex justify-between items-center mb-3">
+                <span className="text-sm font-normal leading-[normal] text-[#696969]">{t('PriceAfterDiscount')}</span>
+                <div className="flex items-center gap-1">
+                  <span className="text-sm font-normal leading-[normal] text-black">
+                    {formatCurrency(
+                      Number(freeStudy?.price_after_discount) === 0
+                        ? Number(freeStudy?.price)
+                        : Number(freeStudy?.price_after_discount) - discountAmount,
+                    )}
+                  </span>
+                </div>
+              </div>
+            </>
+          )}
+
           <Separator className="my-4" />
           <div className="flex-row flex-wrap w-full flex justify-between items-start lg:items-center">
             <p className="text-muted-foreground font-sans text-base font-semibold">الاجمالي</p>
-            <div className="text-foreground font-bold font-sans text-base">
-              ${(stripeAmount + calculatedGatewayFees).toFixed(2)}
-            </div>
+            <div className="text-foreground font-bold font-sans text-base">${total.toFixed(2)}</div>
           </div>
         </CardContent>
       </Card>
