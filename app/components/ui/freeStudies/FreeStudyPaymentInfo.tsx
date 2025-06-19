@@ -132,14 +132,14 @@ const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IP
           </div>
           {activePromoCode && (
             <>
-              <div className="flex justify-between items-center mb-3">
+              <div className="flex justify-between items-center my-3">
                 <span className="text-sm font-normal leading-[normal] text-[#696969]">
                   {t('AdditionallDiscount')} ({activePromoCode.discount_percentage}
                   %)
                 </span>
                 <div className="flex items-center gap-1">
                   <span className="text-sm font-normal leading-[normal] text-green-600">
-                    -{formatCurrency(discount)}
+                    -{formatCurrency(discountAmount)}
                   </span>
                   <TooltipProvider>
                     <Tooltip>
