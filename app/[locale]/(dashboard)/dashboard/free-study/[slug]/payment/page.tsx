@@ -10,10 +10,16 @@ import FreeStudyPaymentInfo from '@/app/components/ui/freeStudies/FreeStudyPayme
 import FreeStudyPaymentForm from '@/app/components/ui/freeStudies/FreeStudyPaymentForm';
 import UseGetFreeStudy from '@/app/hooks/UseGetFreeStudy';
 
+export interface PromoCode {
+  code: string;
+  discount_percentage: number;
+}
+
 const Page = () => {
   const { slug } = useParams();
 
   //   console.log('sems id', slug);
+  const [promoCodeList, setPromoCodeList] = React.useState<PromoCode[]>([]);
 
   const { data, isLoading, error } = UseGetFreeStudy({ slug: Array.isArray(slug) ? slug[0] : slug });
 
@@ -46,7 +52,11 @@ const Page = () => {
           }}
         >
           {/* <SemesterPaymentInfo semester={semester} /> */}
-          <FreeStudyPaymentInfo freeStudy={freeStudy} />
+          <FreeStudyPaymentInfo
+            promoCodeList={promoCodeList}
+            setPromoCodeList={setPromoCodeList}
+            freeStudy={freeStudy}
+          />
         </div>
       </div>
       <div className="w-full lg:w-1/2 py-[28px]">

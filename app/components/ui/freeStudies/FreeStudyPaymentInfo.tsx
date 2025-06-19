@@ -5,13 +5,30 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { FreeStudyCourse } from '@/app/types/freeStudy';
+import { PromoCode } from '@/app/[locale]/(dashboard)/dashboard/free-study/[slug]/payment/page';
+import PromoCodeForm from './PromoCodeForm';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/lib/redux/store';
 
-const FreeStudyPaymentInfo = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => {
+type IProps = {
+  freeStudy: FreeStudyCourse;
+  promoCodeList: PromoCode[];
+  setPromoCodeList: any;
+};
+
+const FreeStudyPaymentInfo = ({ freeStudy, promoCodeList, setPromoCodeList }: IProps) => {
+  const { user } = useSelector((state: RootState) => state.auth);
+
+  // console.log('user is', user);
+
   const stripeAmount =
     Number(freeStudy?.price_after_discount) === 0 ? Number(freeStudy?.price) : Number(freeStudy?.price_after_discount);
 
-  const calculatedGatewayFees = stripeAmount * 0.05;
+  const [calculatedGatewayFees, setGatewayFees] = React.useState(stripeAmount * 0.05);
   const discount = Number(freeStudy?.price) - Number(freeStudy?.price_after_discount);
+  const [total, setTotal] = React.useState(stripeAmount + calculatedGatewayFees);
+
+  const [_subtotal, setSubTotal] = React.useState(total - calculatedGatewayFees);
 
   return (
     <div
@@ -38,6 +55,19 @@ const FreeStudyPaymentInfo = ({ freeStudy }: { freeStudy: FreeStudyCourse }) => 
           </div>
         </CardContent>
       </Card>
+
+      {user && (
+        <PromoCodeForm
+          setSubTotal={setSubTotal}
+          clientPhone={user?.phone || ''}
+          promoCodeList={promoCodeList}
+          setPromoCodeList={setPromoCodeList}
+          setTotal={setTotal}
+          total={total}
+          setGatewayFees={setGatewayFees}
+          gatewayFees={calculatedGatewayFees}
+        />
+      )}
 
       <Card className="mt-7 min-h-[178px]">
         <CardContent className="p-[15px]">
