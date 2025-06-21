@@ -24,7 +24,8 @@ const Navbar = () => {
   };
   const menuItems = [
     { label: t('menu.home'), href: `/${locale}/` },
-    { label: t('menu.freeStudy'), href: `/${locale}/free-study` },
+    // { label: t('menu.freeStudy'), href: `/${locale}/free-study` },
+    { label: t('menu.library'), href: `/${locale}/library` },
     { label: t('menu.academy'), href: `/${locale}/academy` },
     { label: t('menu.contact'), href: `/${locale}/contact-us` },
   ];

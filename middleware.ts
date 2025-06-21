@@ -31,6 +31,7 @@ export function middleware(req: NextRequest) {
     'dashboard/free-study/public',
     'dashboard/free-study/public/payment',
     'adam-and-eve-fittra',
+    'library',
   ];
 
   // Check if current route is public

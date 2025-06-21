@@ -36,7 +36,9 @@ const Navbar = () => {
   const menuItems = [
     { label: t('menu.home'), href: `/${locale}` },
     { label: t('menu.freeStudy'), href: `#` },
+    { label: t('menu.library'), href: `/${locale}/library` },
     { label: t('menu.contact'), href: `/dashboard/contact-us` },
+
     // { label: t("menu.academy"), href: `/${locale}/academy` },
   ];
 
